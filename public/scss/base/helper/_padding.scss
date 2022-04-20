@@ -1,0 +1,250 @@
+$distance: 1;
+
+@mixin p($size) {
+    padding: $size * $distance + px !important;
+}
+@mixin pt($size) {
+    padding-top: $size * $distance + px !important;
+}
+
+@mixin pb($size) {
+    padding-bottom: $size * $distance + px !important;
+}
+
+@mixin ps($size) {
+    padding-left: $size * $distance + px !important;
+}
+
+@mixin pe($size) {
+    padding-right: $size * $distance + px !important;
+}
+
+@mixin py($size) {
+    padding-top   : $size * $distance + px !important;
+    padding-bottom: $size * $distance + px !important;
+}
+
+@mixin px($size) {
+    padding-left : $size * $distance + px !important;
+    padding-right: $size * $distance + px !important;
+}
+
+@for $i from 0 through 150 {
+
+    .p-#{$i * $distance} {
+        @include p($i);
+    }
+    .pt-#{$i * $distance} {
+        @include pt($i);
+    }
+
+    .pb-#{$i * $distance} {
+        @include pb($i);
+    }
+
+    .ps-#{$i * $distance} {
+        @include ps($i);
+    }
+
+    .pe-#{$i * $distance} {
+        @include pe($i);
+    }
+
+    .py-#{$i * $distance} {
+        @include py($i);
+    }
+
+    .px-#{$i * $distance} {
+        @include px($i);
+    }
+}
+
+@include respond ("xxl") {
+    @for $i from 0 through 150 {
+
+        .p-xxl-#{$i * $distance} {
+            @include p($i);
+        }
+        .pt-xxl-#{$i * $distance} {
+            @include pt($i);
+        }
+
+        .pb-xxl-#{$i * $distance} {
+            @include pb($i);
+        }
+
+        .ps-xxl-#{$i * $distance} {
+            @include ps($i);
+        }
+
+        .pe-xxl-#{$i * $distance} {
+            @include pe($i);
+        }
+
+        .py-xxl-#{$i * $distance} {
+            @include py($i);
+        }
+
+        .px-xxl-#{$i * $distance} {
+            @include px($i);
+        }
+    }
+}
+
+@include respond ("xl") {
+    @for $i from 0 through 150 {
+        .p-xl-#{$i * $distance} {
+            @include p($i);
+        }
+        .pt-xl-#{$i * $distance} {
+            @include pt($i);
+        }
+
+        .pb-xl-#{$i * $distance} {
+            @include pb($i);
+        }
+
+        .ps-xl-#{$i * $distance} {
+            @include ps($i);
+        }
+
+        .pe-xl-#{$i * $distance} {
+            @include pe($i);
+        }
+
+        .py-xl-#{$i * $distance} {
+            @include py($i);
+        }
+
+        .px-xl-#{$i * $distance} {
+            @include px($i);
+        }
+    }
+}
+
+@include respond ("lg") {
+    @for $i from 0 through 150 {
+        .p-lg-#{$i * $distance} {
+            @include p($i);
+        }
+        .pt-lg-#{$i * $distance} {
+            @include pt($i);
+        }
+
+        .pb-lg-#{$i * $distance} {
+            @include pb($i);
+        }
+
+        .ps-lg-#{$i * $distance} {
+            @include ps($i);
+        }
+
+        .pe-lg-#{$i * $distance} {
+            @include pe($i);
+        }
+
+        .py-lg-#{$i * $distance} {
+            @include py($i);
+        }
+
+        .px-lg-#{$i * $distance} {
+            @include px($i);
+        }
+    }
+}
+
+
+@include respond ("md") {
+    @for $i from 0 through 150 {
+        .p-md-#{$i * $distance} {
+            @include p($i);
+        }
+        .pt-md-#{$i * $distance} {
+            @include pt($i);
+        }
+
+        .pb-md-#{$i * $distance} {
+            @include pb($i);
+        }
+
+        .ps-md-#{$i * $distance} {
+            @include ps($i);
+        }
+
+        .pe-md-#{$i * $distance} {
+            @include pe($i);
+        }
+
+        .py-md-#{$i * $distance} {
+            @include py($i);
+        }
+
+        .px-md-#{$i * $distance} {
+            @include px($i);
+        }
+    }
+}
+
+
+@include respond ("sm") {
+    @for $i from 0 through 150 {
+        .p-sm-#{$i * $distance} {
+            @include p($i);
+        }
+        .pt-sm-#{$i * $distance} {
+            @include pt($i);
+        }
+
+        .pb-sm-#{$i * $distance} {
+            @include pb($i);
+        }
+
+        .ps-sm-#{$i * $distance} {
+            @include ps($i);
+        }
+
+        .pe-sm-#{$i * $distance} {
+            @include pe($i);
+        }
+
+        .py-sm-#{$i * $distance} {
+            @include py($i);
+        }
+
+        .px-sm-#{$i * $distance} {
+            @include px($i);
+        }
+    }
+}
+
+
+@include respond ("xs") {
+    @for $i from 0 through 150 {
+        .p-xs-#{$i * $distance} {
+            @include p($i);
+        }
+        .pt-xs-#{$i * $distance} {
+            @include pt($i);
+        }
+
+        .pb-xs-#{$i * $distance} {
+            @include pb($i);
+        }
+
+        .ps-xs-#{$i * $distance} {
+            @include ps($i);
+        }
+
+        .pe-xs-#{$i * $distance} {
+            @include pe($i);
+        }
+
+        .py-xs-#{$i * $distance} {
+            @include py($i);
+        }
+
+        .px-xs-#{$i * $distance} {
+            @include px($i);
+        }
+    }
+}

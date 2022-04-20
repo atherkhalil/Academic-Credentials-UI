@@ -1,0 +1,16 @@
+.recent-notification {
+    .icon {
+        height         : 40px;
+        width          : 40px;
+        color          : $white;
+        display        : flex;
+        align-items    : center;
+        justify-content: center;
+        border-radius  : 50px;
+
+        i {
+            font-size  : 20px;
+            line-height: 0px;
+        }
+    }
+}

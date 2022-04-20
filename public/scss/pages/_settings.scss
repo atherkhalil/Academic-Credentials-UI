@@ -1,0 +1,88 @@
+.settings-menu {
+    margin-bottom   : 30px;
+    // margin-top      : 70px;
+    // display      : flex;
+
+    @include respond('sm') {
+        // display   : inline-block;
+        margin-top: 0px;
+    }
+    
+
+    li {
+        margin-bottom: 15px;
+
+        @include respond('sm') {
+            // display: inline-block;
+            padding: 5px 0px;
+            margin-bottom: 7px;
+        }
+
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            a {
+                color     : $white;
+                background: $primary;
+                // opacity: 1;
+            }
+        }
+    }
+
+    a {
+        display        : flex;
+        align-items    : center;
+        margin-right   : 20px;
+        color          : $body-color;
+        font-weight    : $headings-font-weight;
+        font-size      : 14px;
+        // opacity     : 0.75;
+        padding        : 10px 15px;
+        background     : $white;
+        border-radius  : $radius;
+        box-shadow     : $shadow;
+
+        i {
+            font-size   : 16px;
+            margin-right: 7px;
+            // display: inline-block;
+        }
+
+
+    }
+}
+
+
+
+.verify-content {
+    display        : flex;
+    justify-content: space-between;
+    align-items    : center;
+
+    @include respond('sm') {
+        display: block;
+
+        .btn {
+            margin-left: 65px;
+            margin-top : 15px;
+        }
+    }
+}
+
+.icon-circle {
+    height         : 50px;
+    width          : 50px;
+    font-size      : 22px;
+    display        : flex;
+    justify-content: center;
+    align-items    : center;
+    border-radius  : 50px;
+}
+
+.card {
+    .card {
+        box-shadow: none;
+        background: transparent;
+    }
+}

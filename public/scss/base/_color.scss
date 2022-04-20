@@ -1,0 +1,49 @@
+// .bg-gradient-primary {
+//     background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%) !important;
+// }
+
+
+.bg-primary-lighten{    
+    background: rgba($primary, 0.2);
+}
+
+
+.bg-secondary-lighten{    
+    background: rgba($secondary, 0.2);
+}
+
+
+.bg-success-lighten{    
+    background: rgba($success, 0.2);
+}
+
+
+.bg-warning-lighten{    
+    background: rgba($warning, 0.2);
+}
+
+
+.bg-danger-lighten{    
+    background: rgba($danger, 0.2);
+}
+
+
+.bg-info-lighten{    
+    background: rgba($info, 0.2);
+}
+
+
+.bg-dark-lighten{    
+    background: rgba($dark, 0.2);
+}
+
+
+
+.bg-purple {
+    background-color: $purple !important
+}
+
+
+.bg-transparent {
+    background-color: transparent !important
+}

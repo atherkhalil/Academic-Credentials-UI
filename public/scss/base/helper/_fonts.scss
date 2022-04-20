@@ -1,0 +1,64 @@
+$distance: 1;
+
+@mixin fs($size) {
+    font-size: $size * $distance + px !important;
+}
+
+@for $i from 10 through 80 {
+
+    .fs-#{$i * $distance} {
+        @include fs($i);
+    }
+}
+
+@include respond ("xxl") {
+    @for $i from 10 through 80 {
+
+        .fs-xxl-#{$i * $distance} {
+            @include fs($i);
+        }
+    }
+}
+
+@include respond ("xl") {
+    @for $i from 10 through 80 {
+        .fs-xl-#{$i * $distance} {
+            @include fs($i);
+        }
+    }
+}
+
+@include respond ("lg") {
+    @for $i from 10 through 50 {
+        .fs-lg-#{$i * $distance} {
+            @include fs($i);
+        }
+    }
+}
+
+
+@include respond ("md") {
+    @for $i from 10 through 40 {
+        .fs-md-#{$i * $distance} {
+            @include fs($i);
+        }
+    }
+}
+
+
+@include respond ("sm") {
+    @for $i from 8 through 40 {
+        .fs-sm-#{$i * $distance} {
+            @include fs($i);
+        }
+    }
+}
+
+
+@include respond ("xs") {
+    @for $i from 8 through 30 {
+        .fs-xs-#{$i * $distance} {
+            @include fs($i);
+        }
+    }
+}

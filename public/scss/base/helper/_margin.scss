@@ -1,0 +1,238 @@
+$distance: 1;
+
+@mixin m($size) {
+    margin: $size * $distance + px !important;
+}
+@mixin mt($size) {
+    margin-top: $size * $distance + px !important;
+}
+
+@mixin mb($size) {
+    margin-bottom: $size * $distance + px !important;
+}
+
+@mixin ms($size) {
+    margin-left: $size * $distance + px !important;
+}
+
+@mixin me($size) {
+    margin-right: $size * $distance + px !important;
+}
+
+@mixin my($size) {
+    margin-top   : $size * $distance + px !important;
+    margin-bottom: $size * $distance + px !important;
+}
+
+@mixin mx($size) {
+    margin-left : $size * $distance + px !important;
+    margin-right: $size * $distance + px !important;
+}
+
+@for $i from 1 through 150 {
+
+    .m-#{$i * $distance} {
+        @include m($i);
+    }
+    .mt-#{$i * $distance} {
+        @include mt($i);
+    }
+
+    .mb-#{$i * $distance} {
+        @include mb($i);
+    }
+
+    .ms-#{$i * $distance} {
+        @include ms($i);
+    }
+
+    .me-#{$i * $distance} {
+        @include me($i);
+    }
+    .my-#{$i * $distance} {
+        @include my($i);
+    }
+
+    .mx-#{$i * $distance} {
+        @include mx($i);
+    }
+}
+
+@include respond ("xxl") {
+    @for $i from 1 through 150 {
+
+        .m-xxl-#{$i * $distance} {
+            @include m($i);
+        }
+
+        .mt-xxl-#{$i * $distance} {
+            @include mt($i);
+        }
+
+        .mb-xxl-#{$i * $distance} {
+            @include mb($i);
+        }
+
+        .ms-xxl-#{$i * $distance} {
+            @include ms($i);
+        }
+
+        .me-xxl-#{$i * $distance} {
+            @include me($i);
+        }
+        .my-xxl-#{$i * $distance} {
+            @include my($i);
+        }
+        .mx-xxl-#{$i * $distance} {
+            @include mx($i);
+        }
+    }
+}
+
+@include respond ("xl") {
+    @for $i from 1 through 150 {
+        .m-xl-#{$i * $distance} {
+            @include m($i);
+        }
+        .mt-xl-#{$i * $distance} {
+            @include mt($i);
+        }
+
+        .mb-xl-#{$i * $distance} {
+            @include mb($i);
+        }
+
+        .ms-xl-#{$i * $distance} {
+            @include ms($i);
+        }
+
+        .me-xl-#{$i * $distance} {
+            @include me($i);
+        }
+        .my-xl-#{$i * $distance} {
+            @include my($i);
+        }
+        .mx-xl-#{$i * $distance} {
+            @include mx($i);
+        }
+    }
+}
+
+@include respond ("lg") {
+    @for $i from 1 through 150 {
+        .m-lg-#{$i * $distance} {
+            @include m($i);
+        }
+        .mt-lg-#{$i * $distance} {
+            @include mt($i);
+        }
+
+        .mb-lg-#{$i * $distance} {
+            @include mb($i);
+        }
+
+        .ms-lg-#{$i * $distance} {
+            @include ms($i);
+        }
+
+        .me-lg-#{$i * $distance} {
+            @include me($i);
+        }
+        .my-lg-#{$i * $distance} {
+            @include my($i);
+        }
+        .mx-lg-#{$i * $distance} {
+            @include mx($i);
+        }
+    }
+}
+
+
+@include respond ("md") {
+    @for $i from 1 through 150 {
+        .m-md-#{$i * $distance} {
+            @include m($i);
+        }
+        .mt-md-#{$i * $distance} {
+            @include mt($i);
+        }
+
+        .mb-md-#{$i * $distance} {
+            @include mb($i);
+        }
+
+        .ms-md-#{$i * $distance} {
+            @include ms($i);
+        }
+
+        .me-md-#{$i * $distance} {
+            @include me($i);
+        }
+        .my-md-#{$i * $distance} {
+            @include my($i);
+        }
+        .mx-md-#{$i * $distance} {
+            @include mx($i);
+        }
+    }
+}
+
+
+@include respond ("sm") {
+    @for $i from 1 through 150 {
+        .m-sm-#{$i * $distance} {
+            @include m($i);
+        }
+        .mt-sm-#{$i * $distance} {
+            @include mt($i);
+        }
+
+        .mb-sm-#{$i * $distance} {
+            @include mb($i);
+        }
+
+        .ms-sm-#{$i * $distance} {
+            @include ms($i);
+        }
+
+        .me-sm-#{$i * $distance} {
+            @include me($i);
+        }
+        .my-sm-#{$i * $distance} {
+            @include my($i);
+        }
+        .mx-sm-#{$i * $distance} {
+            @include mx($i);
+        }
+    }
+}
+
+
+@include respond ("xs") {
+    @for $i from 1 through 150 {
+        .m-xs-#{$i * $distance} {
+            @include m($i);
+        }
+        .mt-xs-#{$i * $distance} {
+            @include mt($i);
+        }
+
+        .mb-xs-#{$i * $distance} {
+            @include mb($i);
+        }
+
+        .ms-xs-#{$i * $distance} {
+            @include ms($i);
+        }
+
+        .me-xs-#{$i * $distance} {
+            @include me($i);
+        }
+        .my-xs-#{$i * $distance} {
+            @include my($i);
+        }
+        .mx-xs-#{$i * $distance} {
+            @include mx($i);
+        }
+    }
+}

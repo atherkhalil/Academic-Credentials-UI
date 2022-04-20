@@ -1,0 +1,244 @@
+$breakpoint : 991px;
+
+* {
+    box-sizing: border-box;
+}
+
+
+
+.is-striped {
+    background-color: rgba(233, 200, 147, 0.2)
+}
+
+
+
+/* Table column sizing
+================================== */
+.topic-cell {
+    width: 45%;
+    min-width: 30%;
+}
+
+.category-cell {
+    width: 15%;
+}
+
+.ranking-cell {
+    width: 10%;
+}
+
+.impression-cell {
+    width: 15%;
+}
+
+.sales-cell {
+    width: 10%;
+}
+
+.earning-cell {
+    width: 10%;
+}
+
+
+.traffic-cell{
+    width: 10%;
+}
+.source-cell{
+    width: 10%;
+}
+.referrals-cell{
+    width: 10%;
+}
+.trend-cell{
+    width: 10%;
+}
+
+
+.id-cell {
+    width: 10%;
+}
+.date-cell {
+    width: 10%;
+}
+.amount-cell {
+    width: 10%;
+}
+
+.card-cell {
+    width: 10%;
+}
+
+.status-cell {
+    width: 10%;
+}
+.receipt-cell {
+    width: 10%;
+}
+
+/* Apply styles
+================================== */
+.rtable {
+    display         : flex;
+    flex-wrap       : wrap;
+    // margin       : 0 0 3em 0;
+    padding         : 0;
+    // box-shadow: 0 0 40px rgba(0, 0, 0, 0.2);
+
+    .rtable-row {
+        width      : 100%;
+        display    : flex;
+        align-items: center;
+
+        border-radius   : $radius;
+        // border-bottom: 1px solid $border-color;
+        background      : rgba(#fff, 1);
+        margin-bottom   : 30px;
+
+        &:first-child,
+        &:last-child {
+            margin-bottom: 0px;
+        }
+
+        &:hover {
+            background: rgba($primary, 0.1);
+        }
+
+        // &:nth-child(odd) {
+        //     // background-color: rgba(#fff, 1);
+
+        //     &:hover {
+        //         background: rgba(#F6F6F6, 1);
+        //     }
+        // }
+
+        .rtable-cell {
+            box-sizing   : border-box;
+            flex-grow    : 1;
+            // padding   : 0.8em 1.2em;
+            padding      : 7px;
+            overflow     : hidden; // Or flex might break
+            list-style   : none;
+
+            &.column-heading {
+                // background-color: $primary;
+                color     : $white;
+                // padding: 1em;
+                padding   : 15px 5px;
+            }
+
+            .rtable-cell--heading {
+                display: none;
+            }
+
+            .rtable-cell--content {
+                a {
+                    font-size: 2em;
+                    color    : #333;
+                }
+
+                // .webinar-date {
+                //     font-weight: 700;
+                // }
+            }
+
+            .topic-cell-img {
+                // height       : 50px;
+                margin-right : 10px;
+                margin-bottom:10px;
+                border-radius: $radius;
+                background   : white;
+                padding      : 2px;
+            }
+
+            .topic-cell-span {
+                font-weight: 700;
+                display: block;
+            }
+
+            .title-content {
+                h5 {
+                    margin       : 0;
+                    margin-bottom: 5px;
+                }
+
+                p {
+                    font-weight  : 400;
+                    margin-bottom: 0px;
+                }
+            }
+        }
+
+    }
+}
+
+/* Responsive
+==================================== */
+@media all and (max-width: $breakpoint) {
+    .is-striped {
+        background-color: white;
+    }
+
+    .rtable--collapse {
+        display   : block;
+        width     : 100%;
+        padding   : 1em;
+        box-shadow: none;
+
+        .rtable-row {
+            box-sizing      : border-box;
+            width           : 100%;
+            display         : flex;
+            flex-wrap       : wrap;
+            margin-bottom   : 2em;
+            // box-shadow   : 0 0 40px rgba(0, 0, 0, 0.2);
+
+            .rtable-cell {
+                width      : 100% !important;
+                display    : flex;
+                align-items: center;
+                padding    :10px 15px;
+
+                .rtable-cell--heading {
+                    display     : inline-block;
+                    flex        : 0;
+                    max-width   : 120px;
+                    min-width   : 100px;
+                    color       : $primary;
+                    font-weight : 700;
+                    border-right: 1px solid #ccc;
+                    margin-right: 1em;
+                }
+
+                .rtable-cell--content {
+                    flex        : 2;
+                    padding-left: 1em;
+                }
+            }
+        }
+
+        .topic-cell {
+            // background-color: $primary;
+            color           : $body-color;
+            font-weight     : 700;
+            order           : -1;
+
+            .rtable-cell--content {
+                display: block !important;
+                padding-left: 0 !important;                
+            }
+        }
+
+        .rtable-row--head {
+            display: none;
+        }
+    }
+}
+
+// Non-Flex modernizer fallback
+.no-flexbox .rtable {
+    display: block;
+
+    &.rtable-cell {
+        width: 100%;
+    }
+}

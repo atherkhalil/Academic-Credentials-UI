@@ -1,0 +1,130 @@
+.message {
+    .content-body {
+        min-height: 100% !important;
+    }
+}
+
+
+// .chat__box {
+//     display   : flex;
+//     max-height: 100%;
+// }
+
+// .user__box {
+//     flex        : 0 0 30%;
+//     border-right: 1px solid #dddddd;
+//     max-width   : 300px;
+//     min-width   : 150px;
+//     overflow    : auto;
+//     max-height  : 70vh;
+// }
+
+// .user__item {
+//     display      : flex;
+//     padding      : 15px;
+//     border-bottom: 1px solid #dddddd;
+//     align-items  : center;
+//     cursor       : pointer;
+
+//     &:focus,
+//     &:hover {
+//         background-color: #e6e6e6;
+//         text-decoration : none;
+//         color           : #000000;
+//     }
+
+//     &.active {
+//         background-color: #e6e6e6;
+//     }
+// }
+
+// .active.unread::after {
+//     background: transparent;
+// }
+
+// .unread::after {
+//     content         : "";
+//     width           : 10px;
+//     height          : 10px;
+//     background-color: #038004;
+//     border-radius   : 100%;
+//     margin-left     : auto;
+// }
+
+// .user__img {
+//     background-color: #999999;
+//     width           : 30px;
+//     height          : 30px;
+//     border-radius   : 100%;
+//     margin-right    : 15px;
+// }
+
+// .user__name {
+//     color: #000000;
+// }
+
+// .conver__box {
+//     display       : flex;
+//     flex-direction: column;
+//     width         : 100%;
+// }
+
+// .conver__header {
+//     padding      : 15px;
+//     border-bottom: 1px solid #dddddd;
+// }
+
+// .conver__main {
+//     padding                           : 15px;
+//     border-bottom                     : 1px solid #dddddd;
+//     flex-basis                        : 50vh;
+//     // overflow     : auto;
+//     // height                         : calc(85vh - 200px);
+//     // height                      : 100%;
+//     height                            : 60vh;
+// }
+
+// .conver__item {
+//     margin-bottom: 10px;
+// }
+
+// .admin {
+//     text-align: right;
+
+//     >.conver__list {
+//         background-color: #038004;
+//         color           : #ffffff;
+//     }
+// }
+
+// .conver__list {
+//     display         : inline-block;
+//     padding         : 10px 15px;
+//     border-radius   : 20px;
+//     max-width       : 250px;
+//     background-color: #eeeeee;
+// }
+
+// .conver__input {
+//     flex-shrink: 0;
+// }
+
+// .conver__field {
+//     width  : 100%;
+//     border : none;
+//     outline: none;
+//     padding: 15px;
+// }
+
+// .d-none {
+//     display: none;
+// }
+
+// .d-block {
+//     display: block;
+// }
+
+
+
+
+

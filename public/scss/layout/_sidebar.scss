@@ -1,0 +1,194 @@
+.sidebar {
+    background      : darken($info,5%);
+    position        : fixed;
+    left            : 0px;
+    height          : calc(100%-20px);
+    width           : $sidebar-width;
+    top             : 0px;
+    z-index         : 3;
+    bottom          : 0px;
+    border-radius   : 0px;
+    box-shadow      : $shadow;
+    // border-right : 1px solid $border-color;
+
+
+    @include respond("md") {
+        width: 100px;
+    }
+
+    @include respond("sm") {
+        top          : auto;
+        bottom       : 0;
+        width        : 100%;
+        height       : 50px;
+        left         : 0;
+        border-radius: 0px;
+
+    }
+
+
+
+}
+
+.brand-logo {
+    // text-align: center;
+    margin: 20px 20px 20px;
+
+    img {
+        // max-width: 35px;
+        // filter: brightness(100);
+    }
+
+    // .mini-logo {
+    //     display: none;
+    // }
+
+    // @include respond("md") {
+    //     text-align: center;
+
+    //     .full-logo {
+    //         display: none;
+    //     }
+
+    //     .mini-logo {
+    //         display: block;
+    //     }
+    // }
+
+    @include respond("sm") {
+        display: none;
+    }
+}
+
+.menu {
+    margin-top: 30px;
+    padding   : 5px;
+    position  : relative;
+
+    @include respond("sm") {
+        margin-top: 0px;
+        padding   : 0px;
+        // background: $white;
+        box-shadow: $shadow;
+    }
+
+    ul {
+        @include respond("sm") {
+            display        : flex;
+            justify-content: space-around;
+            align-items    : center;
+        }
+
+        li {
+            // text-align: center;
+            margin-bottom: 8px;
+            border-radius: $radius;
+
+
+
+            a {
+                // padding         : 5px 16px;
+                display         : flex;
+                align-items     : center;
+                min-height      : 52px;
+                border-radius   : $radius;
+                // background   : darken($info, 10%);
+                position        : relative;
+
+                // font-weight       : 600;
+                color             : rgba($white, 0.8);
+                justify-content: center;
+
+                @include respond("md") {
+                    justify-content: center;
+                }
+
+                .nav-text {
+                    display         : none;
+                    padding         : 3px 8px;
+                    border-radius   : 4px;
+                    // box-shadow   : $shadow;
+                    background      : $dark;
+                    color           : $white;
+                    position        : absolute;
+                    left            : $sidebar-width ;
+                    // min-width       : 120px;
+                    text-align      : center;
+
+                    @include respond("md") {
+                        display: none;
+
+                    }
+                }
+
+                i {
+                    color                : rgba($white, 10.8);
+                    font-size            : 20px;
+                    // opacity        : 0.6;
+                    // margin-right      : 15px;
+                    // line-height : 0px;
+
+                    padding      : 15px;
+                    border-radius: $radius;
+
+
+                    @include respond("md") {
+                        margin-right: 0px;
+
+                    }
+                }
+
+
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                a {
+
+                    i {
+                        color     : $white;
+                        background: darken($info, 10%);
+                    }
+
+                    .nav-text {
+                        display: block;
+                        color  : $white;
+
+                        @include respond("md") {
+                            display: none;
+
+                        }
+                    }
+                }
+
+
+            }
+
+            &.active {
+
+
+                a {
+                    color: $white;
+
+                    i {
+                        background: darken($info, 10%);
+                        color     : $white;
+                    }
+
+                    .nav-text {
+                        color: $white;
+
+                        @include respond("md") {
+                            display: none;
+
+                        }
+                    }
+                }
+
+
+            }
+        }
+    }
+
+}

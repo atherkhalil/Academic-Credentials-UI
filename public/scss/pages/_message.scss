@@ -1,0 +1,227 @@
+.chat__box {
+
+    // display      : flex;
+    // max-height: calc(100vh - 220px);
+    .nav-item {
+        width     : 50%;
+        text-align: center;
+    }
+
+    .nav-link {
+        padding: 14px 15px;
+        cursor : pointer;
+        border : 0px;
+
+        &.active {
+            background: $primary;
+            color     : $white;
+        }
+    }
+}
+
+.user__box {
+    flex                 : 0 0 30%;
+    // border-right: 1px solid $border-color;
+    // max-width      : 300px;
+    // min-width      : 150px;
+    overflow             : auto;
+    height               : 80vh;
+    // background  : $light;
+    // box-shadow        : $shadow;
+}
+
+.user__item {
+    display      : flex;
+    padding      : 15px;
+    border-bottom: 1px solid $border-color;
+    align-items  : center;
+    cursor       : pointer;
+
+    &:focus,
+    &:hover {
+        background-color: #e6e6e6;
+        text-decoration : none;
+        color           : #000000;
+    }
+
+    &:last-child {
+        border: 0px;
+    }
+
+    &.active {
+        background-color: rgba($primary, 0.15);
+    }
+}
+
+.active.unread::after {
+    background: transparent;
+}
+
+.unread::after {
+    content         : "";
+    width           : 10px;
+    height          : 10px;
+    background-color: $success;
+    border-radius   : 100%;
+    margin-left     : auto;
+}
+
+.user__name {
+    color: #000000;
+}
+
+.conver__box {
+    display       : flex;
+    flex-direction: column;
+    width         : 100%;
+}
+
+.conver__header {
+    padding      : 0px 15px 15px;
+    border-bottom: 1px solid $border-color;
+}
+
+.conver__main {
+    padding      : 15px;
+    border-bottom: 1px solid $border-color;
+    overflow     : auto;
+    height       : 70vh;
+}
+
+.conver__item {
+    margin-bottom: 10px;
+}
+
+.admin {
+    text-align: right;
+
+    >.conver__list {
+        background-color: $primary;
+        color           : #ffffff;
+    }
+}
+
+.conver__list {
+    display         : inline-block;
+    padding         : 10px 15px;
+    border-radius   : 20px;
+    max-width       : 250px;
+    background-color: $light;
+}
+
+.conver__input {
+    flex-shrink: 0;
+}
+
+.conver__field {
+    width  : 100%;
+    border : none;
+    outline: none;
+    padding: 15px;
+}
+
+
+.message {
+    height: 75vh;
+
+    .message-chat {
+        position      : relative;
+        padding-bottom: 50px;
+    }
+
+    .message-video {
+        position: relative;
+        height  : 100%;
+
+        // border-radius: $radius;
+        // background: $white;
+        .message-video-top-bar {
+            position: absolute;
+            top     : 30px;
+            left    : 20px;
+            right   : 20px;
+
+            .message-video-timer {
+                background   : rgba($white, 0.65);
+                border-radius: 20px;
+                padding      : 0.3rem 0.75rem;
+            }
+
+            p {
+                margin: 0;
+                color : $white;
+            }
+
+            img {
+                background   : rgba($white, 0.65);
+                padding      : 2px;
+                border-radius: 20px;
+                width        : 100px;
+            }
+
+        }
+
+        .message-video-screen {
+            height    : 100%;
+            background: $white;
+
+        }
+
+        .message-audio-screen {
+            height    : 100%;
+            background: $dark;
+
+        }
+
+        .message-video-bottom-bar {
+            position       : absolute;
+            bottom         : 20px;
+            left           : 30px;
+            right          : 30px;
+            background     : rgba($white, 0.65);
+            border-radius  : 20px;
+            display        : flex;
+            justify-content: center;
+            align-items    : center;
+            padding        : 2rem;
+
+            i {
+                font-size    : 30px;
+                background   : $white;
+                padding      : 1rem;
+                border-radius: 15px;
+
+                &.active {
+                    background   : $primary;
+                    border-radius: 50%;
+                    color        : $white;
+                    padding      : 1.125rem;
+                }
+            }
+        }
+    }
+
+
+    .dot {
+        height          : 10px;
+        width           : 10px;
+        background-color: $success;
+        border          : 2px solid $white;
+        border-radius   : 50%;
+        display         : inline-block;
+        margin-right    : 10px;
+
+        &.active {
+            background: $danger;
+        }
+    }
+}
+
+.message-chat-sendar,
+.message-chat-receiver {
+    p {
+        max-width   : 80%;
+        // font-size: 12px;
+        // margin   : 0 auto;
+    }
+}

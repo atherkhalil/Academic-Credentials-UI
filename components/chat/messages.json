@@ -1,0 +1,134 @@
+[
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "Hi"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "How are you?"
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "Hi i am good tnx how about you?"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "I am good too, thank you for your chat template"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "Cool"
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "You are welcome"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "I am looking for your next templates"
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "Ok, thank you have a good day"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "Test which is a new approach to have all solutions"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "Test, which is a new approach to have"
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "Apollo University, Delhi, India Test"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "We work directly with our designers and suppliers, and sell direct to you, which means quality, exclusive products, at a price anyone can afford."
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "How the hell am I supposed to get a jury to believe you when I am not even sure that I do?!"
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "When you're backed against the wall, break the god damn thing down."
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "Excuses don't win championships."
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "Oh yeah, did Michael Jordan tell you that?"
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "No, I told him that."
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "What are your choices when someone puts a gun to your head?"
+  },
+  {
+    "userId": 1,
+    "sender": "user",
+    "type": "text",
+    "value": "What are you talking about? You do what they say or they shoot you."
+  },
+  {
+    "userId": 1,
+    "sender": "admin",
+    "type": "text",
+    "value": "Wrong. You take the gun, or you pull out a bigger one. Or, you call their bluff. Or, you do any one of a hundred and forty six other things."
+  },
+  {
+    "userId": 2,
+    "sender": "user",
+    "type": "text",
+    "value": "Hi"
+  },
+  {
+    "userId": 2,
+    "sender": "admin",
+    "type": "text",
+    "value": "Welcome to my world"
+  }
+]
