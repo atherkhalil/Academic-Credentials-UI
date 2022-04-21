@@ -11,7 +11,7 @@ function Signin() {
                             <div className="mini-logo text-center my-16">
                                 <Link href="/">
                                     <a>
-                                        <img src="./images/logo.png" alt="" />
+                                        <img src="./images/University_of_Sharjah_Logo.png" alt="" with="150" height="150" />
                                     </a>
                                 </Link>
                             </div>
@@ -24,7 +24,7 @@ function Signin() {
                                     <div className="text-center">
                                         <p className="mt-16 mb-0">
                                             Have account?
-                                            <Link href="/signin">
+                                            <Link href="/">
                                                 <a className="text-primary ms-5">
                                                     Sign in
                                                 </a>

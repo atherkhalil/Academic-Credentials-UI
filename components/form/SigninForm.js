@@ -20,9 +20,10 @@ function SigninForm() {
                 initialValues={initialValues}
                 validationSchema={SigninFormSchema}
                 onSubmit={(fields) => {
-                    alert(
-                        "SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4)
-                    );
+                    // alert(
+                    //     "SUCCESS!! :-)\n\n" + JSON.stringify(fields, null, 4)
+                    // );
+                    window.location.href = "/dashboard";
                 }}
             >
                 {({ errors, status, touched }) => (

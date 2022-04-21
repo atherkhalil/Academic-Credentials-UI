@@ -7,38 +7,43 @@ function Sidebar() {
         {
             icon: "ri-grid-fill",
             name: "Dashboard",
-            path: "",
+            path: "dashboard",
         },
         {
-            icon: "ri-stack-fill",
-            name: "Courses",
-            path: "courses",
-        },
-        {
-            icon: "ri-wallet-3-fill",
-            name: "Wallet",
-            path: "wallet",
-        },
-        {
-            icon: "ri-hand-coin-fill",
-            name: "Withdraw",
-            path: "withdraw",
-        },
-        {
-            icon: "ri-message-3-fill",
-            name: "Chat",
-            path: "chat",
-        },
-        {
-            icon: "ri-upload-cloud-2-fill",
-            name: "Upload",
-            path: "upload",
+            icon: "ri-user-fill",
+            name: "Profile",
+            path: "profile",
         },
         {
             icon: "ri-empathize-fill",
-            name: "Board",
-            path: "leader-board",
-        }
+            name: "Accredited Institutes",
+            path: "accredited-institutes",
+        },
+        {
+            icon: "ri-hand-coin-fill",
+            name: "Credentials",
+            path: "credentials",
+        },
+        {
+            icon: "ri-upload-cloud-2-fill",
+            name: "Equivalency",
+            path: "equivalency",
+        },
+        // {
+        //     icon: "ri-message-3-fill",
+        //     name: "Chat",
+        //     path: "chat",
+        // },
+        // {
+        //     icon: "ri-upload-cloud-2-fill",
+        //     name: "Upload",
+        //     path: "upload",
+        // },
+        // {
+        //     icon: "ri-empathize-fill",
+        //     name: "Board",
+        //     path: "leader-board",
+        // }
     ];
 
     return (
@@ -52,7 +57,7 @@ function Sidebar() {
                     </Link> */}
                     <Link href="/">
                         <a className="mini-logo">
-                            <img src="./images/logoi.png" alt="" width="30" />
+                            <img src="./images/University_of_Sharjah_Logo.png" alt="" width="100%" />
                         </a>
                     </Link>
                 </div>

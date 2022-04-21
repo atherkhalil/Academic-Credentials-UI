@@ -8,7 +8,7 @@ function Profile() {
             <Layout
                 headTitle="Profile"
                 pageTitle="Profile"
-                pageTitleSub={"Welcome to Edunet Profile page"}
+                pageTitleSub={"Welcome to Profile page"}
                 pageClass={"dashboard"}
                 parent={"Home"}
                 child={"Profile"}

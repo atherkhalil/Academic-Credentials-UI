@@ -15,7 +15,7 @@ function Header() {
                                         <Link href="/">
                                             <a className="mini-logo">
                                                 <img
-                                                    src="./images/logoi.png"
+                                                    src="./images/University_of_Sharjah_Logo.png"
                                                     alt=""
                                                     width="40"
                                                 />
