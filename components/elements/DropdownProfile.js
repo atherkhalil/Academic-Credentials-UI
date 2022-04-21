@@ -24,7 +24,7 @@ function DropdownProfile() {
         {
             icon: "ri-logout-circle-line",
             text: "Logout",
-            path: "signin",
+            path: "",
             color: "text-danger",
         },
     ];
