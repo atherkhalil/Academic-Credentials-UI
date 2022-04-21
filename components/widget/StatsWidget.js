@@ -4,42 +4,29 @@ function StatsWidget() {
     const statsWidgetItem = [
         {
             icon: "ri-team-line",
-            title: "Total Students",
+            title: "Total Institutes",
             amount: 5220,
             color: "text-primary bg-primary-lighten",
             progress: "primary",
-            free: "4240 students ",
-            paid: "980 Students",
             value: 75,
             colorWidget:"color-widget"
         },
         {
             icon: "ri-add-circle-line",
-            title: "New Students",
+            title: "New Institutes",
             amount: 1032,
             color: "text-warning bg-warning-lighten",
             progress: "warning",
-            free: "909 students",
-            paid: "123 students",
             value: 80,
         },
         {
             icon: "ri-stack-line",
-            title: "Total Courses",
+            title: "Total Credentials",
             amount: 109,
             color: "text-danger bg-danger-lighten",
             progress: "danger",
-            free: "83 courses",
-            paid: "26 courses",
             value: 65,
-        },
-        // {
-        //     icon: "ri-coins-line",
-        //     title: "Total Earnings",
-        //     amount: 236,
-        //     color: "text-info bg-info-lighten",
-        //     progress: "info"
-        // },
+        }
     ];
 
     return (
@@ -59,11 +46,6 @@ function StatsWidget() {
                                     <h3 className="mb-0">{item.amount}</h3>
                                 </div>
                             </div>
-                            {/* <h2 className="mb-0">{item.amount}</h2> */}
-                            <p className="mb-7">
-                                <strong>Free: {item.free}</strong>
-                                </p>
-                            <p><strong>Paid: {item.paid}</strong></p>
                             <Progress
                                 color={item.progress}
                                 value={item.value}

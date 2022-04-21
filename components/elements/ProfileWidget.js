@@ -24,8 +24,8 @@ function ProfileWidget() {
         },
         {
             icon: "ri-stack-line",
-            title: "My Course",
-            text: "90 Courses",
+            title: "Institutes",
+            text: "3 Institutes",
             bgColor:"danger",
             textColor:"danger"
         },

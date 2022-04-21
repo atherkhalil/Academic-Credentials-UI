@@ -18,7 +18,7 @@ function Home({ earningHistory, totalSales }) {
             <Layout
                 headTitle="Dashboard"
                 pageTitle="Dashboard"
-                pageTitleSub={"Welcome to Edunet Dashboard"}
+                pageTitleSub={"Ministry of Education Dashboard"}
                 pageClass={"dashboard"}
                 parent={"Home"}
                 child={"Dashboard"}
