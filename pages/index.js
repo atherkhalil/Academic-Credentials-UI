@@ -1,5 +1,6 @@
 import Link from "next/link";
 import SigninForm from "../components/form/SigninForm";
+import Animatehoc from "../shared/HocWappers/AnimateHoc.js";
 
 function Signin() {
     return (
@@ -50,4 +51,4 @@ function Signin() {
         </>
     );
 }
-export default Signin;
+export default Animatehoc(Signin);
