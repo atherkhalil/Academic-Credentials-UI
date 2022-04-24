@@ -9,12 +9,15 @@
         "sass": "node-sass --watch public/scss/style.scss public/css/style.css --source-map public/css/style.css.map"
     },
     "dependencies": {
+        "@apollo/client": "^3.5.10",
         "bootstrap": "^5.0.1",
         "chart.js": "^2.9.4",
         "formik": "^2.2.9",
+        "graphql": "^16.3.0",
         "next": "10.0.9",
         "node-sass": "^5.0.0",
         "react": "17.0.2",
+        "react-animated-css": "^1.2.1",
         "react-avatar": "^3.10.0",
         "react-chartjs-2": "^2.11.2",
         "react-circular-progressbar": "^2.0.4",

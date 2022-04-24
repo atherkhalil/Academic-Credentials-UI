@@ -1,5 +1,5 @@
 .sidebar {
-    background      : darken($grey,5%);
+    background      : darken($sidebar-color,5%);
     position        : fixed;
     left            : 0px;
     height          : calc(100%-20px);

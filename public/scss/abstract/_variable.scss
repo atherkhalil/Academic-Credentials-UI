@@ -8,7 +8,6 @@ $danger   : #f1416c !default;
 $light    : #f5f8fa !default;
 $dark     : #181c32;
 $purple   : #5848BB;
-$grey    : #323232 !default;
 
 // Body
 $body-bg   : #FBF9F6;
@@ -46,4 +45,5 @@ $radius    : $border-radius;
 $shadow    : 0 0 20px 0 rgba(76, 87, 125, 0.02);
 $shadow-sm : 0 0 20px 0 rgba(76, 87, 125, 0.02);
 $shadow-lg : 0 1rem 3rem rgba(35, 38, 45, 0.275);
-$sidebar-width : 80px;
+$sidebar-width : 240px;
+$sidebar-color: #C7CFFF;
