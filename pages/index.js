@@ -22,27 +22,15 @@ function Signin() {
                                 </div>
                                 <div className="card-body">
                                     <SigninForm />
-                                    <p className="mt-16 mb-0">
+                                    {/* <p className="mt-16 mb-0">
                                         Don't have an account?
                                         <Link href="/signup">
                                             <a className="text-primary">
                                                 Sign up
                                             </a>
                                         </Link>
-                                    </p>
+                                    </p> */}
                                 </div>
-                            </div>
-                            <div className="privacy-link">
-                                <Link href="#">
-                                    <a>
-                                        Have an issue with 2-factor
-                                        authentication?
-                                    </a>
-                                </Link>
-                                <br />
-                                <Link href="#">
-                                    <a>Privacy Policy</a>
-                                </Link>
                             </div>
                         </div>
                     </div>

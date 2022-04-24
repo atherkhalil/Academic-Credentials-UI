@@ -1,7 +1,7 @@
 import React from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 
-const Animatedmodal = ({ toggle, setToggle, headerTitle, BodyComponent, FooterComponent }) => {
+const Modal = ({ toggle, setToggle, headerTitle, BodyComponent, FooterComponent }) => {
   return (
     <>
       <Modal isOpen={toggle} centered toggle={() => setToggle(!toggle)}>
@@ -19,4 +19,4 @@ const Animatedmodal = ({ toggle, setToggle, headerTitle, BodyComponent, FooterCo
   );
 };
 
-export default Animatedmodal;
+export default Modal;
