@@ -9,6 +9,7 @@ const Animatehoc = (WrapComponent) => {
         animationOut="bounceOutDown"
         animationInDuration={1000}
         animationOutDuration={1000}
+        className="animated-custom"
       >
         <WrapComponent />
       </Animated>

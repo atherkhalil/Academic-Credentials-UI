@@ -1,9 +1,9 @@
 import dynamic from "next/dynamic";
 import { connect } from "react-redux";
-import Layout from "../components/layout/Layout";
-import StatsWidget from "../components/widget/StatsWidget";
+import Layout from "../../components/layout/Layout";
+import StatsWidget from "../../components/widget/StatsWidget";
 
-const DataMap = dynamic(() => import("../components/elements/DataMap"), {
+const DataMap = dynamic(() => import("../../components/elements/DataMap"), {
     ssr: false,
 });
 

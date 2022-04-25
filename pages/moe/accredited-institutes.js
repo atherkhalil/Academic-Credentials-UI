@@ -1,7 +1,7 @@
 import Link from "next/link";
-import Layout from "../components/layout/Layout";
-import ProfileWidget from './../components/elements/ProfileWidget';
-import TopPerfomingWidget from "./../components/elements/TopPerformingWidget";
+import Layout from "../../components/layout/Layout";
+import ProfileWidget from '../../components/elements/ProfileWidget';
+import TopPerfomingWidget from "../../components/elements/TopPerformingWidget";
 
 function AccreditedInstitutes() {
     return (

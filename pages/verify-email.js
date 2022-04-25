@@ -7,8 +7,7 @@ function VerifyEmail() {
 
   return (
     <>
-      <div className="verification section-padding">
-        <div className="container h-100">
+        <div className="container vh-100">
           <div className="row justify-content-center h-100 align-items-center">
             <div className="col-xl-5 col-md-6">
               <div className="mini-logo text-center my-16">
@@ -42,15 +41,9 @@ function VerifyEmail() {
                   </form>
                 </div>
               </div>
-              {/* <div>
-                <Link href="/signup">
-                  <a>Email didn't arrive?</a>
-                </Link>
-              </div> */}
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 }

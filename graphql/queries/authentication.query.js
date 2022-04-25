@@ -6,6 +6,8 @@ export const GetMOEDetailsQuery = gql`
       id
       isVerified
       qrCode
+      contactEmail
+      adminEmail
     }
   }
 `;

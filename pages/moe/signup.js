@@ -65,8 +65,7 @@ function SignUp() {
 
   return (
     <>
-      <div className="authincation">
-        <div className="container h-100">
+        <div className="container vh-100">
           <div className="row justify-content-center h-100 align-items-center">
             <div className="col-xl-5 col-md-6">
               <div className="mini-logo text-center my-16">
@@ -111,7 +110,6 @@ function SignUp() {
             </div>
           </div>
         </div>
-      </div>
     </>
   );
 }
