@@ -3,21 +3,61 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { Spinner } from "reactstrap";
+import { useSnackbar } from "notistack";
+import { useMutation } from "@apollo/client";
+import * as Yup from "yup";
 import { GetMOEDetailsQuery } from "../../graphql/queries/authentication.query.js";
+import { ActivateMOEMutation } from "../../graphql/mutations/authentication.mutation.js";
 import Animatehoc from "../../shared/HocWappers/AnimateHoc.js";
+import VerifyOtpInput from "../../components/VerifyOtpInput/index.js";
+
+const initialValues = {
+    otp: ""
+};
+
+const OTPSchema = Yup.object().shape({
+    otp: Yup.string().required("OTP is required")
+});
 
 function Verify() {
     const { query } = useRouter();
     const [qrCodeState, setQrCodeState] = useState(null);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const { loading, error, data } = useQuery(GetMOEDetailsQuery, {
         variables: { moeId: query.payload },
     });
+    const [activateMOEMutation, { activateMOEMutationData, activateMOEMutationLoading, activateMOEMutationError }] = useMutation(
+        ActivateMOEMutation
+    );
 
     useEffect(() => {
         if (data) {
             setQrCodeState(data.GetMOEDetails.qrCode);
         }
     }, [data]);
+
+    const _handleOTP = (fields) => {
+        enqueueSnackbar("Successfully Verified OTP!", {
+            variant: "success",
+        });
+        activateMOEMutation({
+            variables: {
+                data: {
+                    otp: state.otp
+                },
+            },
+            onCompleted: () => {
+                router.push(`/verify-email?email=${state.adminEmail}`);
+            },
+        });
+    };
+
+    if (activateMOEMutationError) {
+        console.log("activateMOEMutationError: ", activateMOEMutationError)
+      return enqueueSnackbar("Oops! Something went wrong!", {
+        variant: "error",
+      });
+    }
 
     return (
         <>
@@ -45,23 +85,19 @@ function Verify() {
                             ) : (
                                 <div className="card">
                                     <div className="card-header justify-content-center">
-                                        <h4 className="text-primary">Please scan QR code</h4>
+                                        <h4 className="text-primary">Please scan QR code and Verify OTP</h4>
                                     </div>
                                     <div className="card-body p-0 m-0">
                                         <form className="identity-upload">
                                             <div className="identity-content">
                                                 <img src={qrCodeState} width="280px" height="auto" />
                                             </div>
-                                            <div className="row p-4 m-4">
-                                                <div className="col-12">
-                                                    <div class="input-group mb-3">
-                                                        <input type="text" class="form-control" placeholder="Enter OTP" aria-label="Enter OTP" aria-describedby="basic-addon2" />
-                                                        <div class="input-group-append">
-                                                            <button class="btn btn-primary" style={{ height: "100%", borderRadius: "0px 5px 5px 0px"}} type="button">Verify</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                            <VerifyOtpInput
+                                                initialValues={initialValues}
+                                                OTPSchema={OTPSchema}
+                                                _handleOTP={_handleOTP}
+                                                loading={activateMOEMutationLoading}
+                                            />
                                         </form>
                                     </div>
                                 </div>
