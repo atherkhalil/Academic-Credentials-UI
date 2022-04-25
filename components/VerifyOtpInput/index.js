@@ -1,30 +1,21 @@
+import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import PhoneNumber from "../general/PhoneNumber.js";
 import { Spinner } from "reactstrap";
 
-function MoeSignupForm({
-  //   initialValues,
-  //   SignupFormSchema,
-  //   handleSubmit,
-  //   loading,
-
-  initialValues,
-  OTPSchema,
-  _handleOTP,
-  loading
-}) {
+const VerifyOtpInput = ({ initialValues, OTPSchema, _handleOTP, loading }) => {
   return (
-    <>
-      <Formik
-        initialValues={initialValues}
-        validationSchema={OTPSchema}
-        onSubmit={(fields) => _handleOTP(fields)}
-      >
-        {({ errors, status, touched }) => (
-          <Form>
-            <div className="row">
-              <div className="col-12 mb-16">
-                <label className="form-label">OTP</label>
+    <Formik
+      initialValues={initialValues}
+      validationSchema={OTPSchema}
+      onSubmit={(fields) => {
+        _handleOTP(fields);
+      }}
+    >
+      {({ errors, status, touched }) => (
+        <Form>
+          <div className="row p-4 m-4">
+            <div className="col-12">
+              <div class="input-group mb-3">
                 <Field
                   name="otp"
                   type="text"
@@ -33,24 +24,22 @@ function MoeSignupForm({
                     (errors.otp && touched.otp ? " is-invalid" : "")
                   }
                 />
-                <ErrorMessage
-                  name="otp"
-                  component="div"
-                  className="invalid-feedback"
-                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-primary"
+                    style={{ height: "100%", borderRadius: "0px 5px 5px 0px" }}
+                    type="submit"
+                  >
+                    {loading ? <Spinner children=""></Spinner> : "Verify"}
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div className="mt-16 d-grid gap-2">
-              <button type="submit" className="btn btn-primary mr-2">
-                {loading ? <Spinner children=""></Spinner> : "Sign in"}
-              </button>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+          </div>
+        </Form>
+      )}
+    </Formik>
   );
-}
+};
 
-export default MoeSignupForm;
+export default VerifyOtpInput;
