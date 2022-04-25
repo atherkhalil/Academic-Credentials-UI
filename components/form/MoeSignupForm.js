@@ -82,6 +82,7 @@ function MoeSignupForm({
                     "form-control" +
                     (errors.telephone && touched.telephone ? " is-invalid" : "")
                   }
+                  format={"+97# ## ### ####"}
                 />
 
                 <ErrorMessage

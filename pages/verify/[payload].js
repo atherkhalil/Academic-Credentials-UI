@@ -1,28 +1,30 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
+import MoeSignupForm from "../../components/form/MoeSignupForm";
+import * as Yup from "yup";
+import Animatehoc from "../../shared/HocWappers/AnimateHoc.js";
+import { useMutation } from "@apollo/client";
+import { MoeOnBoardingMutation } from "../../graphql/mutations/authentication.mutation.js";
+import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
 import { Spinner } from "reactstrap";
-import { useSnackbar } from "notistack";
-import { useMutation } from "@apollo/client";
-import * as Yup from "yup";
 import { GetMOEDetailsQuery } from "../../graphql/queries/authentication.query.js";
 import { ActivateMOEMutation } from "../../graphql/mutations/authentication.mutation.js";
-import Animatehoc from "../../shared/HocWappers/AnimateHoc.js";
-import VerifyOtpInput from "../../components/VerifyOtpInput/index.js";
+import VerifyOtpInput from "../../components/VerifyOtpInput";
 
 const initialValues = {
     otp: ""
 };
 
-const OTPSchema = Yup.object().shape({
+const SignupFormSchema = Yup.object().shape({
     otp: Yup.string().required("OTP is required")
 });
 
-function Verify() {
-    const { query } = useRouter();
-    const [qrCodeState, setQrCodeState] = useState(null);
+function SignUp() {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+    const { query, push } = useRouter();
+    const [qrCodeState, setQrCodeState] = useState(null);
     const { loading, error, data } = useQuery(GetMOEDetailsQuery, {
         variables: { moeId: query.payload },
     });
@@ -36,27 +38,35 @@ function Verify() {
         }
     }, [data]);
 
-    const _handleOTP = (fields) => {
-        enqueueSnackbar("Successfully Verified OTP!", {
-            variant: "success",
-        });
+    const _handleSubmit = (state) => {
+        console.log("state: ", state)
         activateMOEMutation({
             variables: {
-                data: {
-                    otp: state.otp
-                },
+                opt: state.otp,
+                moeId: query.payload
             },
             onCompleted: () => {
-                router.push(`/verify-email?email=${state.adminEmail}`);
+                enqueueSnackbar("OTP verified successfully!", {
+                    variant: "success",
+                });
+                setTimeout(() => {
+                    push(`/`);
+                }, 500)
             },
+            onError: (errors) => {
+                console.log("errors: ", errors.message)
+                enqueueSnackbar(errors.message, {
+                    variant: "error",
+                });
+            }
         });
     };
 
     if (activateMOEMutationError) {
         console.log("activateMOEMutationError: ", activateMOEMutationError)
-      return enqueueSnackbar("Oops! Something went wrong!", {
-        variant: "error",
-      });
+        return enqueueSnackbar("Oops! Something went wrong!", {
+            variant: "error",
+        });
     }
 
     return (
@@ -88,17 +98,17 @@ function Verify() {
                                         <h4 className="text-primary">Please scan QR code and Verify OTP</h4>
                                     </div>
                                     <div className="card-body p-0 m-0">
-                                        <form className="identity-upload">
+                                        <div className="identity-upload">
                                             <div className="identity-content">
                                                 <img src={qrCodeState} width="280px" height="auto" />
                                             </div>
                                             <VerifyOtpInput
                                                 initialValues={initialValues}
-                                                OTPSchema={OTPSchema}
-                                                _handleOTP={_handleOTP}
-                                                loading={activateMOEMutationLoading}
+                                                SignupFormSchema={SignupFormSchema}
+                                                handleSubmit={_handleSubmit}
+                                                loading={loading}
                                             />
-                                        </form>
+                                        </div>
                                     </div>
                                 </div>
                             )}
@@ -109,4 +119,4 @@ function Verify() {
         </>
     );
 }
-export default Animatehoc(Verify);
+export default Animatehoc(SignUp);
