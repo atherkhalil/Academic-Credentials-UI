@@ -49,7 +49,7 @@ function Sidebar({ userContext }) {
         </div>
         <div className="menu">
           <ul>
-            {mainNavLink[userContext].map((item, id) => (
+            {mainNavLink[userContext || "MOE"].map((item, id) => (
               <>
                 <li
                   className={
