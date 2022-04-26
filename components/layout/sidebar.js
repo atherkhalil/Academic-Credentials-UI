@@ -31,6 +31,33 @@ function Sidebar({ userContext }) {
         path: "moe/equivalency",
       },
     ],
+    ISSUER: [
+      {
+        icon: "ri-grid-fill",
+        name: "Dashboard",
+        path: "issuer/dashboard",
+      },
+      {
+        icon: "ri-user-fill",
+        name: "Profile",
+        path: "issuer/profile",
+      },
+      {
+        icon: "ri-empathize-fill",
+        name: "Accredited Institutes",
+        path: "issuer/accredited-institutes",
+      },
+      {
+        icon: "ri-hand-coin-fill",
+        name: "Credentials",
+        path: "issuer/credentials",
+      },
+      {
+        icon: "ri-upload-cloud-2-fill",
+        name: "Equivalency",
+        path: "issuer/equivalency",
+      },
+    ],
   };
 
   return (

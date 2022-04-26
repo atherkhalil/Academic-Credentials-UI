@@ -1,40 +1,20 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import Link from "next/link";
-import * as Yup from "yup";
-import { useSnackbar } from "notistack";
-import { useRouter } from "next/router";
+import { Spinner } from "reactstrap";
 
-const initialValues = {
-  email: "",
-  password: "",
-};
-
-const SigninFormSchema = Yup.object().shape({
-  email: Yup.string().email("Email is invalid").required("Email is required"),
-  password: Yup.string()
-    .min(6, "Password must be at least 6 characters")
-    .required("Password is required"),
-});
-
-function SigninForm() {
-  const router = useRouter();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-  const _handleSignIn = (fields) => {
-    enqueueSnackbar("Successfully Logged In!", {
-      variant: "success",
-    });
-    console.log("Submitting ....: ", fields);
-    router.push("/dashboard");
-  };
-
+function SigninForm({
+  initialValues,
+  SigninFormSchema,
+  handleSubmit,
+  loading
+}) {
   return (
     <>
       <Formik
         initialValues={initialValues}
         validationSchema={SigninFormSchema}
         onSubmit={(fields) => {
-          _handleSignIn(fields);
+          handleSubmit(fields);
         }}
       >
         {({ errors, status, touched }) => (
@@ -61,7 +41,7 @@ function SigninForm() {
                 <label className="form-label">Password</label>
                 <Field
                   name="password"
-                  type="text"
+                  type="password"
                   className={
                     "form-control" +
                     (errors.password && touched.password ? " is-invalid" : "")
@@ -92,7 +72,7 @@ function SigninForm() {
 
             <div className="mt-16 d-grid gap-2">
               <button type="submit" className="btn btn-primary mr-2">
-                Sign In
+                {loading ? <Spinner children=""></Spinner> : "Sign In"}
               </button>
             </div>
           </Form>

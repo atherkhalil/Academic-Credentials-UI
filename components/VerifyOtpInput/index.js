@@ -17,7 +17,7 @@ function MoeSignupForm({
       >
         {({ errors, status, touched }) => (
           <Form>
-            <div className="row">
+            <div className="row px-12">
               <div className="col-12 mb-16">
                 <label className="form-label">Enter OTP</label>
 

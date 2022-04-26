@@ -11,3 +11,14 @@ export const GetMOEDetailsQuery = gql`
     }
   }
 `;
+
+export const GetIssuerDetail = gql`
+  query GetIssuerDetail($issuerId: ID!) {
+    GetIssuerDetail(issuerId: $issuerId) {
+      id
+      isVerified
+      qrCode
+      adminEmail
+    }
+  }
+`;

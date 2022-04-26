@@ -1,2 +1,6 @@
 // Global
 export const SET_USER_CONTEXT = "SET_USER_CONTEXT";
+export const TOGGLE_VERIFY_MODAL = "TOGGLE_VERIFY_MODAL";
+
+// User
+export const SET_CURRENT_CONTEXT = "SET_CURRENT_CONTEXT";

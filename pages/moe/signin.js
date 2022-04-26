@@ -8,48 +8,87 @@ import { MOELoginMutation } from "../../graphql/mutations/authentication.mutatio
 import { Spinner } from "reactstrap";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
-import { SetUserContext } from "../../redux/actions/global.action.js";
+import { SetCurrentUser } from "../../redux/actions/user.action.js";
+import { SetUserContext, ToggleVerifyModal } from "../../redux/actions/global.action.js";
+import { ActivateMOEMutation } from "../../graphql/mutations/authentication.mutation.js";
+import VerifyOtpModal from "../../components/VerifyOtpModal/VerifyOtpModal.js";
 
 const initialValues = {
   adminEmail: "",
-  password: ""
+  password: "",
 };
 
 const SignupFormSchema = Yup.object().shape({
   adminEmail: Yup.string()
     .email("Email is invalid")
     .required("Email is required"),
-  password: Yup.string()
-    .required("Password is required")
+  password: Yup.string().required("Password is required"),
 });
 
 function SignUp() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
   const dispatch = useDispatch();
-  const [moeLoginMutation, { data, loading, error }] = useMutation(
-    MOELoginMutation
-  );
+  const showVerifyModal = useSelector((state) => state.Global.showVerifyModal);
+  const currentUserDetials = useSelector((state) => state?.User);
+  const [moeLoginMutation, { data, loading, error }] =
+    useMutation(MOELoginMutation);
+  const [
+    activateMOEMutation,
+    {
+      activateMOEMutationData,
+      activateMOEMutationLoading,
+      activateMOEMutationError,
+    },
+  ] = useMutation(ActivateMOEMutation);
 
   const _handleSubmit = (state) => {
     moeLoginMutation({
       variables: {
         email: state.adminEmail,
-        password: state.password
+        password: state.password,
       },
       onCompleted: (res) => {
-        console.log("moeLoginMutation res: ", res)
-        enqueueSnackbar("OTP verified successfully!", {
+        console.log("moeLoginMutation res: ", res);
+        enqueueSnackbar("Successfully sign in!", {
           variant: "success",
         });
 
+        // Setting & dispatching token
         const token = res.MOELogin.token;
+        localStorage.setItem("certmate_token", token);
         var decodedToken = jwt_decode(token);
         dispatch(SetUserContext(decodedToken.currentLogin));
+        dispatch(SetCurrentUser(decodedToken));
+        _handleToggleOtpVerificationModal();
+      },
+    });
+  };
 
-        router.push(`/moe/dashboard`);
+  const _handleOtpVerification = (otp) => {
+    activateMOEMutation({
+      variables: {
+        opt: otp,
+        moeId: currentUserDetials.currentuser.user._id,
+      },
+      onCompleted: (res) => {
+        console.log("activateMOEMutation res: ", res);
+        enqueueSnackbar("OTP verified successfully!", {
+          variant: "success",
+        });
+        const token = res.ActivateMOE;
+        setTimeout(() => {
+          localStorage.setItem("certmate_token", token);
+          router.push(`/moe/dashboard`);
+        }, 500);
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
       },
     });
   };
@@ -60,8 +99,20 @@ function SignUp() {
     });
   }
 
+  const _handleToggleOtpVerificationModal = () => {
+    dispatch(ToggleVerifyModal(!showVerifyModal));
+  };
+
   return (
     <>
+      {showVerifyModal && (
+        <VerifyOtpModal
+          toggle={showVerifyModal}
+          setToggle={_handleToggleOtpVerificationModal}
+          _handleOtpVerification={_handleOtpVerification}
+        />
+      )}
+
       <div className="container vh-100">
         <div className="row justify-content-center h-100 align-items-center">
           <div className="col-xl-5 col-md-6">

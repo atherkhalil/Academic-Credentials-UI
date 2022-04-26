@@ -32,7 +32,39 @@ mutation MOELogin($password: String!, $email: String!) {
 
 // ===== Issuer ======
 export const IssuerOnBoardingMutation = gql`
-    mutation IssuerOnBoarding($data: IssuerOnBoarding) {
-        IssuerOnBoarding(data: $data)
+mutation IssuerOnBoarding($data: IssuerOnBoarding) {
+    IssuerOnBoarding(data: $data)
+}
+`;
+
+export const ApprovedIssuer = gql`
+mutation ApprovedIssuer($issuerId: ID!, $approved: Boolean!) {
+    ApprovedIssuer(issuerId: $issuerId, approved: $approved)
+}
+`;
+
+export const ActivateIssuerMutation = gql`
+mutation ActivateIssuer($otp: String!, $issuerId: String!) {
+    ActivateIssuer(otp: $otp, issuerId: $issuerId)
+}
+`;
+
+export const ActivateIssuer = gql`
+mutation ActivateIssuer($otp: String!, $issuerId: String!) {
+    ActivateIssuer(otp: $otp, issuerId: $issuerId)
+}
+`;
+
+export const SetIssuerPassword = gql`
+mutation SetIssuerPassword($password: String!, $confirmPassword: String!) {
+    SetIssuerPassword(password: $password, confirmPassword: $confirmPassword)
+}
+`;
+
+export const IssuerLogin = gql`
+    mutation IssuerLogin($email: String!, $password: String!) {
+        IssuerLogin(email: $email, password: $password) {
+            token
+        }
     }
 `;

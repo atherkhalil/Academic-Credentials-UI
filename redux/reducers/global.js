@@ -1,7 +1,8 @@
-import { SET_USER_CONTEXT } from '../type';
+import { SET_USER_CONTEXT, TOGGLE_VERIFY_MODAL } from '../type';
 
 const initialState = {
-    userContext: ""
+    userContext: "",
+    showVerifyModal: false
 };
 
 const Global = (state = initialState, action) => {
@@ -11,6 +12,12 @@ const Global = (state = initialState, action) => {
             return {
                 ...state,
                 userContext: action.payload
+            };
+
+        case TOGGLE_VERIFY_MODAL:
+            return {
+                ...state,
+                showVerifyModal: action.payload
             };
 
         default:
