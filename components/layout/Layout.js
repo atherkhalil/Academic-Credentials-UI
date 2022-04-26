@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import Header from "./Header";
 import PageHead from "./PageHead";
 import PageTitle from "./PageTitle";
@@ -14,15 +15,19 @@ const Layout = ({
     child,
 }) => {
     const [height, setHeight] = useState();
+    const userContext = useSelector(state => state.Global.userContext)
+
     useEffect(() => {
         setHeight(window.screen.height);
     }, []);
+
+
     return (
         <>
             <PageHead headTitle={headTitle} />
             <div id="main-wrapper" className={pageClass}>
                 <Header />
-                <Sidebar />
+                <Sidebar userContext={userContext} />
 
                 <div className="content-body" style={{ minHeight: height - 122 }}>
                     <div className="container">

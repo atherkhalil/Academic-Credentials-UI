@@ -2,6 +2,7 @@ import Link from "next/link";
 import { DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 import DropdownNotification from "./../elements/DropdownNotification";
 import DropdownProfile from "./../elements/DropdownProfile";
+
 function Header() {
     return (
         <>

@@ -46,11 +46,6 @@ function SignUp() {
         password: state.password,
         confirmPassword: state.confirmPassword,
       },
-      fetchOptions: {
-        headers: {
-          "Authorization": query.token,
-        },
-      },
       onCompleted: () => {
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",

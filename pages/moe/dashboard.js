@@ -1,13 +1,13 @@
 import dynamic from "next/dynamic";
-import { connect } from "react-redux";
 import Layout from "../../components/layout/Layout";
 import StatsWidget from "../../components/widget/StatsWidget";
+import { useDispatch } from "react-redux";
 
 const DataMap = dynamic(() => import("../../components/elements/DataMap"), {
     ssr: false,
 });
 
-function Home({ earningHistory, totalSales }) {
+function Home() {
     return (
         <>
             <Layout
@@ -26,8 +26,4 @@ function Home({ earningHistory, totalSales }) {
     );
 }
 
-const mapStateToProps = (state) => ({
-    earningHistory: state.EarningHistory.expenses,
-    totalSales: state.TotalSales.statistics,
-});
-export default connect(mapStateToProps, {})(Home);
+export default Home;

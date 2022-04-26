@@ -8,6 +8,9 @@ import { MOELoginMutation } from "../../graphql/mutations/authentication.mutatio
 import { Spinner } from "reactstrap";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import jwt_decode from "jwt-decode";
+import { SetUserContext } from "../../redux/actions/global.action.js";
 
 const initialValues = {
   adminEmail: "",
@@ -25,6 +28,7 @@ const SignupFormSchema = Yup.object().shape({
 function SignUp() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
+  const dispatch = useDispatch();
   const [moeLoginMutation, { data, loading, error }] = useMutation(
     MOELoginMutation
   );
@@ -40,6 +44,11 @@ function SignUp() {
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",
         });
+
+        const token = res.MOELogin.token;
+        var decodedToken = jwt_decode(token);
+        dispatch(SetUserContext(decodedToken.currentLogin));
+
         router.push(`/moe/dashboard`);
       },
     });

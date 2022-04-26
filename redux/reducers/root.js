@@ -1,9 +1,7 @@
 import { combineReducers } from 'redux';
-import EarningHistory from './earningHistory';
-import TotalSales from './totalSales';
+import Global from './global';
 
 
 export default combineReducers({
-    EarningHistory,
-    TotalSales
+    Global
 });

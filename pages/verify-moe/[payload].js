@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import MoeSignupForm from "../../components/form/MoeSignupForm";
 import * as Yup from "yup";
 import Animatehoc from "../../shared/HocWappers/AnimateHoc.js";
 import { useMutation } from "@apollo/client";
-import { MoeOnBoardingMutation } from "../../graphql/mutations/authentication.mutation.js";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import { useQuery } from "@apollo/client";
@@ -44,19 +42,20 @@ function SignUp() {
   }, [data]);
 
   const _handleSubmit = (state) => {
-    console.log("state: ", state);
     activateMOEMutation({
       variables: {
         opt: state.otp,
         moeId: query.payload,
       },
       onCompleted: (res) => {
-        console.log("activateMOEMutation res: ", res)
+        console.log("activateMOEMutation res: ", res);
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",
         });
+        const token = res.ActivateMOE;
         setTimeout(() => {
-          push(`/moe/set-password?email=${data.GetMOEDetails.adminEmail}?token=${res.ActivateMOE}`);
+          localStorage.setItem("certmate_token", token);
+          push(`/moe/set-password?email=${data.GetMOEDetails.adminEmail}`);
         }, 500);
       },
       onError: (errors) => {
