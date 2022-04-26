@@ -6,11 +6,14 @@ import SelectUserTypeCard from "../components/general/SelectUserTypeCard.js";
 
 const userTypeList = [
   {
+    key: "issuer",
     text: "ISSUER",
     icon: "ri-government-line",
     isSelectedIndex: 0,
+    signupLink: "/issuer/signup",
   },
   {
+    key: "student",
     text: "STUDENT",
     icon: "ri-shield-user-line",
     isSelectedIndex: 1,
@@ -47,18 +50,27 @@ function Signin() {
               <div className="card-body">
                 <div className="row justify-content-around">
                   {userTypeList.map((item, index) => (
-
-                      <SelectUserTypeCard
-                        text={item.text}
-                        icon={item.icon}
-                        isSelected={isSelected == item.isSelectedIndex}
-                        itemSelectedIndex={item.isSelectedIndex}
-                        _hanldeSelectedUserType={_hanldeSelectedUserType}
-                      />
+                    <SelectUserTypeCard
+                      text={item.text}
+                      icon={item.icon}
+                      isSelected={isSelected == item.isSelectedIndex}
+                      itemSelectedIndex={item.isSelectedIndex}
+                      _hanldeSelectedUserType={_hanldeSelectedUserType}
+                    />
                   ))}
                 </div>
 
                 <SigninForm />
+
+                {/* For Issuer only */}
+                {isSelected == 0 && (
+                  <p className="mt-16 mb-0">
+                    Don't have an account?
+                    <Link href={userTypeList[0].signupLink}>
+                      <a className="text-primary ml-2">Sign up</a>
+                    </Link>
+                  </p>
+                )}
               </div>
             </div>
           </div>
