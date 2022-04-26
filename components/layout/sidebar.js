@@ -29,35 +29,15 @@ function Sidebar() {
             name: "Equivalency",
             path: "equivalency",
         },
-        // {
-        //     icon: "ri-message-3-fill",
-        //     name: "Chat",
-        //     path: "chat",
-        // },
-        // {
-        //     icon: "ri-upload-cloud-2-fill",
-        //     name: "Upload",
-        //     path: "upload",
-        // },
-        // {
-        //     icon: "ri-empathize-fill",
-        //     name: "Board",
-        //     path: "leader-board",
-        // }
     ];
 
     return (
         <>
             <div className="sidebar">
                 <div className="brand-logo text-center">
-                    {/* <Link href="/">
-                        <a className="full-logo">
-                            <img src="./images/logoi.png" alt="" width="50" />
-                        </a>
-                    </Link> */}
                     <Link href="/">
                         <a className="mini-logo">
-                            <img src="./images/University_of_Sharjah_Logo.png" alt="" width="100%" />
+                            <img src="../images/University_of_Sharjah_Logo.png" alt="" width="100%" />
                         </a>
                     </Link>
                 </div>

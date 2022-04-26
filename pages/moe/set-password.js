@@ -23,7 +23,6 @@ const SetPassswordSchema = Yup.object().shape({
   confirmPassword: Yup.string()
     .required("Please retype your password.")
     .oneOf([Yup.ref("password")], "Your passwords do not match."),
-  email: Yup.string().email("Email is invalid").required("Email is required"),
 });
 
 function SignUp() {
@@ -41,14 +40,15 @@ function SignUp() {
   }, [query]);
 
   const _handleSubmit = (state) => {
-      console.log("state: ", state)
+    console.log("state: ", state);
     setMoePasswordMutation({
       variables: {
-        data: {
-          password: state.password,
-          confirmPassword: state.confirmPassword,
-          email: emailstate,
-          // moeLoginPassword2: state.moeLoginPassword2,
+        password: state.password,
+        confirmPassword: state.confirmPassword,
+      },
+      fetchOptions: {
+        headers: {
+          "Authorization": query.token,
         },
       },
       onCompleted: () => {

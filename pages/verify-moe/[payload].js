@@ -50,12 +50,13 @@ function SignUp() {
         opt: state.otp,
         moeId: query.payload,
       },
-      onCompleted: () => {
+      onCompleted: (res) => {
+        console.log("activateMOEMutation res: ", res)
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",
         });
         setTimeout(() => {
-          push(`/moe/set-password?email=${data.GetMOEDetails.adminEmail}`);
+          push(`/moe/set-password?email=${data.GetMOEDetails.adminEmail}?token=${res.ActivateMOE}`);
         }, 500);
       },
       onError: (errors) => {

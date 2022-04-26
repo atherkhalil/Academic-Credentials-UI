@@ -16,13 +16,13 @@ class MyDocument extends Document {
           />
         </Head>
         <body
-          style={{
-            backgroundImage:
-              "url(../images/background-texture.png)",
-            backgroundRepeat: "no-repeat, no-repeat",
-            backgroundSize: "2184px 996px, 100% 100%",
-            backgroundPosition: "center top, center top",
-          }}
+          // style={{
+          //   backgroundImage:
+          //     "url(../images/background-texture.png)",
+          //   backgroundRepeat: "no-repeat, no-repeat",
+          //   backgroundSize: "2184px 996px, 100% 100%",
+          //   backgroundPosition: "center top, center top",
+          // }}
         >
           <Main />
           <NextScript />
