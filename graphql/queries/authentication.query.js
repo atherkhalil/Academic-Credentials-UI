@@ -12,6 +12,34 @@ export const GetMOEDetailsQuery = gql`
   }
 `;
 
+export const GetAllMOEDetailsQuery = gql`
+  query GetMOEDetails($moeId: String) {
+    GetMOEDetails(moeId: $moeId) {
+      id
+      name
+      adminEmail
+      telephone
+      publicKey
+      contactEmail
+      logoUrl
+      siteUrl
+      isVerified
+      createdAt
+      updatedAt
+      signature {
+        imageUrl
+        uploadDate
+      }
+      secret {
+        ascii
+        hex
+        base32
+        otpauth_url
+      }
+    }
+  }
+`;
+
 export const GetIssuerDetail = gql`
   query GetIssuerDetail($issuerId: ID!) {
     GetIssuerDetail(issuerId: $issuerId) {

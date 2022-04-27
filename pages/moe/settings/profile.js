@@ -1,33 +1,68 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import * as Yup from "yup";
 import Layout from "../../../components/layout/Layout";
 import SettingsMenu from "../../../components/layout/SettingsMenu";
 import { Step1, Step2, Step3 } from "../../../components/MoeProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
-import { GetMOEDetailsQuery } from "../../../graphql/queries/authentication.query.js";
+import { GetAllMOEDetailsQuery } from "../../../graphql/queries/authentication.query.js";
 import { useQuery } from "@apollo/client";
+import { useSnackbar } from "notistack";
+
+const initialValues = {
+  adminEmail: "",
+  contactEmail: "",
+  createdAt: "",
+  id: "",
+  isVerified: "",
+  logoUrl: "",
+  name: "",
+  publicKey: "",
+  secret: "",
+  signature: "",
+  siteUrl: "",
+  telephone: "",
+  updatedAt: "",
+};
+
+const ProfileSchema = Yup.object().shape({
+  name: Yup.string().required("Full is required"),
+  telephone: Yup.string().required("Full is required"),
+  contactEmail: Yup.string().required("Full is required"),
+  siteUrl: Yup.string().required("Full is required"),
+});
 
 function SettingsProfile() {
   const [currentViewStep, setCurrentViewStep] = useState(0);
   const currentuser = useSelector((state) => state.User.currentuser);
-//   const { loading, error, data } = useQuery(GetMOEDetailsQuery, {
-//     variables: { moeId: currentuser.currentuser.User._id },
-//   });
+  const [currentUserData, setCurrentUserData] = useState(initialValues);
+  const { loading, error, data } = useQuery(GetAllMOEDetailsQuery, {
+    variables: { moeId: currentuser.user._id },
+  });
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
-    console.log("currentuser: ", currentuser)
-  }, []);
+    if (data) {
+      setCurrentUserData(data.GetMOEDetails);
+    }
+  }, [data]);
 
-//   useEffect(() => {
-//       if (data) {
-//           console.log("data: ", data)
-//       }
-//   }, [data]);
+  const _handleSubmit = (state) => {
+    enqueueSnackbar("Successfully updated!", {
+      variant: "success",
+    });
+  } 
 
   const _getCurrentStep = () => {
     switch (currentViewStep) {
       case 0:
-        return <Step1 />;
+        return (
+          <Step1
+            currentUserData={currentUserData}
+            ProfileSchema={ProfileSchema}
+            _handleSubmit={_handleSubmit}
+          />
+        );
       case 1:
         return <Step2 />;
       case 2:
