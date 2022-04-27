@@ -28,15 +28,17 @@ function Sidebar({ userContext }) {
                 <li
                   className={
                     router.pathname == `/${item.path}`
-                      ? "active"
-                      : `${item.class}`
+                      && "active"
                   }
                   key={id}
                 >
                   <Link href={`/${item.path}`}>
-                    <a>
+                    <a className="d-flex flex-row justify-content-start align-items-center">
                       <span>
                         <i className={item.icon}></i>
+                      </span>
+                      <span  style={{ marginLeft: "10px" }}>
+                        {item.name}
                       </span>
                       <span className="nav-text">{item.name}</span>
                     </a>

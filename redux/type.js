@@ -4,6 +4,7 @@ export const TOGGLE_VERIFY_MODAL = "TOGGLE_VERIFY_MODAL";
 
 // User
 export const SET_CURRENT_CONTEXT = "SET_CURRENT_CONTEXT";
+export const LOGOUT_USER = "LOGOUT_USER";
 
 // Course
 export const SET_COURSES_LIST = "SET_COURSES_LIST";

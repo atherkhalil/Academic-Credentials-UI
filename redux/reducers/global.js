@@ -1,4 +1,4 @@
-import { SET_USER_CONTEXT, TOGGLE_VERIFY_MODAL } from '../type';
+import { SET_USER_CONTEXT, TOGGLE_VERIFY_MODAL, LOGOUT_USER } from '../type';
 
 const initialState = {
     userContext: "",
@@ -18,6 +18,13 @@ const Global = (state = initialState, action) => {
             return {
                 ...state,
                 showVerifyModal: action.payload
+            };
+
+        case LOGOUT_USER:
+            return {
+                ...state,
+                userContext: "",
+                showVerifyModal: false
             };
 
         default:

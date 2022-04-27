@@ -83,7 +83,7 @@
             // text-align: center;
             margin-bottom: 8px;
             border-radius: $radius;
-
+            margin-left: 5px;
 
 
             a {
@@ -166,8 +166,6 @@
             }
 
             &.active {
-
-
                 a {
                     color: $white;
 
@@ -175,9 +173,8 @@
                         background: darken($info, 10%);
                         color     : $white;
                     }
-
                     .nav-text {
-                        color: $white;
+                        color: $info;
 
                         @include respond("md") {
                             display: none;
@@ -185,8 +182,6 @@
                         }
                     }
                 }
-
-
             }
         }
     }

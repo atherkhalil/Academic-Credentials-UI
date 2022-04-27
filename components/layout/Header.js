@@ -3,7 +3,7 @@ import { DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
 import DropdownNotification from "./../elements/DropdownNotification";
 import DropdownProfile from "./../elements/DropdownProfile";
 
-function Header() {
+function Header({ _handleLogout }) {
     return (
         <>
             <div className="header">
@@ -125,7 +125,7 @@ function Header() {
                                                     </div>
                                                 </div>
                                             </div>
-                                            <DropdownProfile />
+                                            <DropdownProfile _handleLogout={_handleLogout} />
                                         </DropdownMenu>
                                     </UncontrolledDropdown>
                                 </div>

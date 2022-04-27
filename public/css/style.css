@@ -45106,7 +45106,8 @@ a {
       align-items: center; } }
   .menu ul li {
     margin-bottom: 8px;
-    border-radius: 6px; }
+    border-radius: 6px;
+    margin-left: 5px; }
     .menu ul li a {
       display: flex;
       align-items: center;
@@ -45153,7 +45154,7 @@ a {
         background: #400c83;
         color: #fff; }
       .menu ul li.active a .nav-text {
-        color: #fff; }
+        color: #5710b2; }
         @media only screen and (max-width: 991px) {
           .menu ul li.active a .nav-text {
             display: none; } }

@@ -1,4 +1,4 @@
-import { SET_CURRENT_CONTEXT } from '../type';
+import { SET_CURRENT_CONTEXT, LOGOUT_USER } from '../type';
 
 const initialState = {
     currentuser: {}
@@ -11,6 +11,12 @@ const User = (state = initialState, action) => {
             return {
                 ...state,
                 currentuser: action.payload
+            };
+
+        case LOGOUT_USER:
+            return {
+                ...state,
+                currentuser: {}
             };
 
         default:
