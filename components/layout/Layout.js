@@ -4,7 +4,6 @@ import Header from "./Header";
 import PageHead from "./PageHead";
 import PageTitle from "./PageTitle";
 import Sidebar from "./sidebar";
-import jwt_decode from "jwt-decode";
 
 const Layout = ({
     headTitle,
@@ -17,8 +16,6 @@ const Layout = ({
 }) => {
     const [height, setHeight] = useState();
     // const userContext = useSelector(state => state.Global.userContext);
-    const token = localStorage.getItem("certmate_token");
-    var decodedToken = jwt_decode(token);
 
     useEffect(() => {
         setHeight(window.screen.height);
@@ -30,7 +27,7 @@ const Layout = ({
             <PageHead headTitle={headTitle} />
             <div id="main-wrapper" className={pageClass}>
                 <Header />
-                <Sidebar userContext={decodedToken.currentLogin} />
+                <Sidebar />
 
                 <div className="content-body" style={{ minHeight: height - 122 }}>
                     <div className="container">

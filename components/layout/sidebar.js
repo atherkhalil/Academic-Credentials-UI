@@ -1,8 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import jwt_decode from "jwt-decode";
 
 function Sidebar({ userContext }) {
   const router = useRouter();
+  const token = typeof window !== 'undefined' ? window.localStorage.getItem("certmate_token") : null;
+  var decodedToken = token ? jwt_decode(token) : null;
   const mainNavLink = {
     MOE: [
       {
@@ -76,7 +79,7 @@ function Sidebar({ userContext }) {
         </div>
         <div className="menu">
           <ul>
-            {mainNavLink[userContext || "MOE"].map((item, id) => (
+            {decodedToken && mainNavLink[decodedToken.currentLogin].map((item, id) => (
               <>
                 <li
                   className={
