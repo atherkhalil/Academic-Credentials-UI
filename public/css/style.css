@@ -46217,4 +46217,7 @@ button,
 .cursor-pointer {
   cursor: pointer; }
 
+.course-card:hover {
+  border: 2px solid #20d489; }
+
 /*# sourceMappingURL=style.css.map */

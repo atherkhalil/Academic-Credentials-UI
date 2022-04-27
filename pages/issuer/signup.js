@@ -5,7 +5,6 @@ import * as Yup from "yup";
 import Animatehoc from "../../shared/HocWappers/AnimateHoc.js";
 import { useMutation } from "@apollo/client";
 import { IssuerOnBoardingMutation } from "../../graphql/mutations/authentication.mutation.js";
-import { Spinner } from "reactstrap";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import { issuerTypes } from "../../shared/constants.js";
