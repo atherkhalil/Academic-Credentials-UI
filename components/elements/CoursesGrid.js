@@ -15,6 +15,7 @@ function CoursesGrid() {
 
     const courseItem = [
         {
+            id: 1,
             imgId: 23,
             sales: 150,
             title: "Python Bootcamp from Zero to Hero",
@@ -24,6 +25,7 @@ function CoursesGrid() {
             likes: 82,
         },
         {
+            id: 2,
             imgId: 19,
             sales: 150,
             title: "Amazon Web Services Certification",
@@ -33,6 +35,7 @@ function CoursesGrid() {
             likes: 82,
         },
         {
+            id: 3,
             imgId: 21,
             sales: 150,
             title: "Data Science Exercises Included.",
@@ -42,6 +45,7 @@ function CoursesGrid() {
             likes: 82,
         },
         {
+            id: 4,
             imgId: 10,
             sales: 150,
             title: "The Web Developer Bootcamp 2021",
@@ -99,7 +103,7 @@ function CoursesGrid() {
                                 </div>
                                 <p>{item.desc}</p>
                                 <div className="courses-action">
-                                    <Link href="upload"><a className="btn btn-primary text-white" >Edit</a></Link>
+                                    <Link href={"courses/" + item.id}><a className="btn btn-primary text-white" >Edit</a></Link>
                                     <Button onClick={AnalyticToggle} className="btn btn-light text-dark">Analytics</Button>
                                     <Button onClick={ReviewToggle} className="btn btn-light text-dark">Reviews</Button>
 

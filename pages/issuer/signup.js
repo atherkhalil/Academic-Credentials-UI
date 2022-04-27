@@ -55,11 +55,17 @@ function SignUp() {
       onCompleted: () => {
         router.push(`/under-review`);
       },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
     });
   };
 
   if (error) {
-    return enqueueSnackbar("Oops! Something went wrong!", {
+    enqueueSnackbar("Oops! Something went wrong!", {
       variant: "error",
     });
   }

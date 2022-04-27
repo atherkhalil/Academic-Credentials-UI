@@ -94,7 +94,7 @@ function SignUp() {
   };
 
   if (error) {
-    return enqueueSnackbar("Oops! Something went wrong!", {
+    enqueueSnackbar("Oops! Something went wrong!", {
       variant: "error",
     });
   }

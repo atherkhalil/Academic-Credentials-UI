@@ -48,7 +48,6 @@ function VerifyIssuer() {
         issuerId: query.payload,
       },
       onCompleted: (res) => {
-        console.log("activateMOEMutation res: ", res);
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",
         });

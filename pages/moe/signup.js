@@ -54,11 +54,17 @@ function SignUp() {
       onCompleted: () => {
         router.push(`/verify-email?email=${state.adminEmail}`);
       },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
     });
   };
 
   if (error) {
-    return enqueueSnackbar("Oops! Something went wrong!", {
+    enqueueSnackbar("Oops! Something went wrong!", {
       variant: "error",
     });
   }

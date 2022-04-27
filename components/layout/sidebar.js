@@ -49,8 +49,8 @@ function Sidebar({ userContext }) {
       },
       {
         icon: "ri-hand-coin-fill",
-        name: "Credentials",
-        path: "issuer/credentials",
+        name: "Courses",
+        path: "issuer/courses",
       },
       {
         icon: "ri-upload-cloud-2-fill",
@@ -67,7 +67,7 @@ function Sidebar({ userContext }) {
           <Link href="/">
             <a className="mini-logo">
               <img
-                src="../images/University_of_Sharjah_Logo.png"
+                src="/images/University_of_Sharjah_Logo.png"
                 alt=""
                 width="100%"
               />

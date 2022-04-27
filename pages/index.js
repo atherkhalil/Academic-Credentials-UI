@@ -12,9 +12,7 @@ import {
   SetUserContext,
   ToggleVerifyModal,
 } from "../redux/actions/global.action.js";
-import {
-  SetCurrentUser
-} from "../redux/actions/user.action.js";
+import { SetCurrentUser } from "../redux/actions/user.action.js";
 import SigninForm from "../components/form/SigninForm";
 import SelectUserTypeCard from "../components/general/SelectUserTypeCard.js";
 import VerifyOtpModal from "../components/VerifyOtpModal/VerifyOtpModal";
@@ -91,7 +89,7 @@ function Signin() {
     activateIssuerMutation({
       variables: {
         otp: otp,
-        issuerId: currentUserDetials.currentuser.user._id
+        issuerId: currentUserDetials.currentuser.user._id,
       },
       onCompleted: (res) => {
         console.log("activateIssuerMutation res: ", res);
@@ -122,22 +120,20 @@ function Signin() {
   };
 
   if (error) {
-    return enqueueSnackbar("Oops! Something went wrong!", {
+    enqueueSnackbar("Oops! Something went wrong!", {
       variant: "error",
     });
   }
 
   return (
     <>
-      {
-        showVerifyModal && (
-          <VerifyOtpModal
-            toggle={showVerifyModal}
-            setToggle={_handleToggleOtpVerificationModal}
-            _handleOtpVerification={_handleOtpVerification}
-          />
-        )
-      }
+      {showVerifyModal && (
+        <VerifyOtpModal
+          toggle={showVerifyModal}
+          setToggle={_handleToggleOtpVerificationModal}
+          _handleOtpVerification={_handleOtpVerification}
+        />
+      )}
 
       <div className="container vh-100">
         <div className="row justify-content-center h-100 align-items-center">
@@ -188,7 +184,12 @@ function Signin() {
                     </p>
                   </>
                 ) : (
-                  <SigninForm />
+                  <SigninForm
+                    initialValues={initialValues}
+                    SigninFormSchema={SigninFormSchema}
+                    handleSubmit={_handleSubmit}
+                    loading={loading}
+                  />
                 )}
               </div>
             </div>
