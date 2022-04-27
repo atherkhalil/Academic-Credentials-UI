@@ -11,7 +11,7 @@ const initialState = {};
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ['Global', 'User']
+  whitelist: ['User']
 };
 
 const middleware = [thunk];

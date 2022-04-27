@@ -66,14 +66,14 @@ function Credentials() {
       >
           <div className="d-flex flex-row justify-content-between">
             <div className="mb-4">
-            <Link href={"/issuer/courses/add-course"}>
+            <Link href={"/issuer/courses"}>
                 <button className="btn btn-info mb-4">
                 <i class="ri-arrow-left-s-line"></i>
                 </button>
             </Link>
             </div>
             <div className="text-end mb-4">
-            <Link href={"/issuer/courses/add-course"}>
+            <Link href={"/issuer/courses/create-credential"}>
                 <button className="btn btn-primary mb-4">Create Credential</button>
             </Link>
             </div>

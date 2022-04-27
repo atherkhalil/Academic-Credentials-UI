@@ -3,47 +3,53 @@ import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import Layout from "../../../components/layout/Layout";
 import SettingsMenu from "../../../components/layout/SettingsMenu";
-import { Step1, Step2, Step3 } from "../../../components/MoeProfileWizard";
+import { Step1, Step2, Step3 } from "../../../components/IssuerProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
-import { GetAllMOEDetailsQuery } from "../../../graphql/queries/authentication.query.js";
+import { GetAllIssuerDetail } from "../../../graphql/queries/issuer.query.js";
 import { useQuery } from "@apollo/client";
 import { useSnackbar } from "notistack";
 
 const initialValues = {
   adminEmail: "",
+  approvalDate: "",
+  approved: "",
   contactEmail: "",
   createdAt: "",
+  description: "",
   id: "",
   isVerified: "",
   logoUrl: "",
+  moeId: "",
   name: "",
   publicKey: "",
-  secret: "",
-  signature: "",
+  revocationList: "",
   siteUrl: "",
   telephone: "",
+  type: "",
   updatedAt: "",
 };
 
 const ProfileSchema = Yup.object().shape({
+  type: Yup.string().required("Type is required"),
   name: Yup.string().required("Name is required"),
-  telephone: Yup.string().required("Telephone is required"),
   contactEmail: Yup.string().required("Email is required"),
-  siteUrl: Yup.string().required("Url is required"),
+  address: Yup.string().required("Address is required"),
+  telephone: Yup.string().required("Telephone is required"),
+  siteUrl: Yup.string().required("Url is required")
 });
 
 function SettingsProfile() {
   const [currentViewStep, setCurrentViewStep] = useState(0);
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
-  const { loading, error, data } = useQuery(GetAllMOEDetailsQuery, {
-    variables: { moeId: currentuser.user._id },
+  const { loading, error, data } = useQuery(GetAllIssuerDetail, {
+    variables: { issuerId: currentuser.user._id },
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (data) {
-      setCurrentUserData(data.GetMOEDetails);
+      setCurrentUserData(data.GetIssuerDetail);
     }
   }, [data]);
 
@@ -90,7 +96,7 @@ function SettingsProfile() {
         <div className="row">
           <div className="col-md-3">
             <SettingsMenu
-              profileNavigation={profileNavigation["MOE"]}
+              profileNavigation={profileNavigation["ISSUER"]}
               currentViewStep={currentViewStep}
               _handleStepChange={_handleStepChange}
             />

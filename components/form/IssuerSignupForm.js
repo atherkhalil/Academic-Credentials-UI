@@ -1,6 +1,7 @@
 import { ErrorMessage, Field, Form, Formik, useField } from "formik";
 import PhoneNumber from "../general/PhoneNumber.js";
 import { Spinner } from "reactstrap";
+import Customtextarea from "../general/CustomTextArea.js";
 
 function IssuerSignupForm({
   initialValues,
@@ -119,7 +120,7 @@ function IssuerSignupForm({
 
               <div className="col-12 mb-16">
                 <label className="form-label">Description</label>
-                <MyTextArea
+                <Customtextarea
                   label=""
                   name="description"
                   rows="3"
@@ -175,20 +176,5 @@ function IssuerSignupForm({
     </>
   );
 }
-
-const MyTextArea = ({ label, ...props }) => {
-  // useField() returns [formik.getFieldProps(), formik.getFieldMeta()]
-  // which we can spread on <input> and alse replace ErrorMessage entirely.
-  const [field, meta] = useField(props);
-  return (
-    <>
-      <label htmlFor={props.id || props.name}>{label}</label>
-      <textarea className="form-control text-area" {...field} {...props} />
-      {meta.touched && meta.error ? (
-        <div className="error">{meta.error}</div>
-      ) : null}
-    </>
-  );
-};
 
 export default IssuerSignupForm;
