@@ -27,8 +27,8 @@ const userTypeList = [
     signupLink: "/issuer/signup",
   },
   {
-    key: "student",
-    text: "STUDENT",
+    key: "learner",
+    text: "Learner",
     icon: "ri-shield-user-line",
     isSelectedIndex: 1,
   },

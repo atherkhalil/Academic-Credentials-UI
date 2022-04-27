@@ -4,7 +4,7 @@ const initialState = {
     currentuser: {}
 };
 
-const Global = (state = initialState, action) => {
+const User = (state = initialState, action) => {
     const { payload, type } = action;
     switch (type) {
         case SET_CURRENT_CONTEXT:
@@ -18,4 +18,4 @@ const Global = (state = initialState, action) => {
     }
 };
 
-export default Global;
+export default User;

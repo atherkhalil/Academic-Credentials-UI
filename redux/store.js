@@ -11,7 +11,7 @@ const initialState = {};
 const persistConfig = {
   key: "root",
   storage,
-  whitelist: ['Global']
+  whitelist: ['Global', 'User']
 };
 
 const middleware = [thunk];
@@ -19,7 +19,6 @@ const persistedReducer = persistReducer(persistConfig, rootReducers);
 
 const store = createStore(
   persistedReducer,
-  initialState,
   composeWithDevTools(applyMiddleware(...middleware))
 );
 

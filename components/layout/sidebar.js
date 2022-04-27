@@ -1,11 +1,11 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
-import jwt_decode from "jwt-decode";
-
+import { getDecodedTokenFromLocalStorage } from "../../shared/helper.js";
+ 
 function Sidebar({ userContext }) {
   const router = useRouter();
-  const token = typeof window !== 'undefined' ? window.localStorage.getItem("certmate_token") : null;
-  var decodedToken = token ? jwt_decode(token) : null;
+  let decodedToken = getDecodedTokenFromLocalStorage();
+
   const mainNavLink = {
     MOE: [
       {
@@ -16,7 +16,7 @@ function Sidebar({ userContext }) {
       {
         icon: "ri-user-fill",
         name: "Profile",
-        path: "moe/profile",
+        path: "moe/settings/profile",
       },
       {
         icon: "ri-empathize-fill",

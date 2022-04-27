@@ -3,9 +3,16 @@ import "react-perfect-scrollbar/dist/css/styles.css";
 import { Provider } from "react-redux";
 import "../public/css/style.css";
 import store from "../redux/store";
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@apollo/client";
+import {
+  ApolloClient,
+  InMemoryCache,
+  ApolloProvider,
+  createHttpLink,
+} from "@apollo/client";
 import { SnackbarProvider } from "notistack";
 import { setContext } from "@apollo/client/link/context";
+import { PersistGate } from 'redux-persist/integration/react';
+import { persistStore } from "redux-persist";
 
 const httpLink = createHttpLink({
   uri: "http://localhost:5000/graphql",
@@ -29,12 +36,16 @@ const client = new ApolloClient({
 });
 
 function MyApp({ Component, pageProps }) {
+  const persistor = persistStore(store);
+
   return (
     <ApolloProvider client={client}>
       <Provider store={store}>
-        <SnackbarProvider>
-          <Component {...pageProps} />
-        </SnackbarProvider>
+        <PersistGate loading={null} persistor={persistor}>
+          <SnackbarProvider>
+            <Component {...pageProps} />
+          </SnackbarProvider>
+        </PersistGate>
       </Provider>
     </ApolloProvider>
   );
