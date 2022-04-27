@@ -46,9 +46,11 @@ function CoursesGrid({ coursesList, _handleCourseStatusUpdate }) {
                     <Link href={"courses/" + item.id}>
                       <a className="btn btn-primary text-white">Details</a>
                     </Link>
+                    <Link href={"courses/credentials/" + item.id}>
                     <Button className="btn btn-light text-dark">
                       View Credentials
                     </Button>
+                    </Link>
                   </div>
                   <div>
                     <Switch

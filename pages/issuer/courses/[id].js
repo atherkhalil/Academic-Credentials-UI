@@ -34,22 +34,20 @@ const CourseFormSchema = Yup.object().shape({
 const CourseDetail = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { query, push } = useRouter();
-  const [initialState, setInitialState] = useState(initialValues)
+  const [initialState, setInitialState] = useState(initialValues);
   const courseList = useSelector((state) => state?.Course.courseList);
-  const [addCourseMutation, { data, loading, error }] = useMutation(
-    AddCourse
-  );
+  const [addCourseMutation, { data, loading, error }] = useMutation(AddCourse);
 
   useEffect(() => {
     if (query.id) {
-      let temp = courseList.find(course => course.id == query.id);
-      console.log("temp: ", temp)
+      let temp = courseList.find((course) => course.id == query.id);
+      console.log("temp: ", temp);
       setInitialState(temp);
     }
   }, []);
 
   const _handleCourseUpdate = (state) => {
-    console.log("Submitting course: ", state)
+    console.log("Submitting course: ", state);
     addCourseMutation({
       variables: {
         data: {
@@ -57,7 +55,7 @@ const CourseDetail = (props) => {
           session: state.session,
           creditHours: state.creditHours,
           code: state.code,
-          description: state.description
+          description: state.description,
         },
       },
       onCompleted: () => {
@@ -73,7 +71,7 @@ const CourseDetail = (props) => {
         });
       },
     });
-  }
+  };
 
   return (
     <Layout
@@ -84,9 +82,11 @@ const CourseDetail = (props) => {
       parent={"Home"}
       child={"Course"}
     >
-      <div className="text-end mb-4">
+      <div className="mb-4">
         <Link href={"/issuer/courses"}>
-          <button className="btn btn-info mb-4">Back</button>
+          <button className="btn btn-info mb-4">
+            <i class="ri-arrow-left-s-line"></i>
+          </button>
         </Link>
       </div>
 
@@ -96,7 +96,7 @@ const CourseDetail = (props) => {
             <div className="card-body">
               <div className="row d-flex justify-content-center align-items-center py-20">
                 <div className="col-xl-8">
-                  <UploadCourse 
+                  <UploadCourse
                     CourseFormSchema={CourseFormSchema}
                     initialValues={initialState}
                     _handleCourseUpdate={_handleCourseUpdate}

@@ -61,12 +61,12 @@ const CourseDetail = (props) => {
 
   return (
     <Layout
-      headTitle="Add Course"
-      pageTitle="Add Course"
-      pageTitleSub={"Welcome to Add Course page"}
+      headTitle="Create Course"
+      pageTitle="Create Course"
+      pageTitleSub={"Welcome to Create Course page"}
       pageClass={"dashboard"}
       parent={"Home"}
-      child={"Add Course"}
+      child={"Create Course"}
     >
       <div className="text-end mb-4">
         <Link href={"/issuer/courses"}>

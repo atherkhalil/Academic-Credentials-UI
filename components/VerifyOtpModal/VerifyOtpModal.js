@@ -4,10 +4,25 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
   const [otp, setOtp] = useState("");
 
+  const _clearState = () => {
+    setOtp("")
+    let count = 1;
+    while (count < 7) {
+      const nextfield = document.querySelector(
+        `input[name=field-${count}]`
+      );
+      nextfield.value = '';
+      count = count + 1;
+    }
+    document.querySelector(
+      `input[name=field-1]`
+    ).focus();
+  }
+
   const handleChange = (e) => {
     const { maxLength, value, name } = e.target;
-    console.log("value: ", value)
-    console.log("typeof: ", typeof(value))
+    console.log("value: ", value);
+    console.log("typeof: ", typeof value);
     const [fieldName, fieldIndex] = name.split("-");
 
     let fieldIntIndex = parseInt(fieldIndex, 10);
@@ -28,24 +43,29 @@ const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
       }
       setOtp(otp + value);
     } else {
-        if (fieldIntIndex > 1) {
-            // Get the next input field using it's name
-            const prevfield = document.querySelector(
-              `input[name=field-${fieldIntIndex - 1}]`
-            );
-    
-            // If found, focus the next field
-            if (prevfield !== null) {
-              prevfield.focus();
-            }
+      if (fieldIntIndex > 1) {
+        // Get the next input field using it's name
+        const prevfield = document.querySelector(
+          `input[name=field-${fieldIntIndex - 1}]`
+        );
+
+        // If found, focus the next field
+        if (prevfield !== null) {
+          prevfield.focus();
         }
-        setOtp(otp.substring(0, otp.length - 1));
+      }
+      setOtp(otp.substring(0, otp.length - 1));
     }
   };
 
   return (
     <>
-      <Modal isOpen={toggle} centered toggle={() => setToggle()} backdrop="static">
+      <Modal
+        isOpen={toggle}
+        centered
+        toggle={() => setToggle()}
+        backdrop="static"
+      >
         <ModalBody>
           <h5 className="text-center text-primary">
             Please enter one time password to verify
@@ -92,6 +112,13 @@ const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
           </div>
         </ModalBody>
         <ModalFooter>
+          <button
+            type="button"
+            className="btn btn-info mr-2"
+            onClick={() => _clearState()}
+          >
+            Clear
+          </button>
           <button
             type="button"
             className="btn btn-primary mr-2"
