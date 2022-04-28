@@ -167,7 +167,7 @@ function IssuerSignupForm({
 
             <div className="mt-16 d-grid gap-2">
               <button type="submit" className="btn btn-primary mr-2">
-                {loading ? <Spinner children=""></Spinner> : "Sign in"}
+                {loading ? <Spinner children=""></Spinner> : "Sign up"}
               </button>
             </div>
           </Form>

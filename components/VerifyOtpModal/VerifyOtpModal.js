@@ -5,24 +5,18 @@ const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
   const [otp, setOtp] = useState("");
 
   const _clearState = () => {
-    setOtp("")
+    setOtp("");
     let count = 1;
     while (count < 7) {
-      const nextfield = document.querySelector(
-        `input[name=field-${count}]`
-      );
-      nextfield.value = '';
+      const nextfield = document.querySelector(`input[name=field-${count}]`);
+      nextfield.value = "";
       count = count + 1;
     }
-    document.querySelector(
-      `input[name=field-1]`
-    ).focus();
-  }
+    document.querySelector(`input[name=field-1]`).focus();
+  };
 
   const handleChange = (e) => {
     const { maxLength, value, name } = e.target;
-    console.log("value: ", value);
-    console.log("typeof: ", typeof value);
     const [fieldName, fieldIndex] = name.split("-");
 
     let fieldIntIndex = parseInt(fieldIndex, 10);
@@ -56,6 +50,28 @@ const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
       }
       setOtp(otp.substring(0, otp.length - 1));
     }
+  };
+
+  const _handlePasteOtp = () => {
+    navigator.clipboard
+      .readText()
+      .then((text) => {
+        // `text` contains the text read from the clipboard
+        console.log("text: ", typeof(text))
+        if (text.length == 6) {
+          // Its an OTP, now loop over inputs & assigns val
+          let count = 1;
+          while (count < 7) {
+            const nextfield = document.querySelector(`input[name=field-${count}]`);
+            nextfield.value = text[count - 1];
+            count = count + 1;
+          }
+        }
+      })
+      .catch((err) => {
+        // maybe user didn't grant access to read from clipboard
+        console.log("Something went wrong", err);
+      });
   };
 
   return (
@@ -112,6 +128,13 @@ const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
           </div>
         </ModalBody>
         <ModalFooter>
+          <button
+            type="button"
+            className="btn btn-success mr-2"
+            onClick={() => _handlePasteOtp()}
+          >
+            Paste
+          </button>
           <button
             type="button"
             className="btn btn-info mr-2"

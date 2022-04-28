@@ -106,7 +106,7 @@ function SignUp() {
                   <div className="text-center">
                     <p className="mt-16 mb-0">
                       Have account?
-                      <Link href="/">
+                      <Link href="/moe/signin">
                         <a className="text-primary ms-5">Sign in</a>
                       </Link>
                     </p>
