@@ -37,7 +37,7 @@ function SettingsProfile() {
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
   const { loading, error, data } = useQuery(GetAllMOEDetailsQuery, {
-    variables: { moeId: currentuser.user._id },
+    variables: { moeId: currentuser?.user?._id },
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -64,7 +64,8 @@ function SettingsProfile() {
           />
         );
       case 1:
-        return <Step2 />;
+        return <Step2
+        currentUserData={currentUserData} />;
       case 2:
         return <Step3 />;
 

@@ -32,8 +32,8 @@ const initialValues = {
 const ProfileSchema = Yup.object().shape({
   type: Yup.string().required("Type is required"),
   name: Yup.string().required("Name is required"),
-  contactEmail: Yup.string().required("Email is required"),
-  address: Yup.string().required("Address is required"),
+  // contactEmail: Yup.string().required("Email is required"),
+  // address: Yup.string().required("Address is required"),
   telephone: Yup.string().required("Telephone is required"),
   siteUrl: Yup.string().required("Url is required")
 });
@@ -43,7 +43,7 @@ function SettingsProfile() {
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
   const { loading, error, data } = useQuery(GetAllIssuerDetail, {
-    variables: { issuerId: currentuser.user._id },
+    variables: { issuerId: currentuser?.user?._id },
   });
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -54,6 +54,7 @@ function SettingsProfile() {
   }, [data]);
 
   const _handleSubmit = (state) => {
+    debugger;
     enqueueSnackbar("Successfully updated!", {
       variant: "success",
     });

@@ -2,7 +2,7 @@ import React from "react";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import CreateApi from "../form/CreateApi";
 
-const Step2 = () => {
+const Step2 = ({ currentUserData }) => {
   return (
     <>
       <div className="card">
@@ -24,6 +24,10 @@ const Step2 = () => {
               />
             </Form>
           </Formik>
+
+          <div className="mt-10">
+            <img src={currentUserData?.signature?.imageUrl || "/images/signature.jpg"} width="260px" />
+          </div>
         </div>
       </div>
     </>

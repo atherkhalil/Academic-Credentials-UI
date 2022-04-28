@@ -45062,7 +45062,7 @@ a {
   left: 0px; }
 
 .sidebar {
-  background: #aeb9ff;
+  background: black;
   position: fixed;
   left: 0px;
   height: calc(100%-20px);

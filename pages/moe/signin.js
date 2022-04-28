@@ -81,7 +81,7 @@ function SignUp() {
         });
         const token = res.ActivateMOE;
         setTimeout(() => {
-          // localStorage.setItem("certmate_token", token);
+          localStorage.setItem("certmate_token", token);
           router.push(`/moe/dashboard`);
         }, 500);
       },
