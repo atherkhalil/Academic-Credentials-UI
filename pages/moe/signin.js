@@ -60,6 +60,7 @@ function SignUp() {
         const token = res.MOELogin.token;
         localStorage.setItem("certmate_token", token);
         var decodedToken = jwt_decode(token);
+        console.log("token moe signin: ", token)
         dispatch(SetUserContext(decodedToken.currentLogin));
         dispatch(SetCurrentUser(decodedToken));
         _handleToggleOtpVerificationModal();
@@ -80,7 +81,7 @@ function SignUp() {
         });
         const token = res.ActivateMOE;
         setTimeout(() => {
-          localStorage.setItem("certmate_token", token);
+          // localStorage.setItem("certmate_token", token);
           router.push(`/moe/dashboard`);
         }, 500);
       },

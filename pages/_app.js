@@ -11,7 +11,7 @@ import {
 } from "@apollo/client";
 import { SnackbarProvider } from "notistack";
 import { setContext } from "@apollo/client/link/context";
-import { PersistGate } from 'redux-persist/integration/react';
+import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 
 const httpLink = createHttpLink({
@@ -21,6 +21,8 @@ const httpLink = createHttpLink({
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem("certmate_token");
+
+  console.log("token _app: ", token)
   // return the headers to the context so httpLink can read them
   return {
     headers: {
