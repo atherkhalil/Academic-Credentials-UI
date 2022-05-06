@@ -56,6 +56,10 @@ export const GetAllIssuerDetail = gql`
                 city
                 street
             }
+            signature {
+              imageUrl
+              uploadDate
+            }
         }
     }
 `;

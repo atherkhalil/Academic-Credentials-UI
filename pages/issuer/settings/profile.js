@@ -7,6 +7,7 @@ import { Step1, Step2, Step3 } from "../../../components/IssuerProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
 import { GetAllIssuerDetail } from "../../../graphql/queries/issuer.query.js";
 import { UpdateIssuerDetails } from "../../../graphql/mutations/learner.mutation.js";
+import { SignatureUpload } from "../../../graphql/mutations/general.mutation.js";
 import { useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -50,11 +51,15 @@ function SettingsProfile() {
   const [currentViewStep, setCurrentViewStep] = useState(0);
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
+  const [signatureFile, setSignatureFile] = useState(null);
   const { loading, error, data } = useQuery(GetAllIssuerDetail, {
     variables: { issuerId: currentuser?.user?._id },
   });
   const [updateIssuerDetailsMutation, { updateIssuerDetailsMutationData, updateIssuerDetailsMutationLoading, updateIssuerDetailsMutationError }] = useMutation(
     UpdateIssuerDetails
+  );
+  const [signatureUploadMutation, { signatureUploadMutationData, signatureUploadMutationLoading, signatureUploadMutationError }] = useMutation(
+    SignatureUpload
   );
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -97,6 +102,32 @@ function SettingsProfile() {
     });
   } 
 
+  const _handleSignatureUpload = () => {
+    console.log("signatureFile: ", signatureFile)
+    signatureUploadMutation({
+      variables: {
+        file: signatureFile
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Successfully submitted!", {
+          variant: "success",
+        });
+        router.reload();
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
+  }
+  
+  const _handleSignatureFileChange = (e) => {
+    let file = e.target.files[0];
+    setSignatureFile(file);
+  }
+
   const _getCurrentStep = () => {
     switch (currentViewStep) {
       case 0:
@@ -108,7 +139,11 @@ function SettingsProfile() {
           />
         );
       case 1:
-        return <Step2 />;
+        return <Step2
+          currentUserData={currentUserData} 
+          _handleSubmit={_handleSignatureUpload}
+          _handleSignatureFileChange={_handleSignatureFileChange} 
+        />;
       case 2:
         return <Step3 />;
 
