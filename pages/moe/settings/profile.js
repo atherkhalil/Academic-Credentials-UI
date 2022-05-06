@@ -6,7 +6,10 @@ import SettingsMenu from "../../../components/layout/SettingsMenu";
 import { Step1, Step2, Step3 } from "../../../components/MoeProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
 import { GetAllMOEDetailsQuery } from "../../../graphql/queries/authentication.query.js";
-import { useQuery } from "@apollo/client";
+import { UpdateMoeDetails } from "../../../graphql/mutations/moe.mutation.js";
+import { SignatureUpload } from "../../../graphql/mutations/general.mutation.js";
+import { useQuery, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 
 const initialValues = {
@@ -33,12 +36,20 @@ const ProfileSchema = Yup.object().shape({
 });
 
 function SettingsProfile() {
+  const router = useRouter();
   const [currentViewStep, setCurrentViewStep] = useState(0);
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
+  const [signatureFile, setSignatureFile] = useState(null);
   const { loading, error, data } = useQuery(GetAllMOEDetailsQuery, {
     variables: { moeId: currentuser?.user?._id },
   });
+  const [updateMoeDetailsMutation, { updateMoeDetailsMutationData, updateMoeDetailsMutationLoading, updateMoeDetailsMutationError }] = useMutation(
+    UpdateMoeDetails
+  );
+  const [signatureUploadMutation, { signatureUploadMutationData, signatureUploadMutationLoading, signatureUploadMutationError }] = useMutation(
+    SignatureUpload
+  );
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
@@ -47,11 +58,56 @@ function SettingsProfile() {
     }
   }, [data]);
 
-  const _handleSubmit = (state) => {
-    enqueueSnackbar("Successfully updated!", {
-      variant: "success",
+  const _handleProfileSubmit = (state) => {
+    console.log("Submitting Profile.... : ", state)
+    updateMoeDetailsMutation({
+      variables: {
+        name: state.name,
+        telephone: state.telephone,
+        contactEmail: state.contactEmail,
+        siteUrl: state.siteUrl,
+        course: []
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Successfully submitted!", {
+          variant: "success",
+        });
+        router.reload();
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
     });
-  } 
+  }
+
+  const _handleSignatureUpload = () => {
+    console.log("signatureFile: ", signatureFile)
+    signatureUploadMutation({
+      variables: {
+        file: signatureFile
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Successfully submitted!", {
+          variant: "success",
+        });
+        router.reload();
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
+  }
+  
+  const _handleSignatureFileChange = (e) => {
+    let file = e.target.files[0];
+    setSignatureFile(file);
+  }
 
   const _getCurrentStep = () => {
     switch (currentViewStep) {
@@ -60,12 +116,15 @@ function SettingsProfile() {
           <Step1
             currentUserData={currentUserData}
             ProfileSchema={ProfileSchema}
-            _handleSubmit={_handleSubmit}
+            _handleSubmit={_handleProfileSubmit}
           />
         );
       case 1:
         return <Step2
-        currentUserData={currentUserData} />;
+          currentUserData={currentUserData} 
+          _handleSubmit={_handleSignatureUpload}
+          _handleSignatureFileChange={_handleSignatureFileChange}
+        />;
       case 2:
         return <Step3 />;
 

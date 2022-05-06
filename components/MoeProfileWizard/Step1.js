@@ -4,7 +4,6 @@ import MoePersonalInfo from "../form/MoePersonalInfo";
 import UpdateAvatar from "../form/UpdateAvatar";
 
 const Step1 = ({ currentUserData, ProfileSchema, _handleSubmit }) => {
-  console.log("currentUserData: ", currentUserData);
   return (
     <div className="row">
       <div className="col-xxl-12">

@@ -66,6 +66,8 @@ const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
             nextfield.value = text[count - 1];
             count = count + 1;
           }
+
+          setOtp(text);
         }
       })
       .catch((err) => {

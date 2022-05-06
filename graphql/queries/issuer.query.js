@@ -34,23 +34,28 @@ export const GetCoursesByIssuer = gql`
 export const GetAllIssuerDetail = gql`
     query GetIssuerDetail($issuerId: ID!) {
         GetIssuerDetail(issuerId: $issuerId) {
-        id
-        moeId
-        type
-        name
-        adminEmail
-        contactEmail
-        telephone
-        siteUrl
-        logoUrl
-        publicKey
-        approved
-        approvalDate
-        description
-        revocationList
-        isVerified
-        createdAt
-        updatedAt
+            id
+            moeId
+            type
+            name
+            adminEmail
+            contactEmail
+            telephone
+            siteUrl
+            logoUrl
+            publicKey
+            approved
+            approvalDate
+            description
+            revocationList
+            isVerified
+            createdAt
+            updatedAt
+            address {
+                country
+                city
+                street
+            }
         }
     }
 `;

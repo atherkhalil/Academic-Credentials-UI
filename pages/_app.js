@@ -13,6 +13,8 @@ import { SnackbarProvider } from "notistack";
 import { setContext } from "@apollo/client/link/context";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
+import { createUploadLink } from "apollo-upload-client";
+import { from } from '@apollo/client'
 
 const httpLink = createHttpLink({
   uri: "http://localhost:5000/graphql",
@@ -32,8 +34,12 @@ const authLink = setContext((_, { headers }) => {
   };
 });
 
+const uploadLink = createUploadLink({ 
+  uri: "http://localhost:5000/graphql"
+});
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: from([authLink, uploadLink]),
   cache: new InMemoryCache(),
 });
 

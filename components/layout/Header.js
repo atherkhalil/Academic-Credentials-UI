@@ -23,7 +23,7 @@ function Header({ _handleLogout }) {
                                             </a>
                                         </Link>
                                     </div>
-                                    <div className="search">
+                                    {/* <div className="search">
                                         <form action="#">
                                             <div className="input-group">
                                                 <input
@@ -36,7 +36,7 @@ function Header({ _handleLogout }) {
                                                 </span>
                                             </div>
                                         </form>
-                                    </div>
+                                    </div> */}
                                 </div>
 
                                 <div className="header-right">

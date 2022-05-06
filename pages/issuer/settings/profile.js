@@ -6,7 +6,9 @@ import SettingsMenu from "../../../components/layout/SettingsMenu";
 import { Step1, Step2, Step3 } from "../../../components/IssuerProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
 import { GetAllIssuerDetail } from "../../../graphql/queries/issuer.query.js";
-import { useQuery } from "@apollo/client";
+import { UpdateIssuerDetails } from "../../../graphql/mutations/learner.mutation.js";
+import { useQuery, useMutation } from "@apollo/client";
+import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 
 const initialValues = {
@@ -27,6 +29,11 @@ const initialValues = {
   telephone: "",
   type: "",
   updatedAt: "",
+  address: {
+    country: "",
+    city: "",
+    street: "",
+  }
 };
 
 const ProfileSchema = Yup.object().shape({
@@ -39,24 +46,54 @@ const ProfileSchema = Yup.object().shape({
 });
 
 function SettingsProfile() {
+  const router = useRouter();
   const [currentViewStep, setCurrentViewStep] = useState(0);
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
   const { loading, error, data } = useQuery(GetAllIssuerDetail, {
     variables: { issuerId: currentuser?.user?._id },
   });
+  const [updateIssuerDetailsMutation, { updateIssuerDetailsMutationData, updateIssuerDetailsMutationLoading, updateIssuerDetailsMutationError }] = useMutation(
+    UpdateIssuerDetails
+  );
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
   useEffect(() => {
     if (data) {
+      console.log("GetIssuerDetail: ", data.GetIssuerDetail)
       setCurrentUserData(data.GetIssuerDetail);
     }
   }, [data]);
 
   const _handleSubmit = (state) => {
-    debugger;
-    enqueueSnackbar("Successfully updated!", {
-      variant: "success",
+    console.log("Submitting Profile.... : ", state)
+    let address = {};
+    address.city = state.address.city;
+    address.country = state.address.country;
+    address.street = state.address.street;
+
+    updateIssuerDetailsMutation({
+      variables: {
+        type: state.type,
+        name: state.name,
+        contactEmail: state.adminEmail,
+        address: address,
+        telephone: state.telephone,
+        siteUrl: state.siteUrl,
+        description: state.description,
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Successfully submitted!", {
+          variant: "success",
+        });
+        router.reload();
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
     });
   } 
 

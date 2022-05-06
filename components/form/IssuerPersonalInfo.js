@@ -98,23 +98,6 @@ function IssuerPersonalInfo({ currentUserData, ProfileSchema, _handleSubmit }) {
               </div>
 
               <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Public key</label>
-                <Field
-                  name="publicKey"
-                  type="text"
-                  className={
-                    "form-control" +
-                    (errors.publicKey && touched.publicKey ? " is-invalid" : "")
-                  }
-                />
-                <ErrorMessage
-                  name="publicKey"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-
-              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
                 <label className="form-label">Telephone no.</label>
                 <PhoneNumber
                   name="telephone"
@@ -127,6 +110,57 @@ function IssuerPersonalInfo({ currentUserData, ProfileSchema, _handleSubmit }) {
                 />
                 <ErrorMessage
                   name="telephone"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+              
+              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
+                <label className="form-label">Country</label>
+                <Field
+                  name="address.country"
+                  type="text"
+                  className={
+                    "form-control" +
+                    (errors.country && touched.country ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="address.country"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+              
+              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
+                <label className="form-label">City</label>
+                <Field
+                  name="address.city"
+                  type="text"
+                  className={
+                    "form-control" +
+                    (errors.city && touched.city ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="address.city"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+              
+              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
+                <label className="form-label">Street</label>
+                <Field
+                  name="address.street"
+                  type="text"
+                  className={
+                    "form-control" +
+                    (errors.street && touched.street ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="address.street"
                   component="div"
                   className="invalid-feedback"
                 />

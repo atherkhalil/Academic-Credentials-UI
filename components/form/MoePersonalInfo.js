@@ -70,23 +70,6 @@ function MoePersonalInfo({ currentUserData, ProfileSchema, _handleSubmit }) {
               </div>
 
               <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Public key</label>
-                <Field
-                  name="publicKey"
-                  type="text"
-                  className={
-                    "form-control" +
-                    (errors.publicKey && touched.publicKey ? " is-invalid" : "")
-                  }
-                />
-                <ErrorMessage
-                  name="publicKey"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-
-              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
                 <label className="form-label">Telephone no.</label>
                 <PhoneNumber
                   name="telephone"
