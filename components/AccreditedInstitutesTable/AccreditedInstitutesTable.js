@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import Switch from "react-switch";
 import EmptyData from "../general/EmptyData.js";
+import Link from "next/link";
 
 const AccreditedInstitutesTable = ({
   issuerList,
@@ -12,45 +13,41 @@ const AccreditedInstitutesTable = ({
 
   return (
     <>
-    <Table responsive={true} bordered={false}>
-      <thead>
-        <tr>
-          <th>#</th>
-          <th>Issuer Type</th>
-          <th>Email</th>
-          <th>Name</th>
-          <th>Telephone no.</th>
-          <th>Status</th>
-          <th>Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        {issuerList?.map((row, index) => (
+      <Table responsive={true} bordered={false}>
+        <thead>
           <tr>
-            <th scope="row">{index + 1}</th>
-            <td>{row.type}</td>
-            <td>{row.adminEmail}</td>
-            <td>{row.name}</td>
-            <td>{row.telephone}</td>
-            <td>{row.approved ? "Approved" : "Pending"}</td>
-            <td>
-              <Switch
-                onChange={() =>
-                  _handleActivateIssuer(row.id, row.approved, index)
-                }
-                checked={row.approved}
-              />
-            </td>
-            {/* <td style={{ fontSize: "24px" }}><i class="ri-eye-fill cursor-pointer"></i></td> */}
+            <th>#</th>
+            <th>Type</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Issuance date</th>
+            <th>Board</th>
+            <th>Actions</th>
           </tr>
-        ))}
-        <tr className="text-center">
-          <td colspan="7">
-            {issuerList?.length == 0 && <EmptyData />}
-          </td>
-        </tr>
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {issuerList?.map((row, index) => (
+            <tr>
+              <th scope="row">{index + 1}</th>
+              <td>{row.type}</td>
+              <td>{row.title}</td>
+              <td>{row.description}</td>
+              <td>{row.issuance_date}</td>
+              <td>{row.Board}</td>
+              <td style={{ fontSize: "24px" }}>
+                {/* <Link href="/"> */}
+                  <i class="ri-eye-fill cursor-pointer"></i>
+                {/* </Link> */}
+              </td>
+            </tr>
+          ))}
+          <tr className="text-center">
+            <td colspan="7">
+              {issuerList?.length == 0 && <EmptyData />}
+            </td>
+          </tr>
+        </tbody>
+      </Table>
     </>
   );
 };

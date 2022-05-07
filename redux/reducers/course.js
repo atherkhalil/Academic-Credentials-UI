@@ -1,7 +1,19 @@
-import { SET_COURSES_LIST } from '../type';
+import { SET_COURSES_LIST, ADD_CREDENTIAL } from '../type';
 
 const initialState = {
-    courseList: {}
+    courseList: {},
+    credentialList: [
+        {
+            type: "ACADEMIC",
+            title: "Title",
+            description: "Description",
+            issuer: "",
+            issuance_date: "",
+            student: "",
+            proof: "",
+            Board: "Board"
+        }
+    ]
 };
 
 const Course = (state = initialState, action) => {
@@ -11,6 +23,12 @@ const Course = (state = initialState, action) => {
             return {
                 ...state,
                 courseList: action.payload
+            };
+
+        case ADD_CREDENTIAL:
+            return {
+                ...state,
+                credentialList: [...state.credentialList, action.payload]
             };
 
         default:

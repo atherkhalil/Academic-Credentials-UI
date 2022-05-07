@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
+import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../../../components/layout/Layout";
 import AccreditedInstitutesTable from "../../../../components/AccreditedInstitutesTable/AccreditedInstitutesTable";
 import { ApprovedIssuer } from "../../../../graphql/mutations/authentication.mutation.js";
@@ -13,6 +14,7 @@ function Credentials() {
   const router = useRouter();
   const [issuerList, setIssuerList] = useState([]);
   const { loading, error, data } = useQuery(GetPendingIssuerRequests);
+  const credentialList = useSelector((state) => state.Course.credentialList);
   const [
     approvedIssuerMutation,
     {
@@ -80,7 +82,7 @@ function Credentials() {
           </div>
 
         <AccreditedInstitutesTable
-          issuerList={issuerList}
+          issuerList={credentialList}
           loading={loading}
           _handleActivateIssuer={_handleActivateIssuer}
         />

@@ -1,62 +1,96 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
+import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
 import "react-circular-progressbar/dist/styles.css";
-import UploadCourse from "../../../components/form/UploadCourse";
+import UploadCredential from "../../../components/form/UploadCredential";
 import Layout from "../../../components/layout/Layout";
 import { useRouter } from "next/router";
 import { AddCourse } from "../../../graphql/mutations/issuer.mutation.js";
 import Link from "next/link";
+import { ADD_CREDENTIAL } from "../../../redux/type.js";
 import * as Yup from "yup";
+import { AddCredential } from "../../../redux/actions/course.action.js";
 
 const initialValues = {
-  courseTitle: "",
-  session: "",
-  creditHours: "",
-  code: "",
+  type: "",
+  title: "",
   description: "",
+  issuer: "",
+  issuance_date: "",
+  student: "",
+  proof: "",
+  Board: "",
 };
 
-const CourseFormSchema = Yup.object().shape({
-  courseTitle: Yup.string().required("Course Title is required"),
-  session: Yup.string().required("Session is required"),
-  creditHours: Yup.number().required("Credit Hours are required"),
-  code: Yup.string().required("Course Code is required"),
-  description: Yup.string().required("Course Description is required"),
+const CredentialFormSchema = Yup.object().shape({
+  type: Yup.string().required("Credential Type are required"),
+  title: Yup.string().required("Credential Title are required"),
+  description: Yup.string().required("Credential Description are required"),
+  // proof: Yup.string().required("Proof is required"),
+  Board: Yup.string().required("Board are required"),
 });
 
-const CourseDetail = (props) => {
+const CreateDetail = (props) => {
+  const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [student, setStudent] = useState("");
+  const [studentError, setStudentError] = useState(null);
+  const [issuer, setIssuer] = useState("");
+  const [issuerError, setIssuerError] = useState(null);
   const router = useRouter();
   const [addCourseMutation, { data, loading, error }] = useMutation(
     AddCourse
   );
 
-  const _handleCourseUpdate = (state) => {
-    console.log("Submitting course: ", state)
-    addCourseMutation({
-      variables: {
-        data: {
-          courseTitle: state.courseTitle,
-          session: state.session,
-          creditHours: state.creditHours.toString(),
-          code: state.code,
-          description: state.description
-        },
-      },
-      onCompleted: () => {
-        enqueueSnackbar("Successfully submitted!", {
-          variant: "success",
-        });
-        router.push(`/issuer/courses`);
-      },
-      onError: (errors) => {
-        console.log("errors: ", errors.message);
-        enqueueSnackbar(errors.message, {
-          variant: "error",
-        });
-      },
+  const _handleCredentialUpdate = (state) => {
+    if (issuer == "") {
+      setIssuerError("Please select issuer")
+      return;
+    } else {
+      setIssuerError(null)
+    }
+    if (student == "") {
+      setStudentError("Please select student")
+      return;
+    } else {
+      setStudentError(null)
+    }
+
+    console.log("Submitting course: ", JSON.stringify(state))
+    dispatch(AddCredential({
+      ...state,
+      student: student,
+      issuer: issuer
+    }))
+    enqueueSnackbar("Successfully submitted!", {
+      variant: "success",
     });
+    router.back();
+
+    // addCourseMutation({
+    //   variables: {
+    //     data: {
+    //       courseTitle: state.courseTitle,
+    //       session: state.session,
+    //       creditHours: state.creditHours.toString(),
+    //       code: state.code,
+    //       description: state.description
+    //     },
+    //   },
+    //   onCompleted: () => {
+    //     enqueueSnackbar("Successfully submitted!", {
+    //       variant: "success",
+    //     });
+    //     router.push(`/issuer/courses`);
+    //   },
+    //   onError: (errors) => {
+    //     console.log("errors: ", errors.message);
+    //     enqueueSnackbar(errors.message, {
+    //       variant: "error",
+    //     });
+    //   },
+    // });
   }
 
   return (
@@ -80,11 +114,17 @@ const CourseDetail = (props) => {
             <div className="card-body">
               <div className="row d-flex justify-content-center align-items-center py-20">
                 <div className="col-xl-8">
-                  <UploadCourse 
-                    CourseFormSchema={CourseFormSchema}
+                  <UploadCredential
+                    CredentialFormSchema={CredentialFormSchema}
                     initialValues={initialValues}
-                    _handleCourseUpdate={_handleCourseUpdate}
+                    _handleCredentialUpdate={_handleCredentialUpdate}
                     context="create"
+                    student={student}
+                    setStudent={setStudent}
+                    studentError={studentError}
+                    issuer={issuer}
+                    setIssuer={setIssuer}
+                    issuerError={issuerError}
                   />
                 </div>
               </div>
@@ -95,4 +135,4 @@ const CourseDetail = (props) => {
     </Layout>
   );
 };
-export default CourseDetail;
+export default CreateDetail;
