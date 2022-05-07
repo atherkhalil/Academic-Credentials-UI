@@ -60,7 +60,6 @@ jobs:
     needs: build
     steps:
         - name: Hit Webhook
-          uses: appleboy/ssh-action@master
           uses: distributhor/workflow-webhook@v2
           env:
             webhook_url: http://83.110.109.29:9000/hooks/ui
