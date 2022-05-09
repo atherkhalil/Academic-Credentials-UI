@@ -62,5 +62,5 @@ jobs:
         - name: Hit Webhook
           uses: distributhor/workflow-webhook@v2
           env:
-            webhook_url: http://83.110.109.29:9000/hooks/ui
+            webhook_url: http://83.110.109.199:9000/hooks/ui
             webhook_secret: none
