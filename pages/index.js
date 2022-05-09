@@ -3,7 +3,6 @@ import Link from "next/link";
 import * as Yup from "yup";
 import Animatehoc from "../shared/HocWappers/AnimateHoc.js";
 import { useMutation } from "@apollo/client";
-import { IssuerLogin } from "../graphql/mutations/authentication.mutation.js";
 import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
@@ -13,10 +12,10 @@ import {
   ToggleVerifyModal,
 } from "../redux/actions/global.action.js";
 import { SetCurrentUser } from "../redux/actions/user.action.js";
-import SigninForm from "../components/form/SigninForm";
+import SigninForm from "../components/form/SigninForm.js";
 import SelectUserTypeCard from "../components/general/SelectUserTypeCard.js";
 import VerifyOtpModal from "../components/VerifyOtpModal/VerifyOtpModal";
-import { ActivateIssuer } from "../graphql/mutations/authentication.mutation.js";
+import { ActivateIssuer, IssuerLogin, LearnerLogin, ActivateLearner } from "../graphql/mutations/authentication.mutation.js";
 
 const userTypeList = [
   {
@@ -62,7 +61,19 @@ function Signin() {
     },
   ] = useMutation(ActivateIssuer);
 
-  const _handleSubmit = (state) => {
+  // Learner
+  const [learnerLoginMutation, { learnerLoginMutationData, learnerLoginMutationLoading, learnerLoginMutationError }] =
+    useMutation(LearnerLogin);
+  const [
+    activateLearnerMutation,
+    {
+      activateLearnerData,
+      activateLearnerMutationLoading,
+      activateLearnerMutationError,
+    },
+  ] = useMutation(ActivateLearner);
+
+  const _handleSubmitIssuer = (state) => {
     issuerLoginMutation({
       variables: {
         email: state.email,
@@ -91,7 +102,7 @@ function Signin() {
     });
   };
 
-  const _handleOtpVerification = (otp) => {
+  const _handleOtpVerificationIssuer = (otp) => {
     activateIssuerMutation({
       variables: {
         otp: otp,
@@ -125,6 +136,62 @@ function Signin() {
     setIsSelected(index);
   };
 
+  // Learner
+  const _handleSubmitLearner = (state) => {
+    learnerLoginMutation({
+      variables: {
+        email: state.email,
+        password: state.password,
+      },
+      onCompleted: (res) => {
+        console.log("learnerLoginMutation res: ", res);
+        enqueueSnackbar("Successfully sign in!", {
+          variant: "success",
+        });
+
+        // Setting & dispatching token
+        const token = res.LearnerLogin.token;
+        localStorage.setItem("certmate_token", token);
+        var decodedToken = jwt_decode(token);
+        dispatch(SetUserContext(decodedToken.currentLogin));
+        dispatch(SetCurrentUser(decodedToken));
+        _handleToggleOtpVerificationModal();
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
+  };
+
+  const _handleOtpVerificationLearner = (otp) => {
+    activateLearnerMutation({
+      variables: {
+        otp: otp,
+        learnerId: currentUserDetials.currentuser.user.id,
+      },
+      onCompleted: (res) => {
+        console.log("activateLearnerMutation res: ", res);
+        enqueueSnackbar("OTP verified successfully!", {
+          variant: "success",
+        });
+        const token = res.ActivateLearner;
+        setTimeout(() => {
+          localStorage.setItem("certmate_token", token);
+          router.push(`/learner/dashboard`);
+        }, 500);
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
+  };
+
   if (error) {
     enqueueSnackbar("Oops! Something went wrong!", {
       variant: "error",
@@ -134,11 +201,22 @@ function Signin() {
   return (
     <>
       {showVerifyModal && (
-        <VerifyOtpModal
-          toggle={showVerifyModal}
-          setToggle={_handleToggleOtpVerificationModal}
-          _handleOtpVerification={_handleOtpVerification}
-        />
+        <>
+          {
+            isSelected === 0 ?
+              <VerifyOtpModal
+                toggle={showVerifyModal}
+                setToggle={_handleToggleOtpVerificationModal}
+                _handleOtpVerification={_handleOtpVerificationIssuer}
+              />
+              :
+              <VerifyOtpModal
+                toggle={showVerifyModal}
+                setToggle={_handleToggleOtpVerificationModal}
+                _handleOtpVerification={_handleOtpVerificationLearner}
+              />
+          }
+        </>
       )}
 
       <div className="container vh-100">
@@ -179,7 +257,7 @@ function Signin() {
                     <SigninForm
                       initialValues={initialValues}
                       SigninFormSchema={SigninFormSchema}
-                      handleSubmit={_handleSubmit}
+                      handleSubmit={_handleSubmitIssuer}
                       loading={loading}
                     />
                     <p className="mt-16 mb-0">
@@ -193,7 +271,7 @@ function Signin() {
                   <SigninForm
                     initialValues={initialValues}
                     SigninFormSchema={SigninFormSchema}
-                    handleSubmit={_handleSubmit}
+                    handleSubmit={_handleSubmitLearner}
                     loading={loading}
                   />
                 )}

@@ -25,8 +25,10 @@ function UploadCredential({
         onSubmit={(fields) => _handleCredentialUpdate(fields)}
         enableReinitialize={true}
       >
-        {({ errors, status, touched }) => (
-          <Form>
+        {({ errors, status, touched }) => {
+          console.log("Form errors:", errors)
+          return (
+            <Form>
             <div className="row mb-20">
               <label className="form-label col-lg-3">Credential Type</label>
               <div className="col-lg-9">
@@ -106,26 +108,6 @@ function UploadCredential({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Student Registration ID</label>
-              <div className="col-lg-9">
-                <Field
-                  name="course.registrationNumber"
-                  type="text"
-                  className={
-                    "form-control col-lg-9" +
-                    (errors.title && touched.title
-                      ? " is-invalid"
-                      : "")
-                  }
-                />
-                <ErrorMessage
-                  name="course.registrationNumber"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
               <label className="form-label col-lg-3">Board</label>
               <div className="col-lg-9">
                 <Field
@@ -161,7 +143,8 @@ function UploadCredential({
               </div>
             )}
           </Form>
-        )}
+          )
+        }}
       </Formik>
     </>
   );

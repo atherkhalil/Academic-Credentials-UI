@@ -50,6 +50,18 @@ export const mainNavLink = {
         path: "issuer/students",
       }
     ],
+    LEARNER: [
+      {
+        icon: "ri-grid-fill",
+        name: "Dashboard",
+        path: "issuer/dashboard",
+      },
+      {
+        icon: "ri-user-fill",
+        name: "Profile",
+        path: "issuer/settings/profile",
+      },
+    ],
   };
 
 export const profileNavigation = {
@@ -124,3 +136,5 @@ export const issuersList = [
     country: "USA"
   },
 ];
+
+export const genderTypes = ["MALE", "FEMALE"];

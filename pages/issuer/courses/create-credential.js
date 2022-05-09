@@ -13,14 +13,11 @@ import * as Yup from "yup";
 import { AddCredential } from "../../../redux/actions/course.action.js";
 
 const CredentialFormSchema = Yup.object().shape({
-  type: Yup.string().required("Credential Type are required"),
-  title: Yup.string().required("Credential Title are required"),
-  description: Yup.string().required("Credential Description are required"),
+  type: Yup.string().required("Credential Type is required"),
+  title: Yup.string().required("Credential Title is required"),
+  description: Yup.string().required("Credential Description is required"),
   // proof: Yup.string().required("Proof is required"),
-  Board: Yup.string().required("Board are required"),
-  course: Yup.object().shape({
-      registrationNumber: ""
-  })
+  Board: Yup.string().required("Board is required"),
 });
 
 const CreateDetail = (props) => {
@@ -32,6 +29,7 @@ const CreateDetail = (props) => {
   const [issuerError, setIssuerError] = useState(null);
   const courseList = useSelector((state) => state.Course.courseList);
   const router = useRouter();
+  const [currentCourse, setCurrentCourse] = useState(null);
   const [initialValues, setInitialValues] = useState({
     type: "",
     title: "",
@@ -41,12 +39,6 @@ const CreateDetail = (props) => {
     student: "",
     proof: "",
     Board: "",
-    course: {
-      courseRegistrationNumber: "",
-      registrationNumber: "",
-      courseId: "",
-      issuerId: ""
-    }
   });
   const [addCourseMutation, { data, loading, error }] = useMutation(
     AddCourse
@@ -66,7 +58,7 @@ const CreateDetail = (props) => {
       setStudentError(null)
     }
 
-    console.log("Submitting course: ", JSON.stringify(state))
+    console.log("Submitting course: ", state)
     dispatch(AddCredential({
       ...state,
       student: student,
@@ -109,6 +101,7 @@ const CreateDetail = (props) => {
       title: course.courseTitle,
       description: course.description
     })
+    setCurrentCourse(course);
   }
 
   return (

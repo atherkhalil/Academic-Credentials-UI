@@ -1,5 +1,7 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, getIn } from "formik";
 import { Button } from "reactstrap";
+import Select from 'react-select';
+import { genderTypes } from "../../shared/constants.js";
 import AddCoursesInEnrollStudentTable from "../AddCoursesInEnrollStudentTable/AddCoursesInEnrollStudentTable.js";
 
 function EnrollStudent({
@@ -7,6 +9,10 @@ function EnrollStudent({
   initialValues,
   _handleCourseUpdate,
   context,
+  coursesList,
+  courseSelected,
+  setCourseSelected,
+  courseSelectedError
 }) {
   return (
     <>
@@ -83,12 +89,24 @@ function EnrollStudent({
               <div className="col-lg-9">
                 <Field
                   name="gender"
-                  type="text"
+                  as="select"
+                  type="string"
                   className={
-                    "form-control col-lg-9" +
-                    (errors.gender && touched.gender ? " is-invalid" : "")
+                    "form-control" +
+                    (errors.gender &&
+                      touched.gender
+                      ? " is-invalid"
+                      : "")
                   }
-                />
+                >
+                  <option value="" selected>Select gender</option>
+                  {
+                    genderTypes.map((val, index) => (
+                      <option key={index} value={val}>{val}</option>
+                    ))
+                  }
+                </Field>
+
                 <ErrorMessage
                   name="gender"
                   component="div"
@@ -101,7 +119,7 @@ function EnrollStudent({
               <div className="col-lg-9">
                 <Field
                   name="dob"
-                  type="number"
+                  type="date"
                   className={
                     "form-control col-lg-9" +
                     (errors.dob && touched.dob
@@ -171,10 +189,60 @@ function EnrollStudent({
               </div>
             </div>
 
+            
             <div className="row mb-20">
-              <label className="form-label col-lg-12">Courses</label>
-              <div className="col-lg-12">
-                  <AddCoursesInEnrollStudentTable />
+              <label className="form-label col-lg-3">Student Registration ID</label>
+              <div className="col-lg-9">
+                <Field
+                  name="course.registrationNumber"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (getIn(errors, 'course.registrationNumber') && getIn(touched, 'course.registrationNumber')
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="course.registrationNumber"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Course Registration Number</label>
+              <div className="col-lg-9">
+                <Field
+                  name="course.courseRegistrationNumber"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (getIn(errors, 'course.courseRegistrationNumber') && getIn(touched, 'course.courseRegistrationNumber')
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="course.courseRegistrationNumber"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Courses</label>
+              <div className="col-lg-9">
+                <Select
+                  value={courseSelected}
+                  onChange={(val) => setCourseSelected(val)}
+                  options={coursesList.map((course, index) => ({ value: course.id, label: `${course.courseTitle} (${course.code})`, issuerId: course.issuerId }))}
+                />
+                {courseSelectedError ? (
+                  <div className="error text-danger">{courseSelectedError}</div>
+                ) : null}
               </div>
             </div>
 
@@ -185,7 +253,7 @@ function EnrollStudent({
                 <div className="col-lg-3"></div>
 
                 <div className="col-lg-9">
-                  <Button color="primary" className="me-10">
+                  <Button type="submit" color="primary" className="me-10">
                     Submit
                   </Button>{" "}
                   <Button color="danger">Cancel</Button>{" "}

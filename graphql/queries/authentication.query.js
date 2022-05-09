@@ -50,3 +50,15 @@ export const GetIssuerDetail = gql`
     }
   }
 `;
+
+
+export const GetLearnerDetail = gql`
+  query GetLearnerDetail($learnerId: ID!) {
+    GetLearnerDetail(learnerId: $learnerId) {
+      id
+      isVerified
+      qrCode
+      email
+    }
+  }
+`;
