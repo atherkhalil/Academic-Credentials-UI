@@ -93,19 +93,6 @@ function UploadCredential({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Issuer</label>
-              <div className="col-lg-9">
-                <Select
-                  value={issuer}
-                  onChange={(val) => setIssuer(val)}
-                  options={issuersList.map((issuer, index) => ({ value: issuer._id, label: `${issuer.id} - ${issuer.name}` }))}
-                />
-                {issuerError ? (
-                  <div className="error text-danger">{issuerError}</div>
-                ) : null}
-              </div>
-            </div>
-            <div className="row mb-20">
               <label className="form-label col-lg-3">Student</label>
               <div className="col-lg-9">
                 <Select
@@ -116,6 +103,26 @@ function UploadCredential({
                 {studentError ? (
                   <div className="error text-danger">{studentError}</div>
                 ) : null}
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Student Registration ID</label>
+              <div className="col-lg-9">
+                <Field
+                  name="course.registrationNumber"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.title && touched.title
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="course.registrationNumber"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </div>
             </div>
             <div className="row mb-20">
@@ -147,7 +154,7 @@ function UploadCredential({
 
                 <div className="col-lg-9">
                   <Button type="submit" color="primary" className="me-10">
-                    Submit
+                    Create
                   </Button>{" "}
                   <Button color="danger">Cancel</Button>{" "}
                 </div>

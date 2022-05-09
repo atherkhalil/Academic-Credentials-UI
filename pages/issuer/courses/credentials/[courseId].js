@@ -4,7 +4,7 @@ import { useSnackbar } from "notistack";
 import { useRouter } from "next/router";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../../../components/layout/Layout";
-import AccreditedInstitutesTable from "../../../../components/AccreditedInstitutesTable/AccreditedInstitutesTable";
+import CoursesTable from "../../../../components/CoursesTable/CoursesTable.js";
 import { ApprovedIssuer } from "../../../../graphql/mutations/authentication.mutation.js";
 import { GetPendingIssuerRequests } from "../../../../graphql/queries/issuer.query.js";
 import Link from "next/link";
@@ -75,13 +75,13 @@ function Credentials() {
             </Link>
             </div>
             <div className="text-end mb-4">
-            <Link href={"/issuer/courses/create-credential"}>
+            <Link href={"/issuer/courses/create-credential?courseId=" + router.query.courseId}>
                 <button className="btn btn-primary mb-4">Create Credential</button>
             </Link>
             </div>
           </div>
 
-        <AccreditedInstitutesTable
+        <CoursesTable
           issuerList={credentialList}
           loading={loading}
           _handleActivateIssuer={_handleActivateIssuer}

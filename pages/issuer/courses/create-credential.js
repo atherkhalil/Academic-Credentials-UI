@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
@@ -12,23 +12,15 @@ import { ADD_CREDENTIAL } from "../../../redux/type.js";
 import * as Yup from "yup";
 import { AddCredential } from "../../../redux/actions/course.action.js";
 
-const initialValues = {
-  type: "",
-  title: "",
-  description: "",
-  issuer: "",
-  issuance_date: "",
-  student: "",
-  proof: "",
-  Board: "",
-};
-
 const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type are required"),
   title: Yup.string().required("Credential Title are required"),
   description: Yup.string().required("Credential Description are required"),
   // proof: Yup.string().required("Proof is required"),
   Board: Yup.string().required("Board are required"),
+  course: Yup.object().shape({
+      registrationNumber: ""
+  })
 });
 
 const CreateDetail = (props) => {
@@ -38,18 +30,35 @@ const CreateDetail = (props) => {
   const [studentError, setStudentError] = useState(null);
   const [issuer, setIssuer] = useState("");
   const [issuerError, setIssuerError] = useState(null);
+  const courseList = useSelector((state) => state.Course.courseList);
   const router = useRouter();
+  const [initialValues, setInitialValues] = useState({
+    type: "",
+    title: "",
+    description: "",
+    issuer: "",
+    issuance_date: "",
+    student: "",
+    proof: "",
+    Board: "",
+    course: {
+      courseRegistrationNumber: "",
+      registrationNumber: "",
+      courseId: "",
+      issuerId: ""
+    }
+  });
   const [addCourseMutation, { data, loading, error }] = useMutation(
     AddCourse
   );
 
-  const _handleCredentialUpdate = (state) => {
-    if (issuer == "") {
-      setIssuerError("Please select issuer")
-      return;
-    } else {
-      setIssuerError(null)
+  useEffect(() => {
+    if (courseList && router?.query?.courseId) {
+    _handleCurrentCourse(router.query.courseId)
     }
+  }, [courseList]);
+
+  const _handleCredentialUpdate = (state) => {
     if (student == "") {
       setStudentError("Please select student")
       return;
@@ -91,6 +100,15 @@ const CreateDetail = (props) => {
     //     });
     //   },
     // });
+  }
+
+  const _handleCurrentCourse = (courseId) => {
+    let course = courseList.find(obj => obj.id === courseId);
+    setInitialValues({
+      ...initialValues,
+      title: course.courseTitle,
+      description: course.description
+    })
   }
 
   return (

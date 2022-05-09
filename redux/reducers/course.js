@@ -1,7 +1,7 @@
 import { SET_COURSES_LIST, ADD_CREDENTIAL } from '../type';
 
 const initialState = {
-    courseList: {},
+    courseList: [],
     credentialList: [
         {
             type: "ACADEMIC",
