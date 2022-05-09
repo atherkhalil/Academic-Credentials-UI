@@ -3,50 +3,50 @@ import Link from "next/link";
 import EmptyData from "../general/EmptyData.js";
 import Switch from "react-switch";
 import moment from "moment";
-import './card.module.css';
+import { truncateString } from "../../shared/helper.js";
 
 const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer }) => {
-    console.log("content: ", content)
     return (
-        <div className="card course-card">
+        <div className="card credential-kanban-card">
             <div className="card-body courses-details">
-                <h5>Bachelors of Computer Engineering</h5>
+                <h5>{content.title}</h5>
                 <div className="courses-details-info d-flex justify-content-left">
                     <div className="courses-details-info-box">
-                        <i class="ri-calendar-check-fill"></i>
-                        <span>Session: 4 Years</span>
+                        <i class="ri-government-line"></i>
+                        <span>{content.type}</span>
                     </div>
                     <div className="courses-details-info-box">
                         <i class="ri-timer-2-line"></i>
-                        <span>Credit Hours: 140</span>
-                    </div>
-                    <div className="courses-details-info-box">
-                        <i class="ri-grid-fill"></i>
-                        <span>Code: BSCS</span>
+                        <span>{moment(content.issuance_date).format("MMMM Do YYYY")}</span>
                     </div>
                 </div>
-                <p>This is 4 Years degree in Bachelors of Computer Engineering</p>
-                <span className="text-primary">Active</span>
+                <div className="courses-details-info d-flex justify-content-left">
+                    <div className="courses-details-info-box">
+                        <i class="ri-shield-user-line"></i>
+                        <span>{content?.issuer?.name}</span>
+                    </div>
+                    <div className="courses-details-info-box">
+                        <i class="ri-shield-user-line"></i>
+                        <span>{content?.student?.name}</span>
+                    </div>
+                </div>
+                <p className="truncate">{truncateString(content.description, 50)}</p>
+                <span className="text-primary">{content.Board}</span>
                 {/* <span className="text-warning">Inactive</span> */}
                 <div className="courses-action d-flex flex-row justify-content-between">
                     <div>
                         <Link href={"courses/" + content.id}>
                             <a className="btn btn-primary text-white">Details</a>
                         </Link>
-                        <Link href={"courses/credentials/" + content.id}>
-                            <button className="btn btn-light text-dark">
-                                View Credentials
-                            </button>
-                        </Link>
                     </div>
-                    <div>
+                    {/* <div>
                         <Switch
                             onChange={() =>
                                 _handleCourseStatusUpdate(content.id, content.active, index)
                             }
                             checked={content.active}
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>

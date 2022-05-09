@@ -1,13 +1,18 @@
 import React from 'react';
-import Board from '@asseinfo/react-kanban';
+import Board, { moveCard } from '@asseinfo/react-kanban';
 import '@asseinfo/react-kanban/dist/styles.css';
 import Card from "./Card.js";
 
 
-const Credentialkanban = ({ board }) => {
+const Credentialkanban = ({ board, setBoard }) => {
+    const _handleCardMove = (_card, source, destination) => {
+        const updatedBoard = moveCard(board, source, destination);
+        setBoard(updatedBoard)
+    }
+
     return (
-        // <Board initialBoard={board} />
         <Board
+            onCardDragEnd={_handleCardMove}
             disableColumnDrag
             renderCard={(content, { removeCard, dragging }) => (
                 <Card content={content} dragging={dragging} />

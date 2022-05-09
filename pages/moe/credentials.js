@@ -1,40 +1,76 @@
-import React, { useEffect } from "react";
-import Link from "next/link";
+import React, { useState, useEffect } from "react";
 import Layout from "../../components/layout/Layout";
-import ProfileWidget from '../../components/elements/ProfileWidget';
-import TopPerfomingWidget from "../../components/elements/TopPerformingWidget";
-// import Credentialkanban from "../../components/CredentialKanban/CredentialKanban.js";
 import dynamic from 'next/dynamic';
-
 const Credentialkanban = dynamic(() => import("../../components/CredentialKanban/CredentialKanban.js"), { ssr: false });
 
 function Credentials() {
-    const board = {
+    const [board, setBoard] = useState({
         columns: [
             {
                 id: 1,
-                title: 'Backlog',
+                title: 'Pending',
                 cards: [
                     {
-                        id: 1,
-                        title: 'Add card',
-                        description: 'Add capability to add a card in a column'
-                    },
+                        id: "TsLiK6hij61QLxY07zDKzQ",
+                        type: "ACADEMIC",
+                        title: "Bachelors of Electrical Engineering",
+                        description: "Description",
+                        issuer: {
+                            name: "Mr. Bob"
+                        },
+                        issuance_date: new Date(),
+                        student: {
+                            name: "Alex Daniel"
+                        },
+                        proof: "",
+                        Board: "Board"
+                    }
                 ]
             },
             {
                 id: 2,
-                title: 'Doing',
+                title: 'Approved',
                 cards: [
                     {
-                        id: 2,
-                        title: 'Drag-n-drop support',
-                        description: 'Move a card between the columns'
-                    },
+                        id: "VRpskqk4hmtKvDveMbQ33d",
+                        type: "ACADEMIC",
+                        title: "Bachelors of Computer Engineering",
+                        description: "Description",
+                        issuer: {
+                            name: "Mrs. Alice"
+                        },
+                        issuance_date: new Date(),
+                        student: {
+                            name: "Emma Watson"
+                        },
+                        proof: "",
+                        Board: "Board"
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: 'REJECTED',
+                cards: [
+                    {
+                        id: "CO51dG2W7JBNvKJklwLQ33",
+                        type: "ACADEMIC",
+                        title: "Bachelors of Computer Science",
+                        description: "Description",
+                        issuer: {
+                            name: "Mrs. Alice"
+                        },
+                        issuance_date: new Date(),
+                        student: {
+                            name: "David Johnson"
+                        },
+                        proof: "",
+                        Board: "Board"
+                    }
                 ]
             }
         ]
-    };
+    });
 
     return (
         <>
@@ -46,7 +82,7 @@ function Credentials() {
                 parent={"Home"}
                 child={"Credentials"}
             >
-                 <Credentialkanban board={board} />
+                 <Credentialkanban board={board} setBoard={setBoard} />
             </Layout>
         </>
     );
