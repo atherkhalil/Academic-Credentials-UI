@@ -58,18 +58,18 @@ function UploadCourse({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Course Session</label>
+              <label className="form-label col-lg-3">Course Duration</label>
               <div className="col-lg-9">
                 <Field
-                  name="session"
+                  name="duration"
                   type="text"
                   className={
                     "form-control col-lg-9" +
-                    (errors.session && touched.session ? " is-invalid" : "")
+                    (errors.duration && touched.duration ? " is-invalid" : "")
                   }
                 />
                 <ErrorMessage
-                  name="session"
+                  name="duration"
                   component="div"
                   className="invalid-feedback"
                 />

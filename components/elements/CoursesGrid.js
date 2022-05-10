@@ -24,7 +24,7 @@ function CoursesGrid({ coursesList, _handleCourseStatusUpdate }) {
                 <div className="courses-details-info d-flex justify-content-left">
                   <div className="courses-details-info-box">
                     <i class="ri-calendar-check-fill"></i>
-                    <span>Session: {item.session}</span>
+                    <span>Duration: {item.duration}</span>
                   </div>
                   <div className="courses-details-info-box">
                     <i class="ri-timer-2-line"></i>

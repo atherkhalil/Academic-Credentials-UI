@@ -9,7 +9,7 @@ import { useQuery } from "@apollo/client";
 import { Spinner } from "reactstrap";
 import { GetIssuerDetail } from "../../graphql/queries/authentication.query.js";
 import { ActivateIssuer } from "../../graphql/mutations/authentication.mutation.js";
-import VerifyOtpInput from "../../components/VerifyOtpInput";
+import VerifyOtpInput from "../../components/elements/VerifyOtpInput";
 
 const initialValues = {
   otp: "",

@@ -13,7 +13,7 @@ import jwt_decode from "jwt-decode";
 import { SetCurrentUser } from "../../redux/actions/user.action.js";
 import { SetUserContext, ToggleVerifyModal } from "../../redux/actions/global.action.js";
 import { ActivateMOEMutation } from "../../graphql/mutations/authentication.mutation.js";
-import VerifyOtpModal from "../components/modal/VerifyOtpModal/VerifyOtpModal.js";
+import VerifyOtpModal from "../../components/modal/VerifyOtpModal/VerifyOtpModal.js";
 
 const initialValues = {
   adminEmail: "",

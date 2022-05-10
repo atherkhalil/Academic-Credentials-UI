@@ -16,10 +16,6 @@ import { persistStore } from "redux-persist";
 import { createUploadLink } from "apollo-upload-client";
 import { from } from '@apollo/client'
 
-const httpLink = createHttpLink({
-  uri: "http://83.110.109.199:22005/graphql",
-});
-
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem("certmate_token");
@@ -35,7 +31,7 @@ const authLink = setContext((_, { headers }) => {
 });
 
 const uploadLink = createUploadLink({ 
-  uri: "http://83.110.109.199:22005/graphql"
+  uri: process.env.NEXT_PUBLIC_BACKEND_URL
 });
 
 const client = new ApolloClient({

@@ -1,5 +1,16 @@
 import React, { useState } from "react";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
+import { useSnackbar } from "notistack";
+import SignWithKeyInput from "../../elements/SignWithKeyInput";
+import * as Yup from "yup";
+
+const initialValues = {
+  signature: "",
+};
+
+const SignFormSchema = Yup.object().shape({
+  signature: Yup.string().required("Digital Signature is required"),
+});
 
 const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential }) => {
   return (
@@ -11,9 +22,9 @@ const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential }) => {
         backdrop="static"
       >
         <ModalBody>
-          <h5 className="text-center text-primary">
-            Please enter your digital signature to sign credential
-          </h5>
+          <h4 className="text-center text-primary">
+            Please enter your Digital Signature to sign credential
+          </h4>
           <div
             style={{
               display: "flex",
@@ -21,24 +32,21 @@ const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential }) => {
               justifyContent: "center",
             }}
           >
-            <div style={{ padding: 30 }}> 
-            <img
-                src="/images/sign-image.png"
+            <div style={{ padding: 30 }}>
+              <img
+                src="/images/favpng_contract-clip-art.png"
                 alt=""
-                width="100%"
+                width="100px"
               />
             </div>
           </div>
+          <SignWithKeyInput
+            initialValues={initialValues}
+            SignFormSchema={SignFormSchema}
+            handleSubmit={_handleSignCredential}
+            loading={false}
+          />
         </ModalBody>
-        <ModalFooter>
-          <button
-            type="button"
-            className="btn btn-primary mr-2"
-            onClick={() => _handleSignCredential(otp)}
-          >
-            Sign
-          </button>
-        </ModalFooter>
       </Modal>
     </>
   );

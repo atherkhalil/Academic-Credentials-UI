@@ -11,6 +11,7 @@ import Link from "next/link";
 import { ADD_CREDENTIAL } from "../../../redux/type.js";
 import * as Yup from "yup";
 import { AddCredential } from "../../../redux/actions/course.action.js";
+import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
 
 const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type is required"),
@@ -29,6 +30,7 @@ const CreateDetail = (props) => {
   const [issuerError, setIssuerError] = useState(null);
   const courseList = useSelector((state) => state.Course.courseList);
   const router = useRouter();
+  const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
   const [initialValues, setInitialValues] = useState({
     type: "",
@@ -64,10 +66,12 @@ const CreateDetail = (props) => {
       student: student,
       issuer: issuer
     }))
-    enqueueSnackbar("Successfully submitted!", {
-      variant: "success",
-    });
-    router.back();
+    // enqueueSnackbar("Successfully submitted!", {
+    //   variant: "success",
+    // });
+
+    // Now after credential is submitted, Issuer need to sign it with his digital signature
+    setShowSignWithKeyModal(!showSignWithKeyModal)
 
     // addCourseMutation({
     //   variables: {
@@ -102,6 +106,16 @@ const CreateDetail = (props) => {
       description: course.description
     })
     setCurrentCourse(course);
+  }
+
+  const _handleSignCredential = (state) => { 
+    console.log("Submitting state: ", state)
+    enqueueSnackbar("Credential signed successfully!", {
+      variant: "success",
+    });
+    setTimeout(() => {
+      router.back();
+    }, 500);
   }
 
   return (
@@ -143,6 +157,12 @@ const CreateDetail = (props) => {
           </div>
         </div>
       </div>
+
+      <SignWithKeyModal
+        toggle={showSignWithKeyModal}
+        setToggle={setShowSignWithKeyModal}
+        _handleSignCredential={_handleSignCredential}
+      />
     </Layout>
   );
 };

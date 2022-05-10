@@ -7,7 +7,7 @@ export const AddCourse = gql`
         issuerId
         courseTitle
         creditHours
-        session
+        duration
         code
         description
         active
@@ -23,7 +23,7 @@ export const UpdateCourseStatus = gql`
         id
         issuerId
         courseTitle
-        session
+        duration
         creditHours
         code
         description

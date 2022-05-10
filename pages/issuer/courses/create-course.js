@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import "react-circular-progressbar/dist/styles.css";
@@ -11,7 +11,7 @@ import * as Yup from "yup";
 
 const initialValues = {
   courseTitle: "",
-  session: "",
+  duration: "",
   creditHours: "",
   code: "",
   description: "",
@@ -19,7 +19,7 @@ const initialValues = {
 
 const CourseFormSchema = Yup.object().shape({
   courseTitle: Yup.string().required("Course Title is required"),
-  session: Yup.string().required("Session is required"),
+  duration: Yup.string().required("Duration is required"),
   creditHours: Yup.number().required("Credit Hours are required"),
   code: Yup.string().required("Course Code is required"),
   description: Yup.string().required("Course Description is required"),
@@ -38,7 +38,7 @@ const CourseDetail = (props) => {
       variables: {
         data: {
           courseTitle: state.courseTitle,
-          session: state.session,
+          duration: state.duration,
           creditHours: state.creditHours.toString(),
           code: state.code,
           description: state.description

@@ -6,7 +6,7 @@ export const GetCoursesByIssuer = gql`
             id
             issuerId
             courseTitle
-            session
+            duration
             description
             creditHours
             code
