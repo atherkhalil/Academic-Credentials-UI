@@ -19,13 +19,18 @@ const initialValues = {
   dob: "",
   telephone: "",
   email: "",
-  city: "",
-  country: "",
+  address: {
+    city: "",
+    country: "",
+    street: ""
+  },
   course: {
     courseRegistrationNumber: "",
     registrationNumber: "",
     courseId: "",
-    issuerId: ""
+    status: "",
+    issuerId: "",
+    session: "",
   }
 };
 
@@ -36,11 +41,16 @@ const StudentFormSchema = Yup.object().shape({
   dob: Yup.string().required("Date of birth is required"),
   telephone: Yup.string().required("Telephone no. is required"),
   email: Yup.string().required("Email is required"),
-  city: Yup.string().required("City is required"),
-  country: Yup.string().required("Country Title is required"),  
+  address: Yup.object().shape({
+    city: Yup.string().required("City is required"),
+    country: Yup.string().required("Country Title is required"), 
+    street: Yup.string().required("Street Title is required"),
+  }),
   course: Yup.object().shape({
       courseRegistrationNumber: Yup.string().required("Course Registration No. ID is required"),
-      registrationNumber: Yup.string().required("Student Registration ID is required")
+      registrationNumber: Yup.string().required("Student Registration ID is required"),
+      session: Yup.string().required("Session is required"),
+      status: Yup.string().required("Status is required")
   })
 });
 
@@ -87,13 +97,18 @@ const StudentDetial = (props) => {
           dob: state.dob,
           telephone: state.telephone,
           email: state.email,
-          city: state.city,
-          country: state.country,
+          address: {
+            city: state.city,
+            country: state.country,
+            street: state.street,
+          },
           course: {
             registrationNumber: state.course.registrationNumber,
             courseId: state.course.courseId,
             courseRegistrationNumber: state.course.courseRegistrationNumber,
-            issuerId: state.course.issuerId
+            issuerId: state.course.issuerId,
+            session: state.course.session,
+            status: state.course.status
           }
         },
       },

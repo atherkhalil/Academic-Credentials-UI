@@ -138,3 +138,5 @@ export const issuersList = [
 ];
 
 export const genderTypes = ["MALE", "FEMALE"];
+
+export const enrollLearnerStatusTypes = ["CONTINUE", "DROPPED", "COMPLETED"];

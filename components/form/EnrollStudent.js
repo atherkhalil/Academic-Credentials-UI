@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik, getIn } from "formik";
 import { Button } from "reactstrap";
 import Select from 'react-select';
-import { genderTypes } from "../../shared/constants.js";
+import { genderTypes, enrollLearnerStatusTypes } from "../../shared/constants.js";
 import AddCoursesInEnrollStudentTable from "../AddCoursesInEnrollStudentTable/AddCoursesInEnrollStudentTable.js";
 
 function EnrollStudent({
@@ -156,15 +156,16 @@ function EnrollStudent({
               <label className="form-label col-lg-3">City</label>
               <div className="col-lg-9">
                 <Field
-                  name="city"
+                  name="address.city"
                   type="text"
                   className={
                     "form-control col-lg-9" +
-                    (errors.city && touched.city ? " is-invalid" : "")
+                    (getIn(errors, 'address.city') && getIn(touched, 'address.city')
+                      ? " is-invalid" : "")
                   }
                 />
                 <ErrorMessage
-                  name="city"
+                  name="address.city"
                   component="div"
                   className="invalid-feedback"
                 />
@@ -174,22 +175,42 @@ function EnrollStudent({
               <label className="form-label col-lg-3">Country</label>
               <div className="col-lg-9">
                 <Field
-                  name="country"
+                  name="address.country"
                   type="text"
                   className={
                     "form-control col-lg-9" +
-                    (errors.country && touched.country ? " is-invalid" : "")
+                    (getIn(errors, 'address.country') && getIn(touched, 'address.country')
+                      ? " is-invalid" : "")
                   }
                 />
                 <ErrorMessage
-                  name="country"
+                  name="address.country"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Street</label>
+              <div className="col-lg-9">
+                <Field
+                  name="address.street"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (getIn(errors, 'address.street') && getIn(touched, 'address.street')
+                      ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="address.street"
                   component="div"
                   className="invalid-feedback"
                 />
               </div>
             </div>
 
-            
+
             <div className="row mb-20">
               <label className="form-label col-lg-3">Student Registration ID</label>
               <div className="col-lg-9">
@@ -243,6 +264,56 @@ function EnrollStudent({
                 {courseSelectedError ? (
                   <div className="error text-danger">{courseSelectedError}</div>
                 ) : null}
+              </div>
+            </div>
+
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Status</label>
+              <div className="col-lg-9">
+                <Field
+                  name="course.status"
+                  as="select"
+                  type="string"
+                  className={
+                    "form-control" +
+                    (
+                      getIn(errors, 'course.status') && getIn(touched, 'course.status')
+                        ? " is-invalid"
+                        : "")
+                  }
+                >
+                  <option value="" selected>Select status</option>
+                  {
+                    enrollLearnerStatusTypes.map((val, index) => (
+                      <option key={index} value={val}>{val}</option>
+                    ))
+                  }
+                </Field>
+
+                <ErrorMessage
+                  name="course.status"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Session</label>
+              <div className="col-lg-9">
+                <Field
+                  name="course.session"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (getIn(errors, 'course.session') && getIn(touched, 'course.session')
+                      ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="course.session"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </div>
             </div>
 
