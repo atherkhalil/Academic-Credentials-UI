@@ -18,7 +18,7 @@ export const mainNavLink = {
         path: "moe/accredited-institutes",
       },
       {
-        icon: "ri-hand-coin-fill",
+        icon: "ri-profile-fill",
         name: "Credentials",
         path: "moe/credentials",
       },
@@ -61,6 +61,21 @@ export const mainNavLink = {
         name: "Profile",
         path: "learner/settings/profile",
       },
+      {
+        icon: "ri-hand-coin-fill",
+        name: "Courses",
+        path: "learner/courses",
+      },
+      {
+        icon: "ri-profile-fill",
+        name: "Credentials",
+        path: "learner/credentials",
+      },
+      {
+        icon: "ri-government-line",
+        name: "Credential Issuers",
+        path: "learner/credential-issuers",
+      },
     ],
   };
 
@@ -96,7 +111,21 @@ export const profileNavigation = {
             key: 3,
             title: "Affiliated bodies"   
         },
-    ]
+    ],
+    LEARNER: [
+      {
+          key: 0,
+          title: "Profile"   
+      },
+      {
+          key: 1,
+          title: "Signatures"   
+      },
+      {
+          key: 2,
+          title: "Digital signature keys"   
+      }
+  ]
 };
 
 export const credentialTypes = ["ACADEMIC", "EMPLOYMENT"];

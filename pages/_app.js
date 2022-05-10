@@ -14,7 +14,7 @@ import { setContext } from "@apollo/client/link/context";
 import { PersistGate } from "redux-persist/integration/react";
 import { persistStore } from "redux-persist";
 import { createUploadLink } from "apollo-upload-client";
-import { from } from '@apollo/client'
+import { from } from '@apollo/client';
 
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists

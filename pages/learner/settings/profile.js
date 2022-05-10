@@ -169,7 +169,7 @@ function SettingsProfile() {
         <div className="row">
           <div className="col-md-3">
             <SettingsMenu
-              profileNavigation={profileNavigation["ISSUER"]}
+              profileNavigation={profileNavigation["LEARNER"]}
               currentViewStep={currentViewStep}
               _handleStepChange={_handleStepChange}
             />
