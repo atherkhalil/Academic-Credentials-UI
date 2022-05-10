@@ -14,7 +14,7 @@ import {
 import { SetCurrentUser } from "../redux/actions/user.action.js";
 import SigninForm from "../components/form/SigninForm.js";
 import SelectUserTypeCard from "../components/general/SelectUserTypeCard.js";
-import VerifyOtpModal from "../components/VerifyOtpModal/VerifyOtpModal";
+import VerifyOtpModal from "../components/modal/VerifyOtpModal/VerifyOtpModal.js";
 import { ActivateIssuer, IssuerLogin, LearnerLogin, ActivateLearner } from "../graphql/mutations/authentication.mutation.js";
 
 const userTypeList = [
