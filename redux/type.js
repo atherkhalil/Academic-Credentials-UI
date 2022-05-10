@@ -8,3 +8,4 @@ export const LOGOUT_USER = "LOGOUT_USER";
 
 // Course
 export const SET_COURSES_LIST = "SET_COURSES_LIST";
+export const ADD_CREDENTIAL = "ADD_CREDENTIAL";

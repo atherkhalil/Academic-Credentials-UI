@@ -68,3 +68,25 @@ export const IssuerLogin = gql`
         }
     }
 `;
+
+// ==== Learner =====
+export const ActivateLearner = gql`
+    mutation ActivateLearner($otp: String!, $learnerId: String!) {
+        ActivateLearner(otp: $otp, learnerId: $learnerId)
+    }
+`;
+
+
+export const SetLearnerPassword = gql`
+mutation SetLearnerPassword($password: String!, $confirmPassword: String!) {
+    SetLearnerPassword(password: $password, confirmPassword: $confirmPassword)
+  }
+`;
+
+export const LearnerLogin = gql`
+    mutation LearnerLogin($email: String!, $password: String!) {
+        LearnerLogin(email: $email, password: $password) {
+        token
+        }
+    }
+`;

@@ -50,6 +50,18 @@ export const mainNavLink = {
         path: "issuer/students",
       }
     ],
+    LEARNER: [
+      {
+        icon: "ri-grid-fill",
+        name: "Dashboard",
+        path: "issuer/dashboard",
+      },
+      {
+        icon: "ri-user-fill",
+        name: "Profile",
+        path: "issuer/settings/profile",
+      },
+    ],
   };
 
 export const profileNavigation = {
@@ -86,3 +98,43 @@ export const profileNavigation = {
         },
     ]
 };
+
+export const credentialTypes = ["ACADEMIC", "EMPLOYMENT"];
+
+export const studentsList = [
+  {
+    _id: "239023029fjdskf",
+    id: "0001",
+    firstName: "Mrs.",
+    lastName: "Alis",
+    courseSession: "4 Years",
+    publicKey: "vRFy4g2/bRvIHpt3fbr4LA=="
+  },
+  {
+    _id: "239023029fjdskf",
+    id: "0002",
+    firstName: "Mr.",
+    lastName: "Bob",
+    courseSession: "4 Years",
+    publicKey: "xLAOEFPZ/PWo1HtiUhLbeQ=="
+  },
+];
+
+export const issuersList = [
+  {
+    _id: "239023029fjdskf",
+    id: "20010",
+    name: "Mr Shawn",
+    url: "url",
+    country: "Australia"
+  },
+  {
+    _id: "23909022229fjska",
+    id: "20011",
+    name: "Mr Eminem",
+    url: "url",
+    country: "USA"
+  },
+];
+
+export const genderTypes = ["MALE", "FEMALE"];

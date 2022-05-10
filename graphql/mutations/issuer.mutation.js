@@ -33,3 +33,9 @@ export const UpdateCourseStatus = gql`
         }
     }
 `;
+
+export const LernerOnboarding = gql`
+    mutation LernerOnboarding($data: lernerOnboarding) {
+        LernerOnboarding(data: $data)
+    }
+`;

@@ -1,11 +1,14 @@
-import React from "react";
-import { useMutation } from "@apollo/client";
+import React, { useState, useEffect } from "react";
 import { useSnackbar } from "notistack";
+import { useDispatch } from "react-redux";
+import { useQuery, useMutation } from "@apollo/client";
 import "react-circular-progressbar/dist/styles.css";
 import EnrollStudent from "../../../components/form/EnrollStudent";
 import Layout from "../../../components/layout/Layout";
 import { useRouter } from "next/router";
-import { AddCourse } from "../../../graphql/mutations/issuer.mutation.js";
+import { LernerOnboarding } from "../../../graphql/mutations/issuer.mutation.js";
+import { GetCoursesByIssuer } from "../../../graphql/queries/issuer.query.js";
+import { SetCoursesList } from "../../../redux/actions/course.action.js";
 import Link from "next/link";
 import * as Yup from "yup";
 
@@ -18,6 +21,12 @@ const initialValues = {
   email: "",
   city: "",
   country: "",
+  course: {
+    courseRegistrationNumber: "",
+    registrationNumber: "",
+    courseId: "",
+    issuerId: ""
+  }
 };
 
 const StudentFormSchema = Yup.object().shape({
@@ -29,25 +38,63 @@ const StudentFormSchema = Yup.object().shape({
   email: Yup.string().required("Email is required"),
   city: Yup.string().required("City is required"),
   country: Yup.string().required("Country Title is required"),  
+  course: Yup.object().shape({
+      courseRegistrationNumber: Yup.string().required("Course Registration No. ID is required"),
+      registrationNumber: Yup.string().required("Student Registration ID is required")
+  })
 });
 
 const StudentDetial = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
-  const [addCourseMutation, { data, loading, error }] = useMutation(
-    AddCourse
+  const dispatch = useDispatch();
+  const [coursesList, setCoursesList] = useState([]);
+  const [courseSelected, setCourseSelected] = useState(null);
+  const [courseSelectedError, setCourseSelectedError] = useState(null);
+  const [lernerOnboardingMutation, { lernerOnboardingMutationData, lernerOnboardingMutationLoading, lernerOnboardingMutationError }] = useMutation(
+    LernerOnboarding
   );
+  const { loading, error, data } = useQuery(GetCoursesByIssuer);
+
+  useEffect(() => {
+    if (data?.GetCoursesByIssuer.length > 0) {
+      setCoursesList(data?.GetCoursesByIssuer);
+      dispatch(SetCoursesList(data?.GetCoursesByIssuer));
+    }
+  }, [data]);
 
   const _handleCourseUpdate = (state) => {
+    if (!courseSelected) {
+      setCourseSelectedError("Please select course")
+      return;
+    } else {
+      setCourseSelectedError(null)
+    }
+
+    console.log("Course Selected: ", courseSelected)
+
     console.log("Submitting course: ", state)
-    addCourseMutation({
+    let payload = state;
+    payload.course.courseId = courseSelected.value;
+    payload.course.issuerId = courseSelected.issuerId;
+
+    lernerOnboardingMutation({
       variables: {
         data: {
-          courseTitle: state.courseTitle,
-          session: state.session,
-          creditHours: state.creditHours.toString(),
-          code: state.code,
-          description: state.description
+          firstName: state.firstName,
+          lastName: state.lastName,
+          gender: state.gender,
+          dob: state.dob,
+          telephone: state.telephone,
+          email: state.email,
+          city: state.city,
+          country: state.country,
+          course: {
+            registrationNumber: state.course.registrationNumber,
+            courseId: state.course.courseId,
+            courseRegistrationNumber: state.course.courseRegistrationNumber,
+            issuerId: state.course.issuerId
+          }
         },
       },
       onCompleted: () => {
@@ -91,6 +138,10 @@ const StudentDetial = (props) => {
                     initialValues={initialValues}
                     _handleCourseUpdate={_handleCourseUpdate}
                     context="create"
+                    coursesList={coursesList}
+                    courseSelected={courseSelected}
+                    setCourseSelected={setCourseSelected}
+                    courseSelectedError={courseSelectedError}
                   />
                 </div>
               </div>

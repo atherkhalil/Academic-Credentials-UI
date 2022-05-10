@@ -121,7 +121,7 @@ function UploadCourse({
 
                 <div className="col-lg-9">
                   <Button color="primary" className="me-10">
-                    Submit
+                    Create
                   </Button>{" "}
                   <Button color="danger">Cancel</Button>{" "}
                 </div>
