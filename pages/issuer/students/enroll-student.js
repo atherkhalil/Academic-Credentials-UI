@@ -28,7 +28,6 @@ const initialValues = {
     courseRegistrationNumber: "",
     registrationNumber: "",
     courseId: "",
-    status: "",
     issuerId: "",
     session: "",
   }
@@ -49,8 +48,7 @@ const StudentFormSchema = Yup.object().shape({
   course: Yup.object().shape({
       courseRegistrationNumber: Yup.string().required("Course Registration No. ID is required"),
       registrationNumber: Yup.string().required("Student Registration ID is required"),
-      session: Yup.string().required("Session is required"),
-      status: Yup.string().required("Status is required")
+      session: Yup.string().required("Session is required")
   })
 });
 
@@ -107,8 +105,7 @@ const StudentDetial = (props) => {
             courseId: state.course.courseId,
             courseRegistrationNumber: state.course.courseRegistrationNumber,
             issuerId: state.course.issuerId,
-            session: state.course.session,
-            status: state.course.status
+            session: state.course.session
           }
         },
       },
@@ -116,7 +113,7 @@ const StudentDetial = (props) => {
         enqueueSnackbar("Successfully submitted!", {
           variant: "success",
         });
-        router.push(`/issuer/courses`);
+        router.push(`/issuer/students`);
       },
       onError: (errors) => {
         console.log("errors: ", errors.message);

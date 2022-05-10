@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik, getIn } from "formik";
 import { Button } from "reactstrap";
 import Select from 'react-select';
-import { genderTypes, enrollLearnerStatusTypes } from "../../shared/constants.js";
+import { genderTypes } from "../../shared/constants.js";
 import AddCoursesInEnrollStudentTable from "../AddCoursesInEnrollStudentTable/AddCoursesInEnrollStudentTable.js";
 
 function EnrollStudent({
@@ -264,37 +264,6 @@ function EnrollStudent({
                 {courseSelectedError ? (
                   <div className="error text-danger">{courseSelectedError}</div>
                 ) : null}
-              </div>
-            </div>
-
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Status</label>
-              <div className="col-lg-9">
-                <Field
-                  name="course.status"
-                  as="select"
-                  type="string"
-                  className={
-                    "form-control" +
-                    (
-                      getIn(errors, 'course.status') && getIn(touched, 'course.status')
-                        ? " is-invalid"
-                        : "")
-                  }
-                >
-                  <option value="" selected>Select status</option>
-                  {
-                    enrollLearnerStatusTypes.map((val, index) => (
-                      <option key={index} value={val}>{val}</option>
-                    ))
-                  }
-                </Field>
-
-                <ErrorMessage
-                  name="course.status"
-                  component="div"
-                  className="invalid-feedback"
-                />
               </div>
             </div>
             <div className="row mb-20">
