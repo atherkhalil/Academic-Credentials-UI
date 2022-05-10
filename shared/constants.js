@@ -54,12 +54,12 @@ export const mainNavLink = {
       {
         icon: "ri-grid-fill",
         name: "Dashboard",
-        path: "issuer/dashboard",
+        path: "learner/dashboard",
       },
       {
         icon: "ri-user-fill",
         name: "Profile",
-        path: "issuer/settings/profile",
+        path: "learner/settings/profile",
       },
     ],
   };

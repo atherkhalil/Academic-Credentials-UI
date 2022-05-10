@@ -170,7 +170,7 @@ function Signin() {
     activateLearnerMutation({
       variables: {
         otp: otp,
-        learnerId: currentUserDetials.currentuser.user.id,
+        learnerId: currentUserDetials.currentuser.user._id,
       },
       onCompleted: (res) => {
         console.log("activateLearnerMutation res: ", res);
