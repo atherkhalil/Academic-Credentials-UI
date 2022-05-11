@@ -82,7 +82,11 @@ function Credentials() {
                 parent={"Home"}
                 child={"Credentials"}
             >
-                 <Credentialkanban board={board} setBoard={setBoard} />
+                <div className="container">
+                    <div className="row justify-content-center">
+                        <Credentialkanban board={board} setBoard={setBoard} />
+                    </div>
+                </div>
             </Layout>
         </>
     );

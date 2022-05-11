@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import * as Yup from "yup";
 import { UpdateCredential } from "../../../redux/actions/learner.action.js";
+import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
 
 const initialValues = {
   id: "627a32e7bdd7fef935ce3175",
@@ -44,20 +45,28 @@ const CourseFormSchema = Yup.object().shape({
 
 const CourseDetail = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { query, push } = useRouter();
+  const { query, push, back } = useRouter();
   const credentialList = useSelector((state) => state?.Learner.credentialList);
   const dispatch = useDispatch();
   const [initialState, setInitialState] = useState(credentialList[0]);
   const [addCourseMutation, { data, loading, error }] = useMutation(AddCourse);
+  const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
 
   const _handleVerify = () => {
+    setShowSignWithKeyModal(!showSignWithKeyModal)
+  }
+
+  const _handleSignCredential = (state) => { 
     enqueueSnackbar("Successfully verified!", {
       variant: "success",
     });
     let temp = credentialList;
     temp[0].status = true;
     dispatch(UpdateCredential(temp));
-    push(`/learner/credentials`);
+    
+    setTimeout(() => {
+      push(`/learner/credentials`);
+    }, 500);
   }
 
   return (
@@ -101,6 +110,13 @@ const CourseDetail = (props) => {
           </div>
         </div>
       </div>
+
+      <SignWithKeyModal
+        toggle={showSignWithKeyModal}
+        setToggle={setShowSignWithKeyModal}
+        _handleSignCredential={_handleSignCredential}
+        loading={false}
+      />
     </Layout>
   );
 };
