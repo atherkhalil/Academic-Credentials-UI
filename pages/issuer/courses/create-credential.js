@@ -17,7 +17,6 @@ const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type is required"),
   title: Yup.string().required("Credential Title is required"),
   description: Yup.string().required("Credential Description is required"),
-  // proof: Yup.string().required("Proof is required"),
   Board: Yup.string().required("Board is required"),
 });
 
