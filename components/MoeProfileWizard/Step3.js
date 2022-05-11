@@ -11,7 +11,12 @@ const Step3 = () => {
       </div>
       <div className="card-body">
         <DigitalSignatureCard 
-          state={{ key: "69e387f1-31c3-45ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b43", status: true }} 
+          state={{ 
+            privateKey: "69e387f1-31c3-45ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b43", 
+            publicKey: "69e387f1-31c3-45ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b43", 
+            address: "69e387f11c345ad9c685a51e5e78b43", 
+            status: true 
+          }} 
           showAll={showAll}
           setShowAll={setShowAll}
         />
@@ -24,21 +29,11 @@ const DigitalSignatureCard = ({ state, showAll, setShowAll }) => {
   return (
     <div className="card course-card border border-primary">
       <div className="card-body courses-details">
-        <p>{showAll ? state.key : truncateString(state.key, 50)}</p>
+        <p>Private: {showAll ? state.privateKey : truncateString(state.privateKey, 50)}</p>
+        <p>Public: {showAll ? state.publicKey : truncateString(state.publicKey, 50)}</p>
+        <p>Address: {showAll ? state.address : truncateString(state.address, 50)}</p>
 
         <div className="d-flex flex-row justify-content-between">
-          {state.status ? (
-            <span className="text-primary">Active</span>
-          ) : (
-            <span className="text-warning">Inactive</span>
-          )}
-
-          {/* <Switch
-            onChange={() =>
-              _handleCourseStatusUpdate(state.id, state.active, index)
-            }
-            checked={state.active}
-          /> */}
           <span className="text-success cursor-pointer" onClick={() => setShowAll(!showAll)}>{!showAll ? "View more" : "Hide" }</span>
         </div>
       </div>

@@ -23,7 +23,7 @@ const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential }) => {
       >
         <ModalBody>
           <h4 className="text-center text-primary">
-            Please enter your Digital Signature to sign credential
+            Confirm to Digitally sign the credential using ECDSA Algorithm
           </h4>
           <div
             style={{

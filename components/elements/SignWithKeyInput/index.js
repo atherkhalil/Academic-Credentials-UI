@@ -1,7 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import PhoneNumber from "../../general/PhoneNumber.js";
 import { Spinner } from "reactstrap";
-import CustomTextArea from "../../general/CustomTextArea.js";
 
 function SignWithKeyInput({
   initialValues,
@@ -18,26 +17,24 @@ function SignWithKeyInput({
       >
         {({ errors, status, touched }) => (
           <Form>
-            <CustomTextArea 
-              className="form-control text-area" 
-              name="signature"
-              label=""
-              rows="3"
-              disabled={true}
-            />
-
-            <div className="row justify-content-end px-16 pt-8">
-              <button
-                class="btn btn-primary"
-                style={{
-                  height: "100%",
-                  borderRadius: "0px 5px 5px 0px",
-                  width: "80px"
-                }}
-                type="submit"
-              >
-                {loading ? <Spinner children=""></Spinner> : "Sign"}
-              </button>
+            <div className="row px-12">
+              <div className="col-12 mb-16">
+                <label className="form-label">Private key</label>
+                <p className="border rounded border-secondary bg-light p-8">{initialValues.signature}</p>
+                <div class="row justify-content-center">
+                  <button
+                    class="btn btn-primary"
+                    style={{
+                      height: "100%",
+                      borderRadius: "0px 5px 5px 0px",
+                      width: "80px"
+                    }}
+                    type="submit"
+                  >
+                    {loading ? <Spinner children=""></Spinner> : "Sign"}
+                  </button>
+                </div>
+              </div>
             </div>
           </Form>
         )}
