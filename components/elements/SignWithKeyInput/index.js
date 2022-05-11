@@ -1,6 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import PhoneNumber from "../../general/PhoneNumber.js";
 import { Spinner } from "reactstrap";
+import CustomTextArea from "../../general/CustomTextArea.js";
 
 function SignWithKeyInput({
   initialValues,
@@ -17,37 +18,26 @@ function SignWithKeyInput({
       >
         {({ errors, status, touched }) => (
           <Form>
-            <div className="row px-12">
-              <div className="col-12 mb-16">
-                <div class="input-group mb-3">
-                  <Field
-                    name="signature"
-                    type="text"
-                    placeholder="Enter Digital Signature"
-                    className={
-                      "form-control" +
-                      (errors.signature && touched.signature ? " is-invalid" : "")
-                    }
-                  />
-                  <div class="input-group-append">
-                    <button
-                      class="btn btn-primary"
-                      style={{
-                        height: "100%",
-                        borderRadius: "0px 5px 5px 0px",
-                      }}
-                      type="submit"
-                    >
-                      {loading ? <Spinner children=""></Spinner> : "Sign"}
-                    </button>
-                  </div>
-                  <ErrorMessage
-                    name="signature"
-                    component="div"
-                    className="invalid-feedback"
-                  />
-                </div>
-              </div>
+            <CustomTextArea 
+              className="form-control text-area" 
+              name="signature"
+              label=""
+              rows="3"
+              disabled={true}
+            />
+
+            <div className="row justify-content-end px-16 pt-8">
+              <button
+                class="btn btn-primary"
+                style={{
+                  height: "100%",
+                  borderRadius: "0px 5px 5px 0px",
+                  width: "80px"
+                }}
+                type="submit"
+              >
+                {loading ? <Spinner children=""></Spinner> : "Sign"}
+              </button>
             </div>
           </Form>
         )}

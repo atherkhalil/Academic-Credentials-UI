@@ -65,6 +65,12 @@ function SignUp() {
         dispatch(SetCurrentUser(decodedToken));
         _handleToggleOtpVerificationModal();
       },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
     });
   };
 

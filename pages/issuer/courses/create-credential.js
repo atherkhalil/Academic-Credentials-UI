@@ -102,8 +102,8 @@ const CreateDetail = (props) => {
     let course = courseList.find(obj => obj.id === courseId);
     setInitialValues({
       ...initialValues,
-      title: course.courseTitle,
-      description: course.description
+      title: course?.courseTitle,
+      description: course?.description
     })
     setCurrentCourse(course);
   }
@@ -162,6 +162,7 @@ const CreateDetail = (props) => {
         toggle={showSignWithKeyModal}
         setToggle={setShowSignWithKeyModal}
         _handleSignCredential={_handleSignCredential}
+        loading={false}
       />
     </Layout>
   );

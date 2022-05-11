@@ -5,7 +5,7 @@ import SignWithKeyInput from "../../elements/SignWithKeyInput";
 import * as Yup from "yup";
 
 const initialValues = {
-  signature: "",
+  signature: "69e387f1-31c3-45ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b4345ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b4345ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b43",
 };
 
 const SignFormSchema = Yup.object().shape({
