@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import Layout from "../../../components/layout/Layout";
 import SettingsMenu from "../../../components/layout/SettingsMenu";
-import { Step1, Step2, Step3 } from "../../../components/IssuerProfileWizard";
+import { Step1, Step2, Step3 } from "../../../components/LearnerProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
-import { GetAllIssuerDetail } from "../../../graphql/queries/issuer.query.js";
+import { GetAllLearnerDetail } from "../../../graphql/queries/learner.query.js";
 import { UpdateIssuerDetails } from "../../../graphql/mutations/learner.mutation.js";
 import { SignatureUpload } from "../../../graphql/mutations/general.mutation.js";
 import { useQuery, useMutation } from "@apollo/client";
@@ -52,8 +52,8 @@ function SettingsProfile() {
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
   const [signatureFile, setSignatureFile] = useState(null);
-  const { loading, error, data } = useQuery(GetAllIssuerDetail, {
-    variables: { issuerId: currentuser?.user?._id },
+  const { loading, error, data } = useQuery(GetAllLearnerDetail, {
+    variables: { learnerId: currentuser?.user?._id },
   });
   const [updateIssuerDetailsMutation, { updateIssuerDetailsMutationData, updateIssuerDetailsMutationLoading, updateIssuerDetailsMutationError }] = useMutation(
     UpdateIssuerDetails
@@ -65,8 +65,8 @@ function SettingsProfile() {
 
   useEffect(() => {
     if (data) {
-      console.log("GetIssuerDetail: ", data.GetIssuerDetail)
-      setCurrentUserData(data.GetIssuerDetail);
+      console.log("GetIssuerDetail: ", data.GetLearnerDetail)
+      setCurrentUserData(data.GetLearnerDetail);
     }
   }, [data]);
 

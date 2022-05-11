@@ -5,7 +5,7 @@ import Switch from "react-switch";
 import moment from "moment";
 import { truncateString } from "../../shared/helper.js";
 
-const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer }) => {
+const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _handleShowCredentialDetail }) => {
     return (
         <div className="card credential-kanban-card">
             <div className="card-body courses-details">
@@ -27,26 +27,17 @@ const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer }) 
                     </div>
                     <div className="courses-details-info-box">
                         <i class="ri-shield-user-line"></i>
-                        <span>{content?.student?.name}</span>
+                        <span>{content?.learner?.name}</span>
                     </div>
                 </div>
                 <p className="truncate">{truncateString(content.description, 50)}</p>
-                <span className="text-primary">{content.Board}</span>
-                {/* <span className="text-warning">Inactive</span> */}
+                <span className="text-success">{content.Board}</span>
+                <br />
+                {content.verified ? <span className="text-primary">Verified</span> : <span className="text-danger">Unverified</span>}
                 <div className="courses-action d-flex flex-row justify-content-between">
                     <div>
-                        <Link href={"courses/" + content.id}>
-                            <a className="btn btn-primary text-white">Details</a>
-                        </Link>
+                        <button className="btn btn-primary" onClick={() => _handleShowCredentialDetail(content.id)}>Details</button>
                     </div>
-                    {/* <div>
-                        <Switch
-                            onChange={() =>
-                                _handleCourseStatusUpdate(content.id, content.active, index)
-                            }
-                            checked={content.active}
-                        />
-                    </div> */}
                 </div>
             </div>
         </div>

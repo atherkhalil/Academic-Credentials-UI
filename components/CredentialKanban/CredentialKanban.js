@@ -4,10 +4,21 @@ import '@asseinfo/react-kanban/dist/styles.css';
 import Card from "./Card.js";
 
 
-const Credentialkanban = ({ board, setBoard }) => {
+const Credentialkanban = ({ board, setBoard, _handleShowCredentialDetail, enqueueSnackbar }) => {
     const _handleCardMove = (_card, source, destination) => {
-        const updatedBoard = moveCard(board, source, destination);
-        setBoard(updatedBoard)
+        if (!_card.verified) {
+            enqueueSnackbar("Credential unverifed!", {
+                variant: "error",
+              });
+        } else {
+            console.log("source: ", source)
+            console.log("destination: ", destination)
+            const updatedBoard = moveCard(board, source, destination);
+            setBoard(updatedBoard)
+            if (destination.toColumnId == 2) {
+                _handleShowCredentialDetail(_card.id);
+            }
+        }
     }
 
     return (
@@ -15,7 +26,11 @@ const Credentialkanban = ({ board, setBoard }) => {
             onCardDragEnd={_handleCardMove}
             disableColumnDrag
             renderCard={(content, { removeCard, dragging }) => (
-                <Card content={content} dragging={dragging} />
+                <Card 
+                    content={content} 
+                    dragging={dragging} 
+                    _handleShowCredentialDetail={_handleShowCredentialDetail}
+                />
             )}
         >
             {board}
