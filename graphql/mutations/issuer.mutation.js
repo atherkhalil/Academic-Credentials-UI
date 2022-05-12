@@ -18,8 +18,8 @@ export const AddCourse = gql`
 `;
 
 export const UpdateCourseStatus = gql`
-    mutation UpdateCourseStatus($courseId: ID!, $active: Boolean!) {
-        UpdateCourseStatus(courseId: $courseId, active: $active) {
+mutation UpdateCourseStatus($courseId: ID!, $active: Boolean!) {
+    UpdateCourseStatus(courseId: $courseId, active: $active) {
         id
         issuerId
         courseTitle
@@ -30,12 +30,20 @@ export const UpdateCourseStatus = gql`
         active
         createdAt
         updatedAt
-        }
     }
+}
 `;
 
 export const LernerOnboarding = gql`
-    mutation LernerOnboarding($data: lernerOnboarding) {
-        LernerOnboarding(data: $data)
+mutation LernerOnboarding($data: lernerOnboarding) {
+    LernerOnboarding(data: $data)
+}
+`;
+
+export const CreateCredentials = gql`
+    mutation CreateCredentials($data: CreateCredential!) {
+        createCredentials(data: $data) {
+            courseId
+        }
     }
 `;

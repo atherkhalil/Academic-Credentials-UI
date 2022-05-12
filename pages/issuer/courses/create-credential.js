@@ -1,36 +1,49 @@
 import React, { useState, useEffect } from "react";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useDispatch, useSelector } from "react-redux";
 import { useSnackbar } from "notistack";
-import "react-circular-progressbar/dist/styles.css";
-import UploadCredential from "../../../components/form/UploadCredential";
-import Layout from "../../../components/layout/Layout";
 import { useRouter } from "next/router";
-import { AddCourse } from "../../../graphql/mutations/issuer.mutation.js";
 import Link from "next/link";
-import { ADD_CREDENTIAL } from "../../../redux/type.js";
 import * as Yup from "yup";
-import { AddCredential } from "../../../redux/actions/course.action.js";
+import "react-circular-progressbar/dist/styles.css";
+import Layout from "../../../components/layout/Layout";
+import UploadCredential from "../../../components/form/UploadCredential";
 import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
+import { AddCredential } from "../../../redux/actions/course.action.js";
+import { CreateCredentials } from "../../../graphql/mutations/issuer.mutation.js";
+import { GetLearnersByIssuer, GetCourseByID } from "../../../graphql/queries/issuer.query.js";
 
 const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type is required"),
   title: Yup.string().required("Credential Title is required"),
   description: Yup.string().required("Credential Description is required"),
+  session: Yup.string().required("Session is required"),
   Board: Yup.string().required("Board is required"),
+
+  level: Yup.string().required("Level is required"),
+  creditHours: Yup.string().required("Credit Hours is required"),
+  cgpa: Yup.string().required("CGPA is required"),
+  expiryDate: Yup.string().required("Expiry Date is required"),
+  faculty: Yup.string().required("Faculty is required"),
 });
 
 const CreateDetail = (props) => {
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [student, setStudent] = useState("");
+  const [studentsList, setStudentsList] = useState([]);
   const [studentError, setStudentError] = useState(null);
   const [issuer, setIssuer] = useState("");
   const [issuerError, setIssuerError] = useState(null);
   const courseList = useSelector((state) => state.Course.courseList);
+  const currentUser = useSelector((state) => state.User.currentuser);
   const router = useRouter();
+  const { loading, error, data  } = useQuery(GetLearnersByIssuer);
   const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
+  const { loadIng: GetCourseByIDLoading, error: GetCourseByIDError, data: GetCourseByIDData } = useQuery(GetCourseByID, {
+    variables: { courseId: router?.query?.courseId },
+  });
   const [initialValues, setInitialValues] = useState({
     type: "",
     title: "",
@@ -38,18 +51,35 @@ const CreateDetail = (props) => {
     issuer: "",
     issuance_date: "",
     student: "",
-    proof: "",
+    learnerId: "",
+    session: "",
     Board: "",
+    level: "",
+    creditHours: "",
+    cgpa: "",
+    expiryDate: "",
+    faculty: ""
   });
-  const [addCourseMutation, { data, loading, error }] = useMutation(
-    AddCourse
+  const [createCredentialsMutation, { createCredentialsMutationData, createCredentialsMutationLoading, createCredentialsMutationError }] = useMutation(
+    CreateCredentials
   );
 
   useEffect(() => {
-    if (courseList && router?.query?.courseId) {
-    _handleCurrentCourse(router.query.courseId)
+    if (GetCourseByIDData?.GetCourseByID) {
+      setInitialValues({
+        ...initialValues,
+        title: GetCourseByIDData.GetCourseByID?.courseTitle,
+        description: GetCourseByIDData.GetCourseByID?.description
+      })
+      setCurrentCourse(GetCourseByIDData.GetCourseByID);
     }
-  }, [courseList]);
+  }, [GetCourseByIDData]);
+
+  useEffect(() => {
+    if (data?.GetLearnersByIssuer.length > 0) {
+      setStudentsList(data?.GetLearnersByIssuer);
+    }
+  }, [data]);
 
   const _handleCredentialUpdate = (state) => {
     if (student == "") {
@@ -59,52 +89,40 @@ const CreateDetail = (props) => {
       setStudentError(null)
     }
 
-    console.log("Submitting course: ", state)
-    dispatch(AddCredential({
-      ...state,
-      student: student,
-      issuer: issuer
-    }))
-    // enqueueSnackbar("Successfully submitted!", {
-    //   variant: "success",
-    // });
+    createCredentialsMutation({
+      variables: {
+        data: {
+          type: state.type,
+          courseId: router?.query?.courseId,
+          title: state.title,
+          description: state.description,
+          learnerId: student.value,
+          issuanceDate: new Date(),
+          session: state.session,          
+          level: state.level,
+          creditHours: state.creditHours,
+          cgpa: state.cgpa,
+          expiryDate: state.expiryDate,
+          faculty: state.faculty
+        },
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Successfully submitted!", {
+          variant: "success",
+        });
+        
+        // Now after credential is submitted, Issuer need to sign it with his digital signature
+        setShowSignWithKeyModal(!showSignWithKeyModal)
 
-    // Now after credential is submitted, Issuer need to sign it with his digital signature
-    setShowSignWithKeyModal(!showSignWithKeyModal)
-
-    // addCourseMutation({
-    //   variables: {
-    //     data: {
-    //       courseTitle: state.courseTitle,
-    //       session: state.session,
-    //       creditHours: state.creditHours.toString(),
-    //       code: state.code,
-    //       description: state.description
-    //     },
-    //   },
-    //   onCompleted: () => {
-    //     enqueueSnackbar("Successfully submitted!", {
-    //       variant: "success",
-    //     });
-    //     router.push(`/issuer/courses`);
-    //   },
-    //   onError: (errors) => {
-    //     console.log("errors: ", errors.message);
-    //     enqueueSnackbar(errors.message, {
-    //       variant: "error",
-    //     });
-    //   },
-    // });
-  }
-
-  const _handleCurrentCourse = (courseId) => {
-    let course = courseList.find(obj => obj.id === courseId);
-    setInitialValues({
-      ...initialValues,
-      title: course?.courseTitle,
-      description: course?.description
-    })
-    setCurrentCourse(course);
+        // router.push(`/issuer/courses`);
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
   }
 
   const _handleSignCredential = (state) => { 
@@ -149,6 +167,7 @@ const CreateDetail = (props) => {
                     issuer={issuer}
                     setIssuer={setIssuer}
                     issuerError={issuerError}
+                    studentsList={studentsList}
                   />
                 </div>
               </div>

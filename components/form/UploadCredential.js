@@ -1,7 +1,7 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { Button } from "reactstrap";
 import CustomTextarea from "../general/CustomTextArea.js";
-import { credentialTypes, studentsList, issuersList } from "../../shared/constants.js";
+import { credentialTypes, issuersList } from "../../shared/constants.js";
 import Select from 'react-select';
 
 function UploadCredential({
@@ -15,7 +15,8 @@ function UploadCredential({
   _handleStudent,
   issuer,
   setIssuer,
-  issuerError
+  issuerError,
+  studentsList
 }) {
   return (
     <>
@@ -100,11 +101,31 @@ function UploadCredential({
                 <Select
                   value={student}
                   onChange={(val) => setStudent(val)}
-                  options={studentsList.map((student, index) => ({ value: student._id, label: `${student.id} - ${student.firstName} ${student.lastName}` }))}
+                  options={studentsList.map((student, index) => ({ value: student.id, label: `${student.firstName} ${student.lastName}` }))}
                 />
                 {studentError ? (
                   <div className="error text-danger">{studentError}</div>
                 ) : null}
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Session</label>
+              <div className="col-lg-9">
+                <Field
+                  name="session"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.session && touched.session
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="session"
+                  component="div"
+                  className="invalid-feedback"
+                />
               </div>
             </div>
             <div className="row mb-20">
@@ -122,6 +143,106 @@ function UploadCredential({
                 />
                 <ErrorMessage
                   name="Board"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Level</label>
+              <div className="col-lg-9">
+                <Field
+                  name="level"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.level && touched.level
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="level"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Credit Hours</label>
+              <div className="col-lg-9">
+                <Field
+                  name="creditHours"
+                  type="number"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.creditHours && touched.creditHours
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="creditHours"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">CGPA</label>
+              <div className="col-lg-9">
+                <Field
+                  name="cgpa"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.cgpa && touched.cgpa
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="cgpa"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Expiry Date</label>
+              <div className="col-lg-9">
+                <Field
+                  name="expiryDate"
+                  type="date"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.expiryDate && touched.expiryDate
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="expiryDate"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Faculty</label>
+              <div className="col-lg-9">
+                <Field
+                  name="faculty"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.faculty && touched.faculty
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="faculty"
                   component="div"
                   className="invalid-feedback"
                 />

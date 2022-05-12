@@ -63,3 +63,32 @@ export const GetAllIssuerDetail = gql`
         }
     }
 `;
+
+export const GetLearnersByIssuer = gql`
+    query GetLearnersByIssuer {
+        GetLearnersByIssuer {
+        id
+        firstName
+        lastName
+        }
+    }
+`;
+
+export const GetCourseByID = gql`
+    query GetCourseByID($courseId: String) {
+        GetCourseByID(courseId: $courseId) {
+        id
+        issuerId
+        courseTitle
+        duration
+        creditHours
+        code
+        description
+        active
+        createdAt
+        level
+        faculty
+        updatedAt
+        }
+    }
+`;
