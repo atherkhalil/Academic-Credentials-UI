@@ -11,6 +11,7 @@ import UploadCredential from "../../../components/form/UploadCredential";
 import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
 import { AddCredential } from "../../../redux/actions/course.action.js";
 import { CreateCredentials } from "../../../graphql/mutations/issuer.mutation.js";
+import { SignCredentials } from "../../../graphql/mutations/general.mutation.js";
 import { GetLearnersByIssuer, GetCourseByID } from "../../../graphql/queries/issuer.query.js";
 
 const CredentialFormSchema = Yup.object().shape({
@@ -38,7 +39,7 @@ const CreateDetail = (props) => {
   const courseList = useSelector((state) => state.Course.courseList);
   const currentUser = useSelector((state) => state.User.currentuser);
   const router = useRouter();
-  const { loading, error, data  } = useQuery(GetLearnersByIssuer);
+  const { loading, error, data } = useQuery(GetLearnersByIssuer);
   const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
   const [currentCourse, setCurrentCourse] = useState(null);
   const { loadIng: GetCourseByIDLoading, error: GetCourseByIDError, data: GetCourseByIDData } = useQuery(GetCourseByID, {
@@ -63,6 +64,11 @@ const CreateDetail = (props) => {
   const [createCredentialsMutation, { createCredentialsMutationData, createCredentialsMutationLoading, createCredentialsMutationError }] = useMutation(
     CreateCredentials
   );
+  const [
+    signCredentialsMutation,
+    { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
+  ] = useMutation(SignCredentials);
+  const [createdCredentialId, setCreatedCredentialId] = useState(null);
 
   useEffect(() => {
     if (GetCourseByIDData?.GetCourseByID) {
@@ -98,7 +104,7 @@ const CreateDetail = (props) => {
           description: state.description,
           learnerId: student.value,
           issuanceDate: new Date(),
-          session: state.session,          
+          session: state.session,
           level: state.level,
           creditHours: state.creditHours,
           cgpa: state.cgpa,
@@ -106,15 +112,15 @@ const CreateDetail = (props) => {
           faculty: state.faculty
         },
       },
-      onCompleted: () => {
+      onCompleted: (data) => {
+        console.log("data: ", data)
         enqueueSnackbar("Successfully submitted!", {
           variant: "success",
         });
-        
+
         // Now after credential is submitted, Issuer need to sign it with his digital signature
         setShowSignWithKeyModal(!showSignWithKeyModal)
-
-        // router.push(`/issuer/courses`);
+        setCreatedCredentialId(data.createCredentials.id)
       },
       onError: (errors) => {
         console.log("errors: ", errors.message);
@@ -125,14 +131,26 @@ const CreateDetail = (props) => {
     });
   }
 
-  const _handleSignCredential = (state) => { 
-    console.log("Submitting state: ", state)
-    enqueueSnackbar("Credential signed successfully!", {
-      variant: "success",
+  const _handleSignCredential = () => {
+    signCredentialsMutation({
+      variables: {
+        credentialId: createdCredentialId
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Credential signed successfully!", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          router.back();
+        }, 500);
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
     });
-    setTimeout(() => {
-      router.back();
-    }, 500);
   }
 
   return (

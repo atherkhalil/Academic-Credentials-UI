@@ -5,3 +5,9 @@ export const SignatureUpload = gql`
         SignatureUpload(file: $file)
     }
 `;
+
+export const SignCredentials = gql`
+    mutation SignCredentials($credentialId: String) {
+        signCredentials(credentialId: $credentialId)
+    }
+`;

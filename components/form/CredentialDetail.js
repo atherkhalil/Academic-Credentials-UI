@@ -27,7 +27,6 @@ function CredentialDetail({
         enableReinitialize={true}
       >
         {({ errors, status, touched }) => {
-          console.log("Form errors:", errors)
           return (
             <Form>
             <div className="row mb-20">
