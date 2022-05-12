@@ -202,6 +202,54 @@ function CredentialDetail({
                 />
               </div>
             </div>
+
+            <div><h6 className="text-primary">Student Signature Details</h6></div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">K</label>
+              <div className="col-lg-9">
+                <Field
+                  name="learnerECDSA.k"
+                  type="text"
+                  className="form-control col-lg-9"
+                  disabled={true}
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">R</label>
+              <div className="col-lg-9">
+                <Field
+                  name="learnerECDSA.r"
+                  type="text"
+                  className="form-control col-lg-9"
+                  disabled={true}
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">S</label>
+              <div className="col-lg-9">
+                <Field
+                  name="learnerECDSA.s"
+                  type="text"
+                  className="form-control col-lg-9"
+                  disabled={true}
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Signing Date</label>
+              <div className="col-lg-9">
+                <Field
+                  name="learnerECDSA.signingDate"
+                  type="text"
+                  className="form-control col-lg-9"
+                  disabled={true}
+                />
+              </div>
+            </div>
+
+            <hr className="my-20" />
           </Form>
           )
         }}

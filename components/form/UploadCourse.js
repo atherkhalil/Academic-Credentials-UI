@@ -113,6 +113,42 @@ function UploadCourse({
                 />
               </div>
             </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Faculty</label>
+              <div className="col-lg-9">
+                <Field
+                  name="faculty"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.faculty && touched.faculty ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="faculty"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">Level</label>
+              <div className="col-lg-9">
+                <Field
+                  name="level"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.level && touched.level ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="level"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
             <hr className="my-20" />
 
             {context !== "edit" && (

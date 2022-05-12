@@ -128,26 +128,6 @@ function UploadCredential({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Board</label>
-              <div className="col-lg-9">
-                <Field
-                  name="Board"
-                  type="text"
-                  className={
-                    "form-control col-lg-9" +
-                    (errors.Board && touched.Board
-                      ? " is-invalid"
-                      : "")
-                  }
-                />
-                <ErrorMessage
-                  name="Board"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
               <label className="form-label col-lg-3">Level</label>
               <div className="col-lg-9">
                 <Field
@@ -242,6 +222,66 @@ function UploadCredential({
                 />
                 <ErrorMessage
                   name="faculty"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">MOE Id</label>
+              <div className="col-lg-9">
+                <Field
+                  name="moeId"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.moeId && touched.moeId
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="moeId"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">MOE Name</label>
+              <div className="col-lg-9">
+                <Field
+                  name="moeName"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.moeName && touched.moeName
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="moeName"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+            </div>
+            <div className="row mb-20">
+              <label className="form-label col-lg-3">MOE Public Key</label>
+              <div className="col-lg-9">
+                <Field
+                  name="moePublicKey"
+                  type="text"
+                  className={
+                    "form-control col-lg-9" +
+                    (errors.moePublicKey && touched.moePublicKey
+                      ? " is-invalid"
+                      : "")
+                  }
+                />
+                <ErrorMessage
+                  name="moePublicKey"
                   component="div"
                   className="invalid-feedback"
                 />

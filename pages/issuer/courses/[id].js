@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import "react-circular-progressbar/dist/styles.css";
 import UploadCourse from "../../../components/form/UploadCourse";
 import Layout from "../../../components/layout/Layout";
 import { AddCourse } from "../../../graphql/mutations/issuer.mutation.js";
+import { GetCourseByID } from "../../../graphql/queries/issuer.query.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -33,18 +34,24 @@ const CourseFormSchema = Yup.object().shape({
 
 const CourseDetail = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const router = useRouter();
   const { query, push } = useRouter();
   const [initialState, setInitialState] = useState(initialValues);
   const courseList = useSelector((state) => state?.Course.courseList);
   const [addCourseMutation, { data, loading, error }] = useMutation(AddCourse);
+  const { loading: GetCourseByIDLoading, error: GetCourseByIDError, data: GetCourseByIDData } = 
+  useQuery(GetCourseByID, {
+    variables: {
+      courseId: router?.query?.id
+    }
+  });
 
   useEffect(() => {
-    if (query.id) {
-      let temp = courseList.find((course) => course.id == query.id);
-      console.log("temp: ", temp);
-      setInitialState(temp);
+    if (GetCourseByIDData) {
+      console.log("GetCourseByIDData: ", GetCourseByIDData)
+      setInitialState(GetCourseByIDData.GetCourseByID);
     }
-  }, []);
+  }, [GetCourseByIDData]);
 
   const _handleCourseUpdate = (state) => {
     console.log("Submitting course: ", state);

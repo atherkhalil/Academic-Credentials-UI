@@ -51,7 +51,7 @@ const CoursesTable = ({
             </tr>
           ))}
           <tr className="text-center">
-            <td colspan="7">
+            <td colspan="12">
               {issuerList?.length == 0 && <EmptyData />}
             </td>
           </tr>

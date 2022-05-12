@@ -15,6 +15,8 @@ const initialValues = {
   creditHours: "",
   code: "",
   description: "",
+  faculty: "",
+  level: ""
 };
 
 const CourseFormSchema = Yup.object().shape({
@@ -23,6 +25,8 @@ const CourseFormSchema = Yup.object().shape({
   creditHours: Yup.number().required("Credit Hours are required"),
   code: Yup.string().required("Course Code is required"),
   description: Yup.string().required("Course Description is required"),
+  faculty: Yup.string().required("Faculty Description is required"),
+  level: Yup.string().required("Level Description is required")
 });
 
 const CourseDetail = (props) => {
@@ -41,7 +45,9 @@ const CourseDetail = (props) => {
           duration: state.duration,
           creditHours: state.creditHours.toString(),
           code: state.code,
-          description: state.description
+          description: state.description,
+          faculty: state.faculty,
+          level: state.level
         },
       },
       onCompleted: () => {

@@ -44,6 +44,7 @@ export const GetAllIssuerDetail = gql`
             siteUrl
             logoUrl
             publicKey
+            privateKey
             approved
             approvalDate
             description
@@ -60,6 +61,9 @@ export const GetAllIssuerDetail = gql`
               imageUrl
               uploadDate
             }
+            moeId
+            moeName
+            moePublicKey
         }
     }
 `;

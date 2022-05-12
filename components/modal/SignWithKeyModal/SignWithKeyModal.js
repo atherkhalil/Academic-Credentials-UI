@@ -4,15 +4,15 @@ import { useSnackbar } from "notistack";
 import SignWithKeyInput from "../../elements/SignWithKeyInput";
 import * as Yup from "yup";
 
-const initialValues = {
-  signature: "69e387f1-31c3-45ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b4345ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b4345ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b43",
-};
+// const initialValues = {
+//   signature: "69e387f1-31c3-45ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b4345ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b4345ad-9c68-5a51e5e78b43-69e387f1-31c3-45ad-9c68-5a51e5e78b43",
+// };
 
 const SignFormSchema = Yup.object().shape({
   signature: Yup.string().required("Digital Signature is required"),
 });
 
-const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential }) => {
+const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential, privateKey }) => {
   return (
     <>
       <Modal
@@ -41,7 +41,9 @@ const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential }) => {
             </div>
           </div>
           <SignWithKeyInput
-            initialValues={initialValues}
+            initialValues={{
+              signature: privateKey
+            }}
             SignFormSchema={SignFormSchema}
             handleSubmit={_handleSignCredential}
             loading={false}

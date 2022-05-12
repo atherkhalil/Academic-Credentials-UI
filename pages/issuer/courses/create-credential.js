@@ -12,20 +12,21 @@ import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWit
 import { AddCredential } from "../../../redux/actions/course.action.js";
 import { CreateCredentials } from "../../../graphql/mutations/issuer.mutation.js";
 import { SignCredentials } from "../../../graphql/mutations/general.mutation.js";
-import { GetLearnersByIssuer, GetCourseByID } from "../../../graphql/queries/issuer.query.js";
+import { GetLearnersByIssuer, GetCourseByID, GetAllIssuerDetail } from "../../../graphql/queries/issuer.query.js";
 
 const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type is required"),
   title: Yup.string().required("Credential Title is required"),
   description: Yup.string().required("Credential Description is required"),
   session: Yup.string().required("Session is required"),
-  Board: Yup.string().required("Board is required"),
-
   level: Yup.string().required("Level is required"),
   creditHours: Yup.string().required("Credit Hours is required"),
   cgpa: Yup.string().required("CGPA is required"),
   expiryDate: Yup.string().required("Expiry Date is required"),
   faculty: Yup.string().required("Faculty is required"),
+  moeId: Yup.string().required("Ministry of Education Id is required"),
+  moeName: Yup.string().required("Ministry of Education Name is required"),
+  moePublicKey: Yup.string().required("Ministry of Education Public key is required")
 });
 
 const CreateDetail = (props) => {
@@ -35,9 +36,13 @@ const CreateDetail = (props) => {
   const [studentsList, setStudentsList] = useState([]);
   const [studentError, setStudentError] = useState(null);
   const [issuer, setIssuer] = useState("");
+  const [issuerPrivateKey, setIssuerPrivateKey] = useState("");
   const [issuerError, setIssuerError] = useState(null);
   const courseList = useSelector((state) => state.Course.courseList);
   const currentUser = useSelector((state) => state.User.currentuser);
+  const { loading: GetAllIssuerDetailLoading, error: GetAllIssuerDetailError, data: GetAllIssuerDetailData } = useQuery(GetAllIssuerDetail, {
+    variables: { issuerId: currentUser?.user?._id },
+  });
   const router = useRouter();
   const { loading, error, data } = useQuery(GetLearnersByIssuer);
   const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
@@ -54,12 +59,14 @@ const CreateDetail = (props) => {
     student: "",
     learnerId: "",
     session: "",
-    Board: "",
     level: "",
     creditHours: "",
     cgpa: "",
     expiryDate: "",
-    faculty: ""
+    faculty: "",
+    moeId: "",
+    moeName: "",
+    moePublicKey: ""
   });
   const [createCredentialsMutation, { createCredentialsMutationData, createCredentialsMutationLoading, createCredentialsMutationError }] = useMutation(
     CreateCredentials
@@ -80,6 +87,19 @@ const CreateDetail = (props) => {
       setCurrentCourse(GetCourseByIDData.GetCourseByID);
     }
   }, [GetCourseByIDData]);
+
+  useEffect(() => {
+    if (GetAllIssuerDetailData?.GetIssuerDetail) {
+      let temp = GetAllIssuerDetailData?.GetIssuerDetail;
+      setInitialValues({
+        ...initialValues,
+        moeId: temp.moeId,
+        moeName: temp.moeName,
+        moePublicKey: temp.moePublicKey,
+      })
+      setIssuerPrivateKey(GetAllIssuerDetailData?.GetIssuerDetail.privateKey)
+    }
+  }, [GetAllIssuerDetailData]);
 
   useEffect(() => {
     if (data?.GetLearnersByIssuer.length > 0) {
@@ -109,7 +129,10 @@ const CreateDetail = (props) => {
           creditHours: state.creditHours,
           cgpa: state.cgpa,
           expiryDate: state.expiryDate,
-          faculty: state.faculty
+          faculty: state.faculty,
+          moeId: state.moeId,
+          moeName: state.moeName,
+          moePublicKey: state.moePublicKey
         },
       },
       onCompleted: (data) => {
@@ -196,6 +219,7 @@ const CreateDetail = (props) => {
 
       <SignWithKeyModal
         toggle={showSignWithKeyModal}
+        privateKey={issuerPrivateKey}
         setToggle={setShowSignWithKeyModal}
         _handleSignCredential={_handleSignCredential}
         loading={false}
