@@ -6,15 +6,22 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../../../components/layout/Layout";
 import CoursesTable from "../../../../components/CoursesTable/CoursesTable.js";
 import { ApprovedIssuer } from "../../../../graphql/mutations/authentication.mutation.js";
-import { GetPendingIssuerRequests } from "../../../../graphql/queries/issuer.query.js";
+import { GetPendingIssuerRequests, GetCredentialsBYCourseId } from "../../../../graphql/queries/issuer.query.js";
 import Link from "next/link";
 
 function Credentials() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
   const [issuerList, setIssuerList] = useState([]);
+  const [credentialList, setCredentialList] = useState([]);
   const { loading, error, data } = useQuery(GetPendingIssuerRequests);
-  const credentialList = useSelector((state) => state.Course.credentialList);
+  const { loading: GetCredentialsBYCourseIdLoading, error: GetCredentialsBYCourseIdError, data: GetCredentialsBYCourseIdData } = 
+  useQuery(GetCredentialsBYCourseId, {
+    variables: {
+      courseId: router?.query?.courseId
+    }
+  });
+  // const credentialList = useSelector((state) => state.Course.credentialList);
   const [
     approvedIssuerMutation,
     {
@@ -29,6 +36,12 @@ function Credentials() {
       setIssuerList(data?.GetPendingIssuerRequests);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (GetCredentialsBYCourseIdData?.GetCredentialsBYCourseId.length > 0) {
+      setCredentialList(GetCredentialsBYCourseIdData?.GetCredentialsBYCourseId);
+    }
+  }, [GetCredentialsBYCourseIdData]);
 
   const _handleActivateIssuer = (issuerId, approved, index) => {
     let temp = [];

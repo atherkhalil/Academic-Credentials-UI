@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import Switch from "react-switch";
 import EmptyData from "../general/EmptyData.js";
+import moment from "moment";
 import Link from "next/link";
 
 const CoursesTable = ({
@@ -20,8 +21,12 @@ const CoursesTable = ({
             <th>Type</th>
             <th>Title</th>
             <th>Description</th>
+            <th>Level</th>
+            <th>Session</th>
             <th>Issuance date</th>
-            <th>Board</th>
+            <th>Expiry date</th>
+            <th>Credit Hours</th>
+            <th>Faculty</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -32,12 +37,16 @@ const CoursesTable = ({
               <td>{row.type}</td>
               <td>{row.title}</td>
               <td>{row.description}</td>
-              <td>{row.issuance_date}</td>
-              <td>{row.Board}</td>
+              <td>{row.level}</td>
+              <td>{row.session}</td>
+              <td>{moment(parseInt(row.issuanceDate)).format("DD-MM-YYYY")}</td>
+              <td>{moment(parseInt(row.expiryDate)).format("DD-MM-YYYY")}</td>
+              <td>{row.creditHours}</td>
+              <td>{row.faculty}</td>
               <td style={{ fontSize: "24px" }}>
-                {/* <Link href="/"> */}
+                <Link href={`/issuer/courses/credentials/detail/${row.id}`}>
                   <i class="ri-eye-fill cursor-pointer"></i>
-                {/* </Link> */}
+                </Link>
               </td>
             </tr>
           ))}
