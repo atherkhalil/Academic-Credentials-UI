@@ -102,27 +102,6 @@ function LearnerCredentialDetailForMoe({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Board</label>
-              <div className="col-lg-9">
-                <Field
-                  name="Board"
-                  type="number"
-                  className={
-                    "form-control col-lg-9" +
-                    (errors.Board && touched.Board
-                      ? " is-invalid"
-                      : "")
-                  }
-                  disabled={true}
-                />
-                <ErrorMessage
-                  name="Board"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
               <label className="form-label col-lg-3">Session</label>
               <div className="col-lg-9">
                 <Field

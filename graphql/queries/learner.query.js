@@ -52,3 +52,74 @@ export const GetAllLearnerDetail = gql`
         }
     }
 `;
+
+export const GetAllCredentials = gql`
+    query GetCredentials {
+        GetCredentials {
+        id
+        type
+        courseId
+        faculty
+        level
+        title
+        description
+        creditHours
+        cgpa
+        issuanceDate
+        expiryDate
+        session
+        credentialUrl
+        issuer {
+            id
+            type
+            name
+            url
+            address {
+            country
+            city
+            street
+            }
+        }
+        learner {
+            id
+            registrationNumber
+            courseRegistrationNumber
+            firstName
+            lastName
+        }
+        }
+    }
+`;
+
+export const GetCredentialBYId = gql`
+    query GetCredentialBYId($credentialId: String) {
+        GetCredentialBYId(credentialId: $credentialId) {
+            id
+            type
+            courseId
+            faculty
+            level
+            title
+            description
+            creditHours
+            cgpa
+            issuanceDate
+            expiryDate
+            session
+            credentialUrl
+            issuer {
+                id
+                type
+                name
+                url
+              }
+            learner {
+                id
+                registrationNumber
+                courseRegistrationNumber
+                firstName
+                lastName
+            }
+        }
+    }
+`;

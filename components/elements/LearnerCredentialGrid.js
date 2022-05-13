@@ -12,10 +12,10 @@ import EmptyData from "../general/EmptyData.js";
 import Switch from "react-switch";
 import moment from "moment";
 
-function LearnerCredentialGrid({ coursesList, _handleCourseStatusUpdate }) {
+function LearnerCredentialGrid({ credentialList, _handleCourseStatusUpdate }) {
   return (
     <>
-      {coursesList?.map((item, index) => (
+      {credentialList?.map((item, index) => (
         <>
           <div className="col-12" key={index}>
             <div className="card course-card">
@@ -37,7 +37,7 @@ function LearnerCredentialGrid({ coursesList, _handleCourseStatusUpdate }) {
                         </div>
                         <div className="courses-details-info-box">
                           <i class="ri-timer-2-line"></i>
-                          <span>Issuance Date: {moment(item.issuanceDate).format("MMMM Do YYYY")}</span>
+                          <span>Issuance Date: {moment(parseInt(item.issuanceDate)).format("MMMM Do YYYY")}</span>
                         </div>
                       </div>
                       <p>{item.description}</p>
@@ -73,7 +73,7 @@ function LearnerCredentialGrid({ coursesList, _handleCourseStatusUpdate }) {
           </div>
         </>
       ))}
-      {coursesList?.length == 0 && <EmptyData />}
+      {credentialList?.length == 0 && <EmptyData />}
     </>
   );
 }
@@ -114,7 +114,7 @@ const LearnerCard = ({ state }) => {
         <div className="col-8">
           <span className="m-0 text-muted">{state.registrationNumber}</span>
           <h5 className="m-0 text-muted">{state.firstName} {state.lastName}</h5>
-          <span className="m-0 text-muted">{state.courseSession}</span>
+          <span className="m-0 text-muted">{state.courseRegistrationNumber}</span>
         </div>
       </div>
     </div>

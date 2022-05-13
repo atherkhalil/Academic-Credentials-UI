@@ -7,61 +7,34 @@ import Layout from "../../components/layout/Layout";
 import LearnerCredentialGrid from "../../components/elements/LearnerCredentialGrid";
 import { GetCoursesByIssuer } from "../../graphql/queries/issuer.query.js";
 import { UpdateCourseStatus } from "../../graphql/mutations/issuer.mutation.js";
+import { GetAllCredentials } from "../../graphql/queries/learner.query.js";
 import Link from "next/link";
 import { SetCoursesList } from "../../redux/actions/course.action.js";
-
-const tempCredentialList = [
-  {
-    id: "627a32e7bdd7fef935ce3175",
-    type: "ACADEMIC",
-    title: "Bachelors of Computer Engineering",
-    description: "Bachelors of Computer Engineering is related to Computer Engineering",
-    issuanceDate: new Date(),
-    Board: "Board",
-    courseId: "627a32e7bdd7fef935ce31f7",
-    session: "2022-2026",
-    issuer: {
-      id: "627a32e7bdd7fef935ce31f3",
-      type: "ACCREDITED",
-      name: "Mr. Bob",
-      url: "",
-      publicKey: "vRFy4g2/bRvIHpt3fbr4LA==",
-    },
-    learner: {
-      id: "627a32e7bdd7fef935ce31f5",
-      registrationNumber: "0001",
-      courseRegistrationNumber: "2235",
-      firstName: "Mrs.",
-      lastName: "Alis",
-      courseSession: "4 Years",
-      publicKey: "vRFy4g2/bRvIHpt3fbr4LA=="
-    },
-  }
-];
 
 function MyCourses() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
   const dispatch = useDispatch();
-  const credentialList = useSelector((state) => state?.Learner.credentialList);
-  const [coursesList, setCoursesList] = useState(credentialList || []);
+  // const credentialList = useSelector((state) => state?.Learner.credentialList);
+  const [credentialList, setCredentialList] = useState([]);
   const { loading, error, data } = useQuery(GetCoursesByIssuer);
   const [
     updateCourseStatusMutation,
     { updateCourseData, updateCourseLoading, updateCourseError },
   ] = useMutation(UpdateCourseStatus);
+  const { loading: GetAllCredentialsLoading, error: GetAllCredentialsError, data: GetAllCredentialsData } = 
+    useQuery(GetAllCredentials);
 
-  // useEffect(() => {
-  //   if (data?.GetCoursesByIssuer.length > 0) {
-  //     setCoursesList(data?.GetCoursesByIssuer);
-  //     dispatch(SetCoursesList(data?.GetCoursesByIssuer));
-  //   }
-  // }, [data]);
+  useEffect(() => {
+    if (GetAllCredentialsData?.GetCredentials.length > 0) {
+      setCredentialList(GetAllCredentialsData?.GetCredentials);
+    }
+  }, [GetAllCredentialsData]);
 
   const _handleCourseStatusUpdate = (id, active, index) => {
     let temp = [];
-    for (let index = 0; index < coursesList.length; index++) {
-      let issuer = Object.assign({}, coursesList[index]);
+    for (let index = 0; index < credentialList.length; index++) {
+      let issuer = Object.assign({}, credentialList[index]);
       if (issuer.id == id) {
         issuer.active = !active;
       }
@@ -103,7 +76,7 @@ function MyCourses() {
         <div className="col-12">
           <div className="row">
             <LearnerCredentialGrid
-              coursesList={coursesList}
+              credentialList={credentialList}
               loading={loading}
               _handleCourseStatusUpdate={_handleCourseStatusUpdate}
             />

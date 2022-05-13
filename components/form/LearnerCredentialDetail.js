@@ -101,27 +101,6 @@ function LearnerCredentialDetail({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Board</label>
-              <div className="col-lg-9">
-                <Field
-                  name="Board"
-                  type="number"
-                  className={
-                    "form-control col-lg-9" +
-                    (errors.Board && touched.Board
-                      ? " is-invalid"
-                      : "")
-                  }
-                  disabled={true}
-                />
-                <ErrorMessage
-                  name="Board"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
               <label className="form-label col-lg-3">Session</label>
               <div className="col-lg-9">
                 <Field
@@ -179,17 +158,6 @@ function LearnerCredentialDetail({
                 />
               </div>
             </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Public Key</label>
-              <div className="col-lg-9">
-                <Field
-                  name="issuer.publicKey"
-                  type="text"
-                  className="form-control col-lg-9"
-                  disabled={true}
-                />
-              </div>
-            </div>
             {/* Issuer info end */}
 
             <hr className="my-20" />
@@ -224,28 +192,6 @@ function LearnerCredentialDetail({
                 <input
                   name="firstName"
                   value={`${initialValues?.learner.firstName} ${initialValues?.learner.lastName}`}
-                  type="text"
-                  className="form-control col-lg-9"
-                  disabled={true}
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Course Session</label>
-              <div className="col-lg-9">
-                <Field
-                  name="learner.courseSession"
-                  type="text"
-                  className="form-control col-lg-9"
-                  disabled={true}
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Public Key</label>
-              <div className="col-lg-9">
-                <Field
-                  name="learner.publicKey"
                   type="text"
                   className="form-control col-lg-9"
                   disabled={true}

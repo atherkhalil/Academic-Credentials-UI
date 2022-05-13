@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import "react-circular-progressbar/dist/styles.css";
 import LearnerCredentialDetail from "../../../components/form/LearnerCredentialDetail";
@@ -11,6 +11,8 @@ import Link from "next/link";
 import * as Yup from "yup";
 import { UpdateCredential } from "../../../redux/actions/learner.action.js";
 import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
+import { GetCredentialBYId } from "../../../graphql/queries/learner.query.js";
+import moment from "moment";
 
 const initialValues = {
   id: "627a32e7bdd7fef935ce3175",
@@ -46,11 +48,26 @@ const CourseFormSchema = Yup.object().shape({
 const CourseDetail = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { query, push, back } = useRouter();
-  const credentialList = useSelector((state) => state?.Learner.credentialList);
+  // const credentialList = useSelector((state) => state?.Learner.credentialList);
   const dispatch = useDispatch();
-  const [initialState, setInitialState] = useState(credentialList[0]);
+  const [initialState, setInitialState] = useState(null);
   const [addCourseMutation, { data, loading, error }] = useMutation(AddCourse);
   const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
+  const { loading: GetCredentialBYIdLoading, error: GetCredentialBYIdError, data: GetCredentialBYIdData } = 
+  useQuery(GetCredentialBYId, {
+    variables: {
+      credentialId: query?.id
+    }
+  });
+
+  useEffect(() => {
+    console.log("GetCredentialBYIdData: ", GetCredentialBYIdData)
+    if (GetCredentialBYIdData?.GetCredentialBYId) {
+      let temp = {...GetCredentialBYIdData?.GetCredentialBYId};
+      temp.issuanceDate = moment(parseInt(temp.issuanceDate)).format("DD:MM:YYYY");
+      setInitialState(temp)
+    }
+  }, [GetCredentialBYIdData]);
 
   const _handleVerify = () => {
     setShowSignWithKeyModal(!showSignWithKeyModal)
