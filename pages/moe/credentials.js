@@ -173,6 +173,7 @@ const CredentialDetail = ({
             </div>
 
             <SignWithKeyModal
+                privateKey="vRFy4g2/bRvIHpt3fbr4LA"
                 toggle={showSignWithKeyModal}
                 setToggle={setShowSignWithKeyModal}
                 _handleSignCredential={_handleSignCredential}
