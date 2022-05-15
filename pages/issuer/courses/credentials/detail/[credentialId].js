@@ -13,6 +13,7 @@ import { AddCredential } from "../../../../../redux/actions/course.action.js";
 import { CreateCredentials } from "../../../../../graphql/mutations/issuer.mutation.js";
 import { GetLearnersByIssuer, GetCredentialBYId } from "../../../../../graphql/queries/issuer.query.js";
 import moment from 'moment';
+import { downloadCredentialPdf } from "../../../../../services/files.service.js";
 
 const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type is required"),
@@ -164,9 +165,11 @@ const CreateDetail = (props) => {
       parent={"Home"}
       child={"Credential Detail"}
     >
-      <div className="mb-4">
-        <button onClick={() => router.back()} className="btn btn-info mb-4"><i class="ri-arrow-left-s-line"></i></button>
-      </div>
+        <div className="d-flex flex-row justify-content-between">
+          <button onClick={() => router.back()} className="btn btn-info mb-4"><i class="ri-arrow-left-s-line"></i></button>
+
+          <button onClick={() => downloadCredentialPdf(initialValues.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
+        </div>
 
       <div className="row">
         <div className="col-12">

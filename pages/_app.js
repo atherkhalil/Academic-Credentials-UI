@@ -19,8 +19,6 @@ import { from } from '@apollo/client';
 const authLink = setContext((_, { headers }) => {
   // get the authentication token from local storage if it exists
   const token = localStorage.getItem("certmate_token");
-
-  console.log("token _app: ", token)
   // return the headers to the context so httpLink can read them
   return {
     headers: {

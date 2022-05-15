@@ -3,7 +3,7 @@ import Layout from "../../components/layout/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import dynamic from 'next/dynamic';
 import * as Yup from "yup";
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { useSnackbar } from "notistack";
 import "react-circular-progressbar/dist/styles.css";
 import LearnerCredentialDetailForMoe from "../../components/form/LearnerCredentialDetailForMoe";
@@ -12,7 +12,9 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { UpdateCredential } from "../../redux/actions/learner.action.js";
 import SignWithKeyModal from "../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
+import { SignCredentials } from "../../graphql/mutations/general.mutation.js";
 import ECDSAVerficationModal from "../../components/modal/ECDSAVerficationModal/ECDSAVerficationModal.js";
+import { GetAllCredentials } from "../../graphql/queries/moe.query.js";
 const Credentialkanban = dynamic(() => import("../../components/CredentialKanban/CredentialKanban.js"), { ssr: false });
 
 const CourseFormSchema = Yup.object().shape({
@@ -44,11 +46,15 @@ const ecdsaVerficationStateTemp = {
 function Credentials() {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const [showKanban, setShowKanban] = useState(true);
-    const credentialList = useSelector((state) => state?.Moe.credentialList);
+    const { query, push, back, reload } = useRouter();
+    // const credentialList = useSelector((state) => state?.Moe.credentialList);
+    const [credentialList, setCredentialList] = useState([]);
     const [initialState, setInitialState] = useState(credentialList[0]);
     const [addCourseMutation, { data, loading, error }] = useMutation(AddCourse);
     const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
     const [currentDetailState, setCurrentDetailState] = useState(null);
+    const { loading: GetAllCredentialsLoading, error: GetAllCredentialsError, data: GetAllCredentialsData } = 
+      useQuery(GetAllCredentials);
     const [board, setBoard] = useState({
         columns: [
             {
@@ -70,48 +76,70 @@ function Credentials() {
     });
     const [eCDSAVerficationState, setECDSAVerficationState] = useState({
         issuer: {
-            verfied: false
+            verified: false
         },
         learner: {
-            verfied: false
+            verified: false
         },
     });
     const [showECDSAVerficationModalModal, setShowECDSAVerficationModalModal] = useState(false);
+    const [
+      signCredentialsMutation,
+      { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
+    ] = useMutation(SignCredentials);
 
     useEffect(() => {
-        if (credentialList.length > 0) {
+        if (GetAllCredentialsData?.GetCredentials?.length > 0) {
+            setCredentialList(GetAllCredentialsData?.GetCredentials);
             let tempBoard = board;
-            for (let index = 0; index < credentialList.length; index++) {
-                const credential = credentialList[index];
-                console.log("credential: ", credential)
-                if (credential.status == "Pending") {
-                    tempBoard.columns[0].cards.push(credential);
-                }
-                if (credential.status == "Approved") {
-                    tempBoard.columns[1].cards.push(credential);
-                }
-                if (credential.status == "REJECTED") {
-                    tempBoard.columns[2].cards.push(credential);
+            if (GetAllCredentialsData?.GetCredentials.length == 1) {
+                const credential = GetAllCredentialsData?.GetCredentials[0];
+                tempBoard.columns[0].cards.push(credential);
+            } else {
+                for (let index = 0; index < GetAllCredentialsData?.GetCredentials?.length; index++) {
+                    const credential = GetAllCredentialsData?.GetCredentials[index];
+
+                    let statusList = ["Pending", "Approved", "REJECTED"];
+                    let min = 0;
+                    let max = 2;
+                    let status = statusList[Math.floor(Math.random() * (max - min + 1)) + min];
+                    
+                    if (status == "Pending") {
+                        tempBoard.columns[0].cards.push(credential);
+                    }
+                    if (status == "Approved") {
+                        tempBoard.columns[1].cards.push(credential);
+                    }
+                    if (status == "REJECTED") {
+                        tempBoard.columns[2].cards.push(credential);
+                    }
                 }
             }
-            console.log(tempBoard);
             setBoard(tempBoard);
         }
-    }, [credentialList]);
+    }, [GetAllCredentialsData]);
+
+    useEffect(() => {
+        console.log("eCDSAVerficationState: ", eCDSAVerficationState)
+    }, [eCDSAVerficationState])
 
     const _handleVerify = () => {
-        setShowSignWithKeyModal(!showSignWithKeyModal)
+        setShowECDSAVerficationModalModal(!showECDSAVerficationModalModal);
+        setTimeout(() => {
+            setECDSAVerficationState({
+                issuer: {
+                    verified: true
+                },
+                learner: {
+                    verified: true
+                },
+            })
+       }, 10000);
     }
 
-    const _handleSignCredential = (state) => {
-        enqueueSnackbar("Successfully verified!", {
-            variant: "success",
-        });
-
-        setTimeout(() => {
-            setShowKanban(!showKanban)
-            setShowSignWithKeyModal(!showSignWithKeyModal)
-        }, 500);
+    const _handleAttest = () => {
+        setShowECDSAVerficationModalModal(!showECDSAVerficationModalModal);
+        setShowSignWithKeyModal(!showSignWithKeyModal)
     }
 
     const _handleShowCredentialDetail = (credId) => {
@@ -120,8 +148,30 @@ function Credentials() {
         setShowKanban(!showKanban)
     }
 
+    const _handleSignCredential = () => {
+      signCredentialsMutation({
+        variables: {
+          credentialId: currentDetailState.id
+        },
+        onCompleted: () => {
+          enqueueSnackbar("Credential signed successfully!", {
+            variant: "success",
+          });
+          setTimeout(() => {
+            reload();
+          }, 500);
+        },
+        onError: (errors) => {
+          console.log("errors: ", errors.message);
+          enqueueSnackbar(errors.message, {
+            variant: "error",
+          });
+        },
+      });
+    }
+
     const _handleECDSAVerification = () => {
-        console.log("Verification is in progress!")
+        console.log("ECDSA verification...");
     }
 
     return (
@@ -162,6 +212,7 @@ function Credentials() {
                             showECDSAVerficationModalModal={showECDSAVerficationModalModal}
                             setShowECDSAVerficationModalModal={setShowECDSAVerficationModalModal}
                             _handleECDSAVerification={_handleECDSAVerification}
+                            _handleAttest={_handleAttest}
                         />
                 }
             </Layout>
@@ -183,7 +234,8 @@ const CredentialDetail = ({
     showECDSAVerficationModalModal,
     setShowECDSAVerficationModalModal,
     _handleECDSAVerification,
-    eCDSAVerficationState
+    eCDSAVerficationState,
+    _handleAttest
 }) => {
     return (
         <>
@@ -233,6 +285,7 @@ const CredentialDetail = ({
                 _handleECDSAVerification={_handleECDSAVerification}
                 eCDSAVerficationState={eCDSAVerficationState}
                 loading={false}
+                _handleAttest={_handleAttest}
             />
         </>
     )

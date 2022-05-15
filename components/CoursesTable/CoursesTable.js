@@ -4,6 +4,7 @@ import Switch from "react-switch";
 import EmptyData from "../general/EmptyData.js";
 import moment from "moment";
 import Link from "next/link";
+import { downloadCredentialPdf } from "../../services/files.service.js";
 
 const CoursesTable = ({
   issuerList,
@@ -47,6 +48,7 @@ const CoursesTable = ({
                 <Link href={`/issuer/courses/credentials/detail/${row.id}`}>
                   <i class="ri-eye-fill cursor-pointer"></i>
                 </Link>
+                <i onClick={() => downloadCredentialPdf(row.credentialUrl)} class="ri-file-download-fill cursor-pointer"></i>
               </td>
             </tr>
           ))}

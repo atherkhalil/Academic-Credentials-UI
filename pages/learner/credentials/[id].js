@@ -14,6 +14,7 @@ import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWit
 import { GetCredentialBYId } from "../../../graphql/queries/learner.query.js";
 import { SignCredentials } from "../../../graphql/mutations/general.mutation.js";
 import { GetAllLearnerDetail } from "../../../graphql/queries/learner.query.js";
+import { downloadCredentialPdf } from "../../../services/files.service.js";
 import moment from "moment";
 
 const initialValues = {
@@ -130,6 +131,7 @@ const CourseDetail = (props) => {
           <button color="primary" onClick={_handleVerify} className="btn btn-primary me-10">
             Verify
           </button>
+          <button onClick={() => downloadCredentialPdf(initialState.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
         </div>
       </div>
 

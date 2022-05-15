@@ -9,7 +9,8 @@ const SignFormSchema = Yup.object().shape({
   signature: Yup.string().required("Digital Signature is required"),
 });
 
-const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerification, eCDSAVerficationState }) => {
+const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerification, eCDSAVerficationState, _handleAttest }) => {
+  console.log("ECDSAVerficationModal eCDSAVerficationState: ", eCDSAVerficationState)
   return (
     <>
       <Modal
@@ -73,11 +74,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
                   </div>
                 </div>
                 <div className="row mb-20 justify-content-center text-center">
-                  {
-                    eCDSAVerficationState.issuer.verified ?
-                    <i class="ri-check-double-line ri-lg text-primary"></i> :
-                  <Spinner children=""></Spinner>
-                  }
+                  <LoaderBeforeVerified state={eCDSAVerficationState.issuer.verified} />
                 </div>
               </div>
 
@@ -139,13 +136,14 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
                   </div>
                 </div>
                 <div className="row mb-20 justify-content-center text-center">
-                  {
-                    eCDSAVerficationState.learner.verified ?
-                    <i class="ri-check-double-line ri-lg text-primary"></i> :
-                  <Spinner children=""></Spinner>
-                  }
+                  <LoaderBeforeVerified state={eCDSAVerficationState.learner.verified} />
                 </div>
               </div>
+            </div>
+            <div className="row justify-content-center">
+              <button color="primary" onClick={_handleAttest} style={{ width: "100px" }} className="btn btn-primary me-10">
+                Attest
+              </button>
             </div>
           </div>
         </ModalBody>
@@ -153,5 +151,14 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
     </>
   );
 };
+
+const LoaderBeforeVerified = state => {
+  if (state) {
+    return <i class="ri-check-double-line ri-lg text-primary"></i>
+  }
+  return (
+    <Spinner children=""></Spinner>
+  )
+}
 
 export default ECDSAVerficationModal;

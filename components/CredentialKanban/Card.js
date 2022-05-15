@@ -4,6 +4,7 @@ import EmptyData from "../general/EmptyData.js";
 import Switch from "react-switch";
 import moment from "moment";
 import { truncateString } from "../../shared/helper.js";
+import { downloadCredentialPdf } from "../../services/files.service.js";
 
 const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _handleShowCredentialDetail }) => {
     return (
@@ -37,6 +38,9 @@ const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _h
                 <div className="courses-action d-flex flex-row justify-content-between">
                     <div>
                         <button className="btn btn-primary" onClick={() => _handleShowCredentialDetail(content.id)}>Details</button>
+                    </div>
+                    <div>
+                        <i onClick={() => downloadCredentialPdf(content.credentialUrl)} class="ri-file-download-fill ri-xl cursor-pointer"></i>
                     </div>
                 </div>
             </div>
