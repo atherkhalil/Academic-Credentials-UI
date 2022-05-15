@@ -61,6 +61,7 @@ const CreateDetail = (props) => {
     expiryDate: "",
     faculty: "",
     name: "",
+    credentialTrackingStatus: null,
     issuerECDSA: 
     {
         k: "559013b2dc2196e112b142be2adb426a25f003a9ae504fbee4d0b58f18547564",
