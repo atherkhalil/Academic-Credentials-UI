@@ -12,6 +12,8 @@ import * as Yup from "yup";
 import { UpdateCredential } from "../../../redux/actions/learner.action.js";
 import SignWithKeyModal from "../../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
 import { GetCredentialBYId } from "../../../graphql/queries/learner.query.js";
+import { SignCredentials } from "../../../graphql/mutations/general.mutation.js";
+import { GetAllLearnerDetail } from "../../../graphql/queries/learner.query.js";
 import moment from "moment";
 
 const initialValues = {
@@ -48,8 +50,9 @@ const CourseFormSchema = Yup.object().shape({
 const CourseDetail = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { query, push, back } = useRouter();
-  // const credentialList = useSelector((state) => state?.Learner.credentialList);
+  const currentUser = useSelector((state) => state.User.currentuser);
   const dispatch = useDispatch();
+  const [issuerPrivateKey, setIssuerPrivateKey] = useState("");
   const [initialState, setInitialState] = useState(null);
   const [addCourseMutation, { data, loading, error }] = useMutation(AddCourse);
   const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
@@ -59,9 +62,15 @@ const CourseDetail = (props) => {
       credentialId: query?.id
     }
   });
+  const [
+    signCredentialsMutation,
+    { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
+  ] = useMutation(SignCredentials);
+  const { loading: GetAllLearnerDetailLoading, error: GetAllLearnerDetailError, data: GetAllLearnerDetailData } = useQuery(GetAllLearnerDetail, {
+    variables: { learnerId: currentUser?.user?._id },
+  });
 
   useEffect(() => {
-    console.log("GetCredentialBYIdData: ", GetCredentialBYIdData)
     if (GetCredentialBYIdData?.GetCredentialBYId) {
       let temp = {...GetCredentialBYIdData?.GetCredentialBYId};
       temp.issuanceDate = moment(parseInt(temp.issuanceDate)).format("DD:MM:YYYY");
@@ -69,21 +78,36 @@ const CourseDetail = (props) => {
     }
   }, [GetCredentialBYIdData]);
 
+  useEffect(() => {
+    if (GetAllLearnerDetailData?.GetLearnerDetail.privateKey) {
+      setIssuerPrivateKey(GetAllLearnerDetailData?.GetLearnerDetail.privateKey)
+    }
+  }, [GetAllLearnerDetailData]);
+
   const _handleVerify = () => {
     setShowSignWithKeyModal(!showSignWithKeyModal)
   }
 
-  const _handleSignCredential = (state) => { 
-    enqueueSnackbar("Successfully verified!", {
-      variant: "success",
+  const _handleSignCredential = () => {
+    signCredentialsMutation({
+      variables: {
+        credentialId: query?.id
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Credential signed successfully!", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          back();
+        }, 500);
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
     });
-    let temp = credentialList;
-    temp[0].status = true;
-    dispatch(UpdateCredential(temp));
-    
-    setTimeout(() => {
-      push(`/learner/credentials`);
-    }, 500);
   }
 
   return (
@@ -130,6 +154,7 @@ const CourseDetail = (props) => {
 
       <SignWithKeyModal
         toggle={showSignWithKeyModal}
+        privateKey={issuerPrivateKey}
         setToggle={setShowSignWithKeyModal}
         _handleSignCredential={_handleSignCredential}
         loading={false}

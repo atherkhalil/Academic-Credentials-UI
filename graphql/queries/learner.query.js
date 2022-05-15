@@ -49,6 +49,7 @@ export const GetAllLearnerDetail = gql`
         updatedAt
         qrCode
         publicKey
+        privateKey
         }
     }
 `;
