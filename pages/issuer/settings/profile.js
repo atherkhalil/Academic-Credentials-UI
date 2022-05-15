@@ -3,11 +3,11 @@ import { useSelector } from "react-redux";
 import * as Yup from "yup";
 import Layout from "../../../components/layout/Layout";
 import SettingsMenu from "../../../components/layout/SettingsMenu";
-import { Step1, Step2, Step3 } from "../../../components/IssuerProfileWizard";
+import { Step1, Step2, Step3, Step4 } from "../../../components/IssuerProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
 import { GetAllIssuerDetail } from "../../../graphql/queries/issuer.query.js";
 import { UpdateIssuerDetails } from "../../../graphql/mutations/learner.mutation.js";
-import { SignatureUpload } from "../../../graphql/mutations/general.mutation.js";
+import { SignatureUpload, SyncCourse } from "../../../graphql/mutations/general.mutation.js";
 import { useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
@@ -52,6 +52,7 @@ function SettingsProfile() {
   const currentuser = useSelector((state) => state.User.currentuser);
   const [currentUserData, setCurrentUserData] = useState(initialValues);
   const [signatureFile, setSignatureFile] = useState(null);
+  const [bulkCredentialFile, setBulkCredentialFile] = useState(null);
   const { loading, error, data } = useQuery(GetAllIssuerDetail, {
     variables: { issuerId: currentuser?.user?._id },
   });
@@ -60,6 +61,9 @@ function SettingsProfile() {
   );
   const [signatureUploadMutation, { signatureUploadMutationData, signatureUploadMutationLoading, signatureUploadMutationError }] = useMutation(
     SignatureUpload
+  );
+  const [syncCourseMutation, { syncCourseMutationData, syncCourseMutationLoading, syncCourseMutationError }] = useMutation(
+    SyncCourse
   );
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
@@ -103,7 +107,6 @@ function SettingsProfile() {
   } 
 
   const _handleSignatureUpload = () => {
-    console.log("signatureFile: ", signatureFile)
     signatureUploadMutation({
       variables: {
         file: signatureFile
@@ -128,6 +131,31 @@ function SettingsProfile() {
     setSignatureFile(file);
   }
 
+  const _handleBulkCredentialFileUpload = () => {
+    syncCourseMutation({
+      variables: {
+        file: bulkCredentialFile
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Successfully submitted!", {
+          variant: "success",
+        });
+        router.reload();
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
+  }
+  
+  const _handleBulkCredentialFileChange = (e) => {
+    let file = e.target.files[0];
+    setBulkCredentialFile(file);
+  }
+
   const _getCurrentStep = () => {
     switch (currentViewStep) {
       case 0:
@@ -146,6 +174,11 @@ function SettingsProfile() {
         />;
       case 2:
         return <Step3 />;
+      case 3:
+        return <Step4 
+        _handleSubmit={_handleBulkCredentialFileUpload}
+          _handleBulkCredentialFileChange={_handleBulkCredentialFileChange}
+        />;
 
       default:
         return <Step1 />;

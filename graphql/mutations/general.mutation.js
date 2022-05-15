@@ -7,7 +7,13 @@ export const SignatureUpload = gql`
 `;
 
 export const SignCredentials = gql`
-    mutation SignCredentials($credentialId: String) {
+mutation SignCredentials($credentialId: String) {
         signCredentials(credentialId: $credentialId)
+    }
+`;
+
+export const SyncCourse = gql`
+    mutation SyncCourse($file: Upload) {
+        syncCourse(file: $file)
     }
 `;

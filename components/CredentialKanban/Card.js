@@ -40,7 +40,7 @@ const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _h
                         <button className="btn btn-primary" onClick={() => _handleShowCredentialDetail(content.id)}>Details</button>
                     </div>
                     <div>
-                        <i onClick={() => downloadCredentialPdf(content.credentialUrl)} class="ri-file-download-fill ri-xl cursor-pointer"></i>
+                        <i onClick={() => downloadCredentialPdf(process.env.NEXT_PUBLIC_CREDENTIAL_URL + content.credentialUrl)} class="ri-file-download-fill ri-xl cursor-pointer"></i>
                     </div>
                 </div>
             </div>

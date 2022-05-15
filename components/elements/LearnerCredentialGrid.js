@@ -68,7 +68,7 @@ function LearnerCredentialGrid({ credentialList, _handleCourseStatusUpdate }) {
                       <a className="btn btn-primary text-white"><i class="ri-eye-fill cursor-pointer align-middle"></i> Details</a>
                     </Link>
                     {/* <i onClick={() => downloadCredentialPdf(item.credentialUrl)} class="ri-file-download-fill ri-xl cursor-pointer align-middle" style={{ marginRight: "10px" }}></i> */}
-                    <button onClick={() => downloadCredentialPdf(item.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
+                    <button onClick={() => downloadCredentialPdf(process.env.NEXT_PUBLIC_CREDENTIAL_URL + item.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
                   </div>
                 </div>
               </div>

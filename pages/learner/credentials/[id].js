@@ -131,7 +131,7 @@ const CourseDetail = (props) => {
           <button color="primary" onClick={_handleVerify} className="btn btn-primary me-10">
             Verify
           </button>
-          <button onClick={() => downloadCredentialPdf(initialState.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
+          <button onClick={() => downloadCredentialPdf(process.env.NEXT_PUBLIC_CREDENTIAL_URL + initialState.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
         </div>
       </div>
 

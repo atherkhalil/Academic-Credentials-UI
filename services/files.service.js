@@ -1,5 +1,5 @@
 export const downloadCredentialPdf = (url) => {
-    let filePath = process.env.NEXT_PUBLIC_CREDENTIAL_URL + url;
+    let filePath = url;
     var a = document.createElement('A');
     a.href = filePath;
     a.target = "_blank"

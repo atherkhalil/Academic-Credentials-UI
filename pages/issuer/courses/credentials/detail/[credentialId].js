@@ -168,7 +168,7 @@ const CreateDetail = (props) => {
         <div className="d-flex flex-row justify-content-between">
           <button onClick={() => router.back()} className="btn btn-info mb-4"><i class="ri-arrow-left-s-line"></i></button>
 
-          <button onClick={() => downloadCredentialPdf(initialValues.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
+          <button onClick={() => downloadCredentialPdf(process.env.NEXT_PUBLIC_CREDENTIAL_URL + initialValues.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
         </div>
 
       <div className="row">

@@ -48,7 +48,7 @@ const CoursesTable = ({
                 <Link href={`/issuer/courses/credentials/detail/${row.id}`}>
                   <i class="ri-eye-fill cursor-pointer"></i>
                 </Link>
-                <i onClick={() => downloadCredentialPdf(row.credentialUrl)} class="ri-file-download-fill cursor-pointer"></i>
+                <i onClick={() => downloadCredentialPdf(process.env.NEXT_PUBLIC_CREDENTIAL_URL + row.credentialUrl)} class="ri-file-download-fill cursor-pointer"></i>
               </td>
             </tr>
           ))}
