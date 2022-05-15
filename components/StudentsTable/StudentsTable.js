@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import Switch from "react-switch";
 import EmptyData from "../general/EmptyData.js";
+import moment from "moment";
 
 const StudentsTable = ({
   issuerList,
@@ -20,33 +21,22 @@ const StudentsTable = ({
           <th>DOB</th>
           <th>Email</th>
           <th>Telephone no.</th>
-          <th>Country</th>
-          <th>City</th>
+          <th>Gender</th>
           <th>Is Verified</th>
           <th>Joined</th>
-          <th>Action</th>
         </tr>
       </thead>
       <tbody>
         {issuerList?.map((row, index) => (
           <tr>
             <th scope="row">{index + 1}</th>
-            <td>{row.type}</td>
-            <td>{row.adminEmail}</td>
-            <td>{row.name}</td>
-            <td>{row.name}</td>
-            <td>{row.name}</td>
-            <td>{row.name}</td>
+            <td>{`${row.firstName} ${row.lastName}`}</td>
+            <td>{moment(parseInt(row.dob)).format("DD:MM:YYYY")}</td>
+            <td>{row.email}</td>
             <td>{row.telephone}</td>
-            <td>{row.approved ? "Approved" : "Pending"}</td>
-            <td>
-              <Switch
-                onChange={() =>
-                  _handleActivateIssuer(row.id, row.approved, index)
-                }
-                checked={row.approved}
-              />
-            </td>
+            <td>{row.gender}</td>
+            <td>{row.isVerified ? "Verified" : "Unverified"}</td>
+            <td>{moment(parseInt(row.createdAt)).format("DD:MM:YYYY")}</td>
           </tr>
         ))}
         <tr className="text-center">

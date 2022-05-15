@@ -6,13 +6,14 @@ import Link from "next/link";
 import Layout from "../../components/layout/Layout";
 import StudentsTable from "../../components/StudentsTable/StudentsTable";
 import { ApprovedIssuer } from "../../graphql/mutations/authentication.mutation.js";
-import { GetPendingIssuerRequests } from "../../graphql/queries/issuer.query.js";
+import { GetPendingIssuerRequests, GetLearnersByIssuer } from "../../graphql/queries/issuer.query.js";
 
 function Students() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const router = useRouter();
   const [issuerList, setIssuerList] = useState([]);
   const { loading, error, data } = useQuery(GetPendingIssuerRequests);
+  const { loading: GetCoursesByIssuerLoading, error: GetCoursesByIssuerError, data: GetCoursesByIssuerData } = useQuery(GetLearnersByIssuer);
   const [
     approvedIssuerMutation,
     {
@@ -23,10 +24,11 @@ function Students() {
   ] = useMutation(ApprovedIssuer);
 
   useEffect(() => {
-    if (data?.GetPendingIssuerRequests.length > 0) {
-      setIssuerList(data?.GetPendingIssuerRequests);
+    console.log("GetCoursesByIssuerData: ", GetCoursesByIssuerData)
+    if (GetCoursesByIssuerData?.GetLearnersByIssuer?.length > 0) {
+      setIssuerList(GetCoursesByIssuerData?.GetLearnersByIssuer);
     }
-  }, [data]);
+  }, [GetCoursesByIssuerData]);
 
   const _handleActivateIssuer = (issuerId, approved, index) => {
     let temp = [];

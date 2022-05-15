@@ -12,11 +12,34 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 import { UpdateCredential } from "../../redux/actions/learner.action.js";
 import SignWithKeyModal from "../../components/modal/SignWithKeyModal/SignWithKeyModal.js";
+import ECDSAVerficationModal from "../../components/modal/ECDSAVerficationModal/ECDSAVerficationModal.js";
 const Credentialkanban = dynamic(() => import("../../components/CredentialKanban/CredentialKanban.js"), { ssr: false });
 
 const CourseFormSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
 });
+
+const ecdsaVerficationStateTemp = {
+    issuerECDSA:
+    {
+        k: "559013b2dc2196e112b142be2adb426a25f003a9ae504fbee4d0b58f18547564",
+        r: "888e0051ede98729682408349a2bf37657a515474838e4a5121dc7351b1dd327",
+        s: "79a7c464c1e6a912eb36a4804ef6699a273e9f8c8c4378040ea28f2740aab554",
+        signingDate: "Tue, 10 May 2022 12:38:45 GMT"
+    },
+    learnerECDSA: {
+        k: "0d07ba56a96e09c468578bb67b208bd00077ae79bdf7b28ad9feb55888155dd8",
+        r: "7890dc448f2c1ee1e5a428b28bfa6267798782d2ea2f2f7ec251ec7909772b31",
+        s: "2221ef87015f8d561b331b3d9244ca5321a7cff0a4aa5edd462bb5d9cc0fbb76",
+        signingDate: "Tue, 10 May 2022 12:38:51 GMT"
+    },
+    moeECDSA: {
+        k: "75e6a9fd2f9f9ac07dc048427006414db7d984be523d955a70384f0aeda7511a",
+        r: "0a768b73bcb6fc2be07f933b6fd2148d824b8ddd923b961f3334e7d082d7e162",
+        s: "76d1e2d2b9a1a160305b5f1a07d670220755651797f864348c24831d2f7eabd6",
+        signingDate: "Tue, 10 May 2022 12:38:54 GMT"
+    }
+};
 
 function Credentials() {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -45,6 +68,15 @@ function Credentials() {
             }
         ]
     });
+    const [eCDSAVerficationState, setECDSAVerficationState] = useState({
+        issuer: {
+            verfied: false
+        },
+        learner: {
+            verfied: false
+        },
+    });
+    const [showECDSAVerficationModalModal, setShowECDSAVerficationModalModal] = useState(false);
 
     useEffect(() => {
         if (credentialList.length > 0) {
@@ -66,26 +98,30 @@ function Credentials() {
             setBoard(tempBoard);
         }
     }, [credentialList]);
-  
+
     const _handleVerify = () => {
-      setShowSignWithKeyModal(!showSignWithKeyModal)
-    }
-  
-    const _handleSignCredential = (state) => { 
-      enqueueSnackbar("Successfully verified!", {
-        variant: "success",
-      });
-      
-      setTimeout(() => {
-        setShowKanban(!showKanban)
         setShowSignWithKeyModal(!showSignWithKeyModal)
-      }, 500);
+    }
+
+    const _handleSignCredential = (state) => {
+        enqueueSnackbar("Successfully verified!", {
+            variant: "success",
+        });
+
+        setTimeout(() => {
+            setShowKanban(!showKanban)
+            setShowSignWithKeyModal(!showSignWithKeyModal)
+        }, 500);
     }
 
     const _handleShowCredentialDetail = (credId) => {
         let temp = credentialList.find(cred => cred.id == credId);
         setCurrentDetailState(temp);
         setShowKanban(!showKanban)
+    }
+
+    const _handleECDSAVerification = () => {
+        console.log("Verification is in progress!")
     }
 
     return (
@@ -102,26 +138,31 @@ function Credentials() {
                     showKanban ?
                         <div className="container">
                             <div className="row justify-content-center">
-                                <Credentialkanban 
-                                    board={board} 
-                                    setBoard={setBoard} 
+                                <Credentialkanban
+                                    board={board}
+                                    setBoard={setBoard}
                                     _handleShowCredentialDetail={_handleShowCredentialDetail}
                                     enqueueSnackbar={enqueueSnackbar}
                                 />
                             </div>
                         </div>
-                        : 
-                    <CredentialDetail 
-                        CourseFormSchema={CourseFormSchema}
-                        initialValues={currentDetailState}
-                        context="edit"
-                        _handleVerify={_handleVerify}
-                        showSignWithKeyModal={showSignWithKeyModal}
-                        setShowSignWithKeyModal={setShowSignWithKeyModal}
-                        _handleSignCredential={_handleSignCredential}
-                        showKanban={showKanban}
-                        setShowKanban={setShowKanban}
-                    />
+                        :
+                        <CredentialDetail
+                            CourseFormSchema={CourseFormSchema}
+                            initialValues={currentDetailState}
+                            context="edit"
+                            _handleVerify={_handleVerify}
+                            showSignWithKeyModal={showSignWithKeyModal}
+                            setShowSignWithKeyModal={setShowSignWithKeyModal}
+                            _handleSignCredential={_handleSignCredential}
+                            showKanban={showKanban}
+                            setShowKanban={setShowKanban}
+                            ecdsaVerficationStateTemp={ecdsaVerficationStateTemp}
+                            eCDSAVerficationState={eCDSAVerficationState}
+                            showECDSAVerficationModalModal={showECDSAVerficationModalModal}
+                            setShowECDSAVerficationModalModal={setShowECDSAVerficationModalModal}
+                            _handleECDSAVerification={_handleECDSAVerification}
+                        />
                 }
             </Layout>
         </>
@@ -137,8 +178,13 @@ const CredentialDetail = ({
     setShowSignWithKeyModal,
     _handleSignCredential,
     showKanban,
-    setShowKanban
-  }) => {
+    setShowKanban,
+    ecdsaVerficationStateTemp,
+    showECDSAVerficationModalModal,
+    setShowECDSAVerficationModalModal,
+    _handleECDSAVerification,
+    eCDSAVerficationState
+}) => {
     return (
         <>
             <div className="mb-4">
@@ -177,6 +223,15 @@ const CredentialDetail = ({
                 toggle={showSignWithKeyModal}
                 setToggle={setShowSignWithKeyModal}
                 _handleSignCredential={_handleSignCredential}
+                loading={false}
+            />
+
+            <ECDSAVerficationModal
+                state={ecdsaVerficationStateTemp}
+                toggle={showECDSAVerficationModalModal}
+                setToggle={setShowECDSAVerficationModalModal}
+                _handleECDSAVerification={_handleECDSAVerification}
+                eCDSAVerficationState={eCDSAVerficationState}
                 loading={false}
             />
         </>

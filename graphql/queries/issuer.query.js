@@ -68,16 +68,6 @@ export const GetAllIssuerDetail = gql`
     }
 `;
 
-export const GetLearnersByIssuer = gql`
-    query GetLearnersByIssuer {
-        GetLearnersByIssuer {
-        id
-        firstName
-        lastName
-        }
-    }
-`;
-
 export const GetCourseByID = gql`
     query GetCourseByID($courseId: String) {
         GetCourseByID(courseId: $courseId) {
@@ -146,6 +136,26 @@ export const GetCredentialBYId = gql`
                 firstName
                 lastName
             }
+        }
+    }
+`;
+
+export const GetLearnersByIssuer = gql`
+    query GetLearnersByIssuer {
+        GetLearnersByIssuer {
+        id
+        firstName
+        lastName
+        dob
+        gender
+        telephone
+        email
+        isVerified
+        createdAt
+        updatedAt
+        qrCode
+        publicKey
+        privateKey
         }
     }
 `;
