@@ -24,7 +24,7 @@ const CoursesTable = ({
             <th>Title</th>
             <th>Description</th>
             <th>Level</th>
-            <th>Session</th>
+            <th>Study period</th>
             <th>Issuance date</th>
             <th>Expiry date</th>
             <th>Credit Hours</th>

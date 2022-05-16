@@ -48,7 +48,7 @@ const StudentFormSchema = Yup.object().shape({
   course: Yup.object().shape({
       courseRegistrationNumber: Yup.string().required("Course Registration No. ID is required"),
       registrationNumber: Yup.string().required("Student Registration ID is required"),
-      session: Yup.string().required("Session is required")
+      session: Yup.string().required("Study period is required")
   })
 });
 

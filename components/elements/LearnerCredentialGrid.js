@@ -31,7 +31,7 @@ function LearnerCredentialGrid({ credentialList, _handleCourseStatusUpdate }) {
                       <div className="courses-details-info d-flex justify-content-left">
                         <div className="courses-details-info-box">
                           <i class="ri-calendar-check-fill"></i>
-                          <span>Session: {item.session}</span>
+                          <span>Study period: {item.session}</span>
                         </div>
                         <div className="courses-details-info-box">
                           <i class="ri-government-line"></i>

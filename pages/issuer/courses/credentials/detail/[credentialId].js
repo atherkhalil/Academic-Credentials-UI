@@ -19,7 +19,7 @@ const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type is required"),
   title: Yup.string().required("Credential Title is required"),
   description: Yup.string().required("Credential Description is required"),
-  session: Yup.string().required("Session is required"),
+  session: Yup.string().required("Study period is required"),
   Board: Yup.string().required("Board is required"),
 
   level: Yup.string().required("Level is required"),

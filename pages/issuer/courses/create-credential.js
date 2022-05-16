@@ -18,7 +18,7 @@ const CredentialFormSchema = Yup.object().shape({
   type: Yup.string().required("Credential Type is required"),
   title: Yup.string().required("Credential Title is required"),
   description: Yup.string().required("Credential Description is required"),
-  session: Yup.string().required("Session is required"),
+  session: Yup.string().required("Study period is required"),
   level: Yup.string().required("Level is required"),
   creditHours: Yup.string().required("Credit Hours is required"),
   cgpa: Yup.string().required("CGPA is required"),
@@ -83,7 +83,11 @@ const CreateDetail = (props) => {
       setInitialValues({
         ...initialValues,
         title: GetCourseByIDData.GetCourseByID?.courseTitle,
-        description: GetCourseByIDData.GetCourseByID?.description
+        description: GetCourseByIDData.GetCourseByID?.description,
+        session: GetCourseByIDData.GetCourseByID?.duration,
+        level: GetCourseByIDData.GetCourseByID?.level,
+        creditHours: GetCourseByIDData.GetCourseByID?.creditHours,
+        faculty: GetCourseByIDData.GetCourseByID?.faculty,
       })
       setCurrentCourse(GetCourseByIDData.GetCourseByID);
     }

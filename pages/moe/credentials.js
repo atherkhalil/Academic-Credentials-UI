@@ -82,7 +82,7 @@ function Credentials() {
             verified: false
         },
     });
-    const [showECDSAVerficationModalModal, setShowECDSAVerficationModalModal] = useState(false);
+    const [showECDSAVerficationModalModal, setShowECDSAVerficationModalModal] = useState(true);
     const [
       signCredentialsMutation,
       { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }

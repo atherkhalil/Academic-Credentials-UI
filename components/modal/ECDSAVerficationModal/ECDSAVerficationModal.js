@@ -23,6 +23,13 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
         <ModalBody>
           <div className="container-fluid">
             <div className="row">
+              <h4 className="text-primary">
+                Verifying Issuer and Student Signature details
+              </h4>
+              <br />
+              <br />
+            </div>
+            <div className="row">
               <div className="col-5">
                 <div><h6 className="text-primary">Issuer Signature Details</h6></div>
                 <div className="row mb-20">
@@ -62,7 +69,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
                   </div>
                 </div>
                 <div className="row mb-20">
-                  <label className="form-label col-lg-3">Signing Date</label>
+                  <label className="form-label col-lg-3">Signing Timestamp</label>
                   <div className="col-lg-9">
                     <input
                       name="issuerECDSA.signingDate"
@@ -124,7 +131,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
                   </div>
                 </div>
                 <div className="row mb-20">
-                  <label className="form-label col-lg-3">Signing Date</label>
+                  <label className="form-label col-lg-3">Signing Timestamp</label>
                   <div className="col-lg-9">
                     <input
                       name="learnerECDSA.signingDate"
@@ -140,6 +147,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
                 </div>
               </div>
             </div>
+            <br />
             <div className="row justify-content-center">
               <button color="primary" onClick={_handleAttest} style={{ width: "100px" }} className="btn btn-primary me-10">
                 Attest

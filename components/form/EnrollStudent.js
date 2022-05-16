@@ -267,7 +267,7 @@ function EnrollStudent({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Session</label>
+              <label className="form-label col-lg-3">Study period</label>
               <div className="col-lg-9">
                 <Field
                   name="course.session"
