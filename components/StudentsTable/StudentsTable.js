@@ -2,6 +2,7 @@ import React from "react";
 import { Table } from "reactstrap";
 import Switch from "react-switch";
 import EmptyData from "../general/EmptyData.js";
+import Link from "next/link";
 import moment from "moment";
 
 const StudentsTable = ({
@@ -24,6 +25,7 @@ const StudentsTable = ({
           <th>Gender</th>
           <th>Is Verified</th>
           <th>Joined</th>
+          <th>Actions</th>
         </tr>
       </thead>
       <tbody>
@@ -37,6 +39,11 @@ const StudentsTable = ({
             <td>{row.gender}</td>
             <td>{row.isVerified ? "Verified" : "Unverified"}</td>
             <td>{moment(parseInt(row.createdAt)).format("DD:MM:YYYY")}</td>
+            <td style={{ fontSize: "24px" }}>
+              <Link href={`/issuer/students/${row.id}`}>
+                <i class="ri-eye-fill cursor-pointer"></i>
+              </Link>
+            </td>
           </tr>
         ))}
         <tr className="text-center">
