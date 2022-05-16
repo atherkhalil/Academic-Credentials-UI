@@ -6,11 +6,11 @@ import Card from "./Card.js";
 
 const Credentialkanban = ({ board, setBoard, _handleShowCredentialDetail, enqueueSnackbar }) => {
     const _handleCardMove = (_card, source, destination) => {
-        if (!_card.verified) {
-            enqueueSnackbar("Credential unverifed!", {
-                variant: "error",
-              });
-        } else {
+        // if (!_card.verified) {
+        //     enqueueSnackbar("Credential unverifed!", {
+        //         variant: "error",
+        //       });
+        // } else {
             console.log("source: ", source)
             console.log("destination: ", destination)
             const updatedBoard = moveCard(board, source, destination);
@@ -18,7 +18,7 @@ const Credentialkanban = ({ board, setBoard, _handleShowCredentialDetail, enqueu
             if (destination.toColumnId == 2) {
                 _handleShowCredentialDetail(_card.id);
             }
-        }
+        // }
     }
 
     return (

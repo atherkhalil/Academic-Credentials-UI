@@ -26,7 +26,7 @@ const CredentialFormSchema = Yup.object().shape({
   creditHours: Yup.string().required("Credit Hours is required"),
   cgpa: Yup.string().required("CGPA is required"),
   expiryDate: Yup.string().required("Expiry Date is required"),
-  faculty: Yup.string().required("Faculty is required"),
+  faculty: Yup.string().required("College is required"),
 });
 
 const CreateDetail = (props) => {

@@ -5,6 +5,7 @@ import EmptyData from "../general/EmptyData.js";
 import moment from "moment";
 import Link from "next/link";
 import { downloadCredentialPdf } from "../../services/files.service.js";
+import { truncateString } from "../../shared/helper.js";
 
 const CoursesTable = ({
   issuerList,
@@ -27,7 +28,7 @@ const CoursesTable = ({
             <th>Issuance date</th>
             <th>Expiry date</th>
             <th>Credit Hours</th>
-            <th>Faculty</th>
+            <th>College</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -37,7 +38,7 @@ const CoursesTable = ({
               <th scope="row">{index + 1}</th>
               <td>{row.type}</td>
               <td>{row.title}</td>
-              <td>{row.description}</td>
+              <td>{truncateString(row.description, 50)}</td>
               <td>{row.level}</td>
               <td>{row.session}</td>
               <td>{moment(parseInt(row.issuanceDate)).format("DD-MM-YYYY")}</td>

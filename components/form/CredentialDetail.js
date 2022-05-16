@@ -172,7 +172,7 @@ function CredentialDetail({
                 </div>
               </div>
               <div className="row mb-20">
-                <label className="form-label col-lg-3">Faculty</label>
+                <label className="form-label col-lg-3">College</label>
                 <div className="col-lg-9">
                   <Field
                     name="faculty"

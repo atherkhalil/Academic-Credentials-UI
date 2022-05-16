@@ -11,6 +11,7 @@ import Link from "next/link";
 import EmptyData from "../general/EmptyData.js";
 import Switch from "react-switch";
 import moment from "moment";
+import { truncateString } from "../../shared/helper.js";
 
 function CoursesGrid({ coursesList, _handleCourseStatusUpdate }) {
   return (
@@ -35,7 +36,7 @@ function CoursesGrid({ coursesList, _handleCourseStatusUpdate }) {
                     <span>Code: {item.code}</span>
                   </div>
                 </div>
-                <p>{item.description}</p>
+                <p>{truncateString(item.description, 150)}</p>
                 {item.active ? (
                   <span className="text-primary">Active</span>
                 ) : (

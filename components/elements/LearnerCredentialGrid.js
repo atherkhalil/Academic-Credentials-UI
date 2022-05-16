@@ -12,6 +12,7 @@ import EmptyData from "../general/EmptyData.js";
 import Switch from "react-switch";
 import moment from "moment";
 import { downloadCredentialPdf } from "../../services/files.service.js";
+import { truncateString } from "../../shared/helper.js";
 
 function LearnerCredentialGrid({ credentialList, _handleCourseStatusUpdate }) {
   return (
@@ -41,7 +42,7 @@ function LearnerCredentialGrid({ credentialList, _handleCourseStatusUpdate }) {
                           <span>Issuance Date: {moment(parseInt(item.issuanceDate)).format("MMMM Do YYYY")}</span>
                         </div>
                       </div>
-                      <p>{item.description}</p>
+                      <p>{truncateString(item.description, 200)}</p>
                       <span><b>{item.type}</b></span>
                       <br />
                       <br />

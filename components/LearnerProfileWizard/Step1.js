@@ -10,7 +10,7 @@ const Step1 = ({ currentUserData, ProfileSchema, _handleSubmit }) => {
       <div className="col-xxl-12">
         <div className="card">
           <div className="card-header">
-            <h4 className="card-title">Personal Information</h4>
+            <h4 className="card-title">Profile Information</h4>
           </div>
           <div className="card-body">
             <IssuerPersonalInfo

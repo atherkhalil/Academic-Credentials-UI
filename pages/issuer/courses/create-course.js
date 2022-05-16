@@ -25,7 +25,7 @@ const CourseFormSchema = Yup.object().shape({
   creditHours: Yup.number().required("Credit Hours are required"),
   code: Yup.string().required("Course Code is required"),
   description: Yup.string().required("Course Description is required"),
-  faculty: Yup.string().required("Faculty Description is required"),
+  faculty: Yup.string().required("College Description is required"),
   level: Yup.string().required("Level Description is required")
 });
 
