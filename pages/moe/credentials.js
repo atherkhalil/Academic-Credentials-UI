@@ -15,6 +15,7 @@ import SignWithKeyModal from "../../components/modal/SignWithKeyModal/SignWithKe
 import { SignCredentials } from "../../graphql/mutations/general.mutation.js";
 import ECDSAVerficationModal from "../../components/modal/ECDSAVerficationModal/ECDSAVerficationModal.js";
 import { GetAllCredentials } from "../../graphql/queries/moe.query.js";
+import { GetAllMOEDetailsQuery } from "../../graphql/queries/authentication.query.js";
 const Credentialkanban = dynamic(() => import("../../components/CredentialKanban/CredentialKanban.js"), { ssr: false });
 
 const CourseFormSchema = Yup.object().shape({
@@ -87,9 +88,14 @@ function Credentials() {
       signCredentialsMutation,
       { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
     ] = useMutation(SignCredentials);
+    const currentUser = useSelector((state) => state.User.currentuser);
+    const { loading: GetAllMOEDetailsQueryLoading, error: GetAllMOEDetailsQueryError, data: GetAllMOEDetailsQueryData } = useQuery(GetAllMOEDetailsQuery, {
+      variables: { moeId: currentUser?.user?._id },
+    });
+    const [moePrivateKey, setMoePrivateKey] = useState("");
 
     useEffect(() => {
-        let tempId = "62836d2df3a2381b19699527";
+        let tempId = "62837bf576f03c06e9152ebb";
         if (GetAllCredentialsData?.GetCredentials?.length > 0) {
             setCredentialList(GetAllCredentialsData?.GetCredentials);
             let tempBoard = board;
@@ -110,6 +116,13 @@ function Credentials() {
             setBoard(tempBoard);
         }
     }, [GetAllCredentialsData]);
+
+    useEffect(() => {
+        console.log("GetAllMOEDetailsQueryData: ", GetAllMOEDetailsQueryData)
+      if (GetAllMOEDetailsQueryData?.GetMOEDetails) {
+        setMoePrivateKey(GetAllMOEDetailsQueryData?.GetMOEDetails.privateKey)
+      }
+    }, [GetAllMOEDetailsQueryData]);
 
     const _handleVerify = () => {
         setShowECDSAVerficationModalModal(!showECDSAVerficationModalModal);
@@ -201,6 +214,7 @@ function Credentials() {
                             setShowECDSAVerficationModalModal={setShowECDSAVerficationModalModal}
                             _handleECDSAVerification={_handleECDSAVerification}
                             _handleAttest={_handleAttest}
+                            moePrivateKey={moePrivateKey}
                         />
                 }
             </Layout>
@@ -223,7 +237,8 @@ const CredentialDetail = ({
     setShowECDSAVerficationModalModal,
     _handleECDSAVerification,
     eCDSAVerficationState,
-    _handleAttest
+    _handleAttest,
+    moePrivateKey
 }) => {
 
     const _handleShowVerifyButton = (state) => {
@@ -274,7 +289,7 @@ const CredentialDetail = ({
             </div>
 
             <SignWithKeyModal
-                privateKey="vRFy4g2/bRvIHpt3fbr4LA"
+                privateKey={moePrivateKey}
                 toggle={showSignWithKeyModal}
                 setToggle={setShowSignWithKeyModal}
                 _handleSignCredential={_handleSignCredential}

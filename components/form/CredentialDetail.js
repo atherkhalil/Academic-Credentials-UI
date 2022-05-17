@@ -347,7 +347,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">K</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.learnerSign.issuerECDSA.k"
+                          name="credentialTrackingStatus.learnerSign.learnerECDSA.k"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -358,7 +358,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">R</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.learnerSign.issuerECDSA.r"
+                          name="credentialTrackingStatus.learnerSign.learnerECDSA.r"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -369,7 +369,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">S</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.learnerSign.issuerECDSA.s"
+                          name="credentialTrackingStatus.learnerSign.learnerECDSA.s"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -380,7 +380,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">Signing timestamp</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.learnerSign.issuerECDSA.signingDate"
+                          name="credentialTrackingStatus.learnerSign.learnerECDSA.signingDate"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -399,7 +399,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">K</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.moeSign.issuerECDSA.k"
+                          name="credentialTrackingStatus.moeSign.moeECDSA.k"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -410,7 +410,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">R</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.moeSign.issuerECDSA.r"
+                          name="credentialTrackingStatus.moeSign.moeECDSA.r"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -421,7 +421,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">S</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.moeSign.issuerECDSA.s"
+                          name="credentialTrackingStatus.moeSign.moeECDSA.s"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -432,7 +432,7 @@ function CredentialDetail({
                       <label className="form-label col-lg-3">Signing timestamp</label>
                       <div className="col-lg-9">
                         <Field
-                          name="credentialTrackingStatus.moeSign.issuerECDSA.signingDate"
+                          name="credentialTrackingStatus.moeSign.moeECDSA.signingDate"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
