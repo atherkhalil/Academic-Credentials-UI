@@ -228,26 +228,6 @@ function UploadCredential({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">MOE Id</label>
-              <div className="col-lg-9">
-                <Field
-                  name="moeId"
-                  type="text"
-                  className={
-                    "form-control col-lg-9" +
-                    (errors.moeId && touched.moeId
-                      ? " is-invalid"
-                      : "")
-                  }
-                />
-                <ErrorMessage
-                  name="moeId"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
               <label className="form-label col-lg-3">MOE Name</label>
               <div className="col-lg-9">
                 <Field

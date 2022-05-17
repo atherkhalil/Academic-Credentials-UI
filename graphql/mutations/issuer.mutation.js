@@ -48,3 +48,22 @@ export const CreateCredentials = gql`
         }
     }
 `;
+
+export const CourseByID = gql`
+    mutation CourseByID($courseId: String) {
+        CourseByID(courseId: $courseId) {
+        id
+        issuerId
+        courseTitle
+        duration
+        creditHours
+        code
+        description
+        active
+        createdAt
+        level
+        faculty
+        updatedAt
+        }
+    }
+`;

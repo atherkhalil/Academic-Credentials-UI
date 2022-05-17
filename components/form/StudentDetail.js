@@ -5,12 +5,14 @@ import moment from "moment";
 import { truncateString } from "../../shared/helper.js";
 import { studentCourseStatusList } from "../../shared/constants.js";
 import Link from "next/link";
+import EmptyData from "../../components/general/EmptyData.js";
 
 function StudentDetail({
   CourseFormSchema,
   initialValues,
   _handleCourseUpdate,
   context,
+  courseList
 }) {
   return (
     <>
@@ -22,88 +24,92 @@ function StudentDetail({
       >
         {({ errors, status, touched }) => (
           <Form>
-            <div><h6 className="text-primary">Student Details</h6></div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Learner Name</label>
-              <div className="col-lg-9">
-                <input
-                  name="name"
-                  type="text"
-                  value={`${initialValues?.firstName} ${initialValues?.lastName}`}
-                  className="form-control col-lg-9"
-                />
+            <div className="row">
+              <div className="col-8">
+                <div><h6 className="text-primary">Student Details</h6></div>
+                <div className="row mb-20">
+                  <label className="form-label col-lg-3">Learner Name</label>
+                  <div className="col-lg-9">
+                    <input
+                      name="name"
+                      type="text"
+                      value={`${initialValues?.firstName} ${initialValues?.lastName}`}
+                      className="form-control col-lg-9"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <label className="form-label col-lg-3">DOB</label>
+                  <div className="col-lg-9">
+                    <input
+                      name="name"
+                      type="text"
+                      value={moment(parseInt(initialValues.dob)).format("DD-MM-YYYY")}
+                      className="form-control col-lg-9"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <label className="form-label col-lg-3">Email</label>
+                  <div className="col-lg-9">
+                    <input
+                      name="name"
+                      type="text"
+                      value={initialValues.email}
+                      className="form-control col-lg-9"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <label className="form-label col-lg-3">Telephone no.</label>
+                  <div className="col-lg-9">
+                    <input
+                      name="name"
+                      type="text"
+                      value={initialValues.telephone}
+                      className="form-control col-lg-9"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <label className="form-label col-lg-3">Gender</label>
+                  <div className="col-lg-9">
+                    <input
+                      name="name"
+                      type="text"
+                      value={initialValues.gender}
+                      className="form-control col-lg-9"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <label className="form-label col-lg-3">Verified</label>
+                  <div className="col-lg-9">
+                    <input
+                      name="name"
+                      type="text"
+                      value={initialValues.isVerified ? "Verified" : "Unverified"}
+                      className="form-control col-lg-9"
+                    />
+                  </div>
+                </div>
+                <div className="row mb-20">
+                  <label className="form-label col-lg-3">Joined</label>
+                  <div className="col-lg-9">
+                    <input
+                      name="name"
+                      type="text"
+                      value={moment(parseInt(initialValues.createdAt)).format("DD-MM-YYYY")}
+                      className="form-control col-lg-9"
+                    />
+                  </div>
+                </div>
+                <hr className="my-20" />
               </div>
             </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">DOB</label>
-              <div className="col-lg-9">
-                <input
-                  name="name"
-                  type="text"
-                  value={moment(parseInt(initialValues.dob)).format("DD-MM-YYYY")}
-                  className="form-control col-lg-9"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Email</label>
-              <div className="col-lg-9">
-                <input
-                  name="name"
-                  type="text"
-                  value={initialValues.email}
-                  className="form-control col-lg-9"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Telephone no.</label>
-              <div className="col-lg-9">
-                <input
-                  name="name"
-                  type="text"
-                  value={initialValues.telephone}
-                  className="form-control col-lg-9"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Gender</label>
-              <div className="col-lg-9">
-                <input
-                  name="name"
-                  type="text"
-                  value={initialValues.gender}
-                  className="form-control col-lg-9"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Verified</label>
-              <div className="col-lg-9">
-                <input
-                  name="name"
-                  type="text"
-                  value={initialValues.isVerified ? "Verified" : "Unverified"}
-                  className="form-control col-lg-9"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
-              <label className="form-label col-lg-3">Joined</label>
-              <div className="col-lg-9">
-                <input
-                  name="name"
-                  type="text"
-                  value={moment(parseInt(initialValues.createdAt)).format("DD-MM-YYYY")}
-                  className="form-control col-lg-9"
-                />
-              </div>
-            </div>
-            <hr className="my-20" />
 
             <div><h6 className="text-primary">Student Course Details</h6></div>
-            <CoursesTable courseList={initialValues.courses}/>
+            <CoursesTable courseList={courseList} />
           </Form>
         )}
       </Formik>
@@ -126,6 +132,12 @@ const CoursesTable = ({
             <th>#</th>
             <th>Course Registration No.</th>
             <th>Registration No.</th>
+            <th>Title</th>
+            {/* <th>Description</th> */}
+            <th>Study period</th>
+            <th>Credit Hours</th>
+            <th>Level</th>
+            <th>College</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -135,7 +147,12 @@ const CoursesTable = ({
               <th scope="row">{index + 1}</th>
               <td>{row.courseRegistrationNumber}</td>
               <td>{row.registrationNumber}</td>
-
+              <td>{row.courseTitle}</td>
+              {/* <td>{truncateString(row.description, 50)}</td> */}
+              <td>{row.duration}</td>
+              <td>{row.creditHours}</td>
+              <td>{row.level}</td>
+              <td>{row.faculty}</td>
               <td style={{ fontSize: "24px" }}>
                 <select
                   name="type"

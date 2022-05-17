@@ -5,6 +5,7 @@ import "react-circular-progressbar/dist/styles.css";
 import StudentDetail from "../../../components/form/StudentDetail";
 import Layout from "../../../components/layout/Layout";
 import { GetAllLearnerDetail } from "../../../graphql/queries/issuer.query.js";
+import { CourseByID } from "../../../graphql/mutations/issuer.mutation.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -36,17 +37,56 @@ const StudentDetailPage = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { query, push } = useRouter();
   const [initialState, setInitialState] = useState(initialValues);
-  const courseList = useSelector((state) => state?.Course.courseList);
+  const [courseListState, setCourseListState] = useState([]);
   const { loading: GetAllLearnerDetailLoading, error: GetAllLearnerDetailError, data: GetAllLearnerDetailData } = 
   useQuery(GetAllLearnerDetail, {
     variables: {
         learnerId: query?.id
     }
   });
+  const [courseByIDMutation, { courseByIDMutationData, courseByIDMutationLoading, courseByIDMutationError }] = useMutation(
+    CourseByID
+  );
 
   useEffect(() => {
     if (GetAllLearnerDetailData?.GetLearnerDetail) {
         setInitialState(GetAllLearnerDetailData?.GetLearnerDetail);
+        let courseList = GetAllLearnerDetailData?.GetLearnerDetail.courses;
+        console.log("GetAllLearnerDetailData?.GetLearnerDetail: ", )
+
+        let tempCourseList = [];
+        for (let index = 0; index < courseList.length; index++) {
+          const course = courseList[index];
+
+          courseByIDMutation({
+            variables: {
+              courseId: course.courseId
+            },
+            onCompleted: (data) => {
+              let newCourseObj = {
+                ...course,
+                active: data.CourseByID.active,
+                code: data.CourseByID.code,
+                courseTitle: data.CourseByID.courseTitle,
+                createdAt: data.CourseByID.createdAt,
+                creditHours: data.CourseByID.creditHours,
+                description: data.CourseByID.description,
+                duration: data.CourseByID.duration,
+                faculty: data.CourseByID.faculty,
+                id: data.CourseByID.id,
+                issuerId: data.CourseByID.issuerId,
+                level: data.CourseByID.level,
+                updatedAt: data.CourseByID.updatedAt,
+              };
+              setCourseListState([...courseListState, newCourseObj]);
+            },
+            onError: (errors) => {
+              enqueueSnackbar(errors.message, {
+                variant: "error",
+              });
+            },
+          }) 
+        }
     }
   }, [GetAllLearnerDetailData]);
 
@@ -72,10 +112,11 @@ const StudentDetailPage = (props) => {
           <div className="card">
             <div className="card-body">
               <div className="row d-flex justify-content-center align-items-center py-20">
-                <div className="col-xl-8">
+                <div className="col-12">
                   <StudentDetail
                     CourseFormSchema={CourseFormSchema}
                     initialValues={initialState}
+                    courseList={courseListState}
                     context="edit"
                   />
                 </div>

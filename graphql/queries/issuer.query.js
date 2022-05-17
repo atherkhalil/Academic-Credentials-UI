@@ -141,6 +141,11 @@ export const GetCredentialBYId = gql`
             firstName
             lastName
         }
+        moe {
+            moeId
+            moeName
+            publicKey
+        }
         credentialTrackingStatus {
             currentStatus
             created {

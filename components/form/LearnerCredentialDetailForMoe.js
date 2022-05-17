@@ -240,8 +240,6 @@ function LearnerCredentialDetailForMoe({
               </div>
               {/* Issuer info end */}
 
-              <hr className="my-20" />
-
               {/* Issuer info start */}
               <div><h6 className="text-primary">Student Details</h6></div>
               <div className="row mb-20">
@@ -279,6 +277,30 @@ function LearnerCredentialDetailForMoe({
                 </div>
               </div>
 
+              {/* MOE info start */}
+              <div><h6 className="text-primary">MOE Details</h6></div>
+              <div className="row mb-20">
+                <label className="form-label col-lg-3">MOE ID</label>
+                <div className="col-lg-9">
+                  <Field
+                    name="moe.moeId"
+                    type="text"
+                    className="form-control col-lg-9"
+                    disabled={true}
+                  />
+                </div>
+              </div>
+              <div className="row mb-20">
+                <label className="form-label col-lg-3">MOE Name.</label>
+                <div className="col-lg-9">
+                  <Field
+                    name="moe.moeName"
+                    type="text"
+                    className="form-control col-lg-9"
+                    disabled={true}
+                  />
+                </div>
+              </div>
 
               { _shouldShowSignatureDetails(initialValues) && (
                 <>

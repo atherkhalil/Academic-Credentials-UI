@@ -82,7 +82,6 @@ const VerifyOtpModal = ({ toggle, setToggle, _handleOtpVerification }) => {
         isOpen={toggle}
         centered
         toggle={() => setToggle()}
-        backdrop="static"
       >
         <ModalBody>
           <h5 className="text-center text-primary">
