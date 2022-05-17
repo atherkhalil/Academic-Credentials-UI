@@ -131,7 +131,7 @@ const CreateDetail = (props) => {
           issuanceDate: new Date(),
           session: state.session,
           level: state.level,
-          creditHours: state.creditHours,
+          creditHours: parseInt(state.creditHours),
           cgpa: state.cgpa,
           expiryDate: state.expiryDate,
           faculty: state.faculty,

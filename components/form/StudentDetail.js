@@ -102,7 +102,7 @@ function StudentDetail({
             </div>
             <hr className="my-20" />
 
-            <div><h6 className="text-primary">Student Details</h6></div>
+            <div><h6 className="text-primary">Student Course Details</h6></div>
             <CoursesTable courseList={initialValues.courses}/>
           </Form>
         )}
