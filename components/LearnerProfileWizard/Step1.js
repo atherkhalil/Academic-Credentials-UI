@@ -1,10 +1,9 @@
 import React from "react";
 import UpdateInfo from "../form/UpdateInfo";
-import IssuerPersonalInfo from "../form/IssuerPersonalInfo";
+import LearnerPersonalInfo from "../form/LearnerPersonalInfo";
 import UpdateAvatar from "../form/UpdateAvatar";
 
 const Step1 = ({ currentUserData, ProfileSchema, _handleSubmit }) => {
-  console.log("currentUserData: ", currentUserData);
   return (
     <div className="row">
       <div className="col-xxl-12">
@@ -13,7 +12,7 @@ const Step1 = ({ currentUserData, ProfileSchema, _handleSubmit }) => {
             <h4 className="card-title">Profile Information</h4>
           </div>
           <div className="card-body">
-            <IssuerPersonalInfo
+            <LearnerPersonalInfo
               currentUserData={currentUserData}
               ProfileSchema={ProfileSchema}
               _handleSubmit={_handleSubmit}

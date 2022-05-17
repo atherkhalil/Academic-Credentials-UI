@@ -1,6 +1,6 @@
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik, getIn } from "formik";
 import PhoneNumber from "../general/PhoneNumber.js";
-import { issuerTypes } from "../../shared/constants.js";
+import { issuerTypes, genderTypes } from "../../shared/constants.js";
 import CustomTextarea from "../general/CustomTextArea.js";
 import * as Yup from "yup";
 
@@ -17,81 +17,80 @@ function IssuerPersonalInfo({ currentUserData, ProfileSchema, _handleSubmit }) {
           <Form>
             <div className="row">
               <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Name</label>
+                <label className="form-label">First Name</label>
                 <Field
-                  name="name"
+                  name="firstName"
                   type="text"
                   className={
                     "form-control" +
-                    (errors.name && touched.name ? " is-invalid" : "")
+                    (errors.firstName && touched.firstName ? " is-invalid" : "")
                   }
                 />
                 <ErrorMessage
-                  name="name"
+                  name="firstName"
+                  component="div"
+                  className="invalid-feedback"
+                />
+              </div>
+              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
+                <label className="form-label">Last Name</label>
+                <Field
+                  name="lastName"
+                  type="text"
+                  className={
+                    "form-control" +
+                    (errors.lastName && touched.lastName ? " is-invalid" : "")
+                  }
+                />
+                <ErrorMessage
+                  name="lastName"
                   component="div"
                   className="invalid-feedback"
                 />
               </div>
 
               <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Admin Email</label>
+                <label className="form-label">Email</label>
                 <Field
-                  name="adminEmail"
-                  type="text"
+                  name="email"
+                  type="email"
                   className={
                     "form-control" +
-                    (errors.adminEmail && touched.adminEmail
+                    (errors.email && touched.email
                       ? " is-invalid"
                       : "")
                   }
                 />
                 <ErrorMessage
-                  name="adminEmail"
+                  name="email"
                   component="div"
                   className="invalid-feedback"
                 />
               </div>
 
               <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Contact Email</label>
+                <label className="form-label">Gender</label>
                 <Field
-                  name="contactEmail"
-                  type="text"
-                  className={
-                    "form-control" +
-                    (errors.contactEmail && touched.contactEmail
-                      ? " is-invalid"
-                      : "")
-                  }
-                />
-                <ErrorMessage
-                  name="contactEmail"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-
-              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Type</label>
-                <Field
-                  name="type"
+                  name="gender"
                   as="select"
+                  type="string"
                   className={
                     "form-control" +
-                    (errors.type && touched.type
+                    (errors.gender &&
+                      touched.gender
                       ? " is-invalid"
                       : "")
                   }
                 >
-                  <option selected>Please Select</option>
+                  <option value="" selected>Select gender</option>
                   {
-                    issuerTypes.map((type, index) => (
-                      <option value={type} key={index}>{type}</option>
+                    genderTypes.map((val, index) => (
+                      <option key={index} value={val}>{val}</option>
                     ))
                   }
                 </Field>
                 <ErrorMessage
-                  name="type"
+                  name="gender"
                   component="div"
                   className="invalid-feedback"
                 />
@@ -121,8 +120,9 @@ function IssuerPersonalInfo({ currentUserData, ProfileSchema, _handleSubmit }) {
                   name="address.country"
                   type="text"
                   className={
-                    "form-control" +
-                    (errors.country && touched.country ? " is-invalid" : "")
+                    "form-control col-lg-9" +
+                    (getIn(errors, 'address.country') && getIn(touched, 'address.country')
+                      ? " is-invalid" : "")
                   }
                 />
                 <ErrorMessage
@@ -138,8 +138,9 @@ function IssuerPersonalInfo({ currentUserData, ProfileSchema, _handleSubmit }) {
                   name="address.city"
                   type="text"
                   className={
-                    "form-control" +
-                    (errors.city && touched.city ? " is-invalid" : "")
+                    "form-control col-lg-9" +
+                    (getIn(errors, 'address.city') && getIn(touched, 'address.city')
+                      ? " is-invalid" : "")
                   }
                 />
                 <ErrorMessage
@@ -155,44 +156,13 @@ function IssuerPersonalInfo({ currentUserData, ProfileSchema, _handleSubmit }) {
                   name="address.street"
                   type="text"
                   className={
-                    "form-control" +
-                    (errors.street && touched.street ? " is-invalid" : "")
+                    "form-control col-lg-9" +
+                    (getIn(errors, 'address.street') && getIn(touched, 'address.street')
+                      ? " is-invalid" : "")
                   }
                 />
                 <ErrorMessage
                   name="address.street"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-
-              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Description</label>
-                <CustomTextarea
-                  label=""
-                  name="description"
-                  rows="3"
-                  placeholder="Enter description..."
-                />
-                <ErrorMessage
-                  name="telephone"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-              
-              <div className="col-xxl-6 col-xl-6 col-lg-6 mb-16">
-                <label className="form-label">Site Url</label>
-                <Field
-                  name="siteUrl"
-                  type="text"
-                  className={
-                    "form-control" +
-                    (errors.siteUrl && touched.siteUrl ? " is-invalid" : "")
-                  }
-                />
-                <ErrorMessage
-                  name="siteUrl"
                   component="div"
                   className="invalid-feedback"
                 />

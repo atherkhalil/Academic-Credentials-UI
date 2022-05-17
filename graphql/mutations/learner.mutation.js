@@ -6,27 +6,10 @@ export const LernerOnboarding = gql`
     }
 `;
 
-export const UpdateIssuerDetails = gql`
-    mutation UpdateIssuerDetails(
-        $type: String!
-        $name: String!
-        $contactEmail: String!
-        $address: Address!
-        $telephone: String
-        $siteUrl: String
-        $description: String
-    ) {
-        UpdateIssuerDetails(
-            type: $type
-            name: $name
-            contactEmail: $contactEmail
-            address: $address
-            telephone: $telephone
-            siteUrl: $siteUrl
-            description: $description
-        ) {
-            id
-            moeId
+export const UpdateLearnerDetails = gql`
+    mutation UpdateLearnerDetails($firstName: String!, $lastName: String!, $dob: String!, $gender: String!, $telephone: String, $address: Address) {
+        UpdateLearnerDetails(firstName: $firstName, lastName: $lastName, dob: $dob, gender: $gender, telephone: $telephone, address: $address) {
+        id
         }
     }
 `;

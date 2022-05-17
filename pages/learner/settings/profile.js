@@ -6,30 +6,18 @@ import SettingsMenu from "../../../components/layout/SettingsMenu";
 import { Step1, Step2, Step3 } from "../../../components/LearnerProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
 import { GetAllLearnerDetail } from "../../../graphql/queries/learner.query.js";
-import { UpdateIssuerDetails } from "../../../graphql/mutations/learner.mutation.js";
+import { UpdateLearnerDetails } from "../../../graphql/mutations/learner.mutation.js";
 import { SignatureUpload } from "../../../graphql/mutations/general.mutation.js";
 import { useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import { useSnackbar } from "notistack";
 
 const initialValues = {
-  adminEmail: "",
-  approvalDate: "",
-  approved: "",
-  contactEmail: "",
-  createdAt: "",
-  description: "",
-  id: "",
-  isVerified: "",
-  logoUrl: "",
-  moeId: "",
-  name: "",
-  publicKey: "",
-  revocationList: "",
-  siteUrl: "",
+  firstName: "",
+  lastName: "",
+  dob: "",
+  gender: "",
   telephone: "",
-  type: "",
-  updatedAt: "",
   address: {
     country: "",
     city: "",
@@ -38,12 +26,15 @@ const initialValues = {
 };
 
 const ProfileSchema = Yup.object().shape({
-  type: Yup.string().required("Type is required"),
-  name: Yup.string().required("Name is required"),
-  // contactEmail: Yup.string().required("Email is required"),
-  // address: Yup.string().required("Address is required"),
+  firstName: Yup.string().required("First Name is required"),
+  lastName: Yup.string().required("Last Name is required"),
+  gender: Yup.string().required("Gender is required"),
   telephone: Yup.string().required("Telephone is required"),
-  siteUrl: Yup.string().required("Url is required")
+  address: Yup.object().shape({
+    country: Yup.string().required("Country is required"),
+    city: Yup.string().required("City is required"),
+    street: Yup.string().required("Street is required"),
+  })
 });
 
 function SettingsProfile() {
@@ -55,8 +46,8 @@ function SettingsProfile() {
   const { loading, error, data } = useQuery(GetAllLearnerDetail, {
     variables: { learnerId: currentuser?.user?._id },
   });
-  const [updateIssuerDetailsMutation, { updateIssuerDetailsMutationData, updateIssuerDetailsMutationLoading, updateIssuerDetailsMutationError }] = useMutation(
-    UpdateIssuerDetails
+  const [updateLearnerDetailsMutation, { updateLearnerDetailsMutationData, updateLearnerDetailsMutationLoading, updateLearnerDetailsMutationError }] = useMutation(
+    UpdateLearnerDetails
   );
   const [signatureUploadMutation, { signatureUploadMutationData, signatureUploadMutationLoading, signatureUploadMutationError }] = useMutation(
     SignatureUpload
@@ -65,8 +56,9 @@ function SettingsProfile() {
 
   useEffect(() => {
     if (data) {
-      console.log("GetIssuerDetail: ", data.GetLearnerDetail)
-      setCurrentUserData(data.GetLearnerDetail);
+      setCurrentUserData({
+        ...data.GetLearnerDetail
+      });
     }
   }, [data]);
 
@@ -77,15 +69,14 @@ function SettingsProfile() {
     address.country = state.address.country;
     address.street = state.address.street;
 
-    updateIssuerDetailsMutation({
+    updateLearnerDetailsMutation({
       variables: {
-        type: state.type,
-        name: state.name,
-        contactEmail: state.adminEmail,
-        address: address,
+        firstName: state.firstName,
+        lastName: state.lastName,
+        dob: new Date(parseInt(state.dob)),
+        gender: state.gender,
         telephone: state.telephone,
-        siteUrl: state.siteUrl,
-        description: state.description,
+        address: address
       },
       onCompleted: () => {
         enqueueSnackbar("Successfully submitted!", {

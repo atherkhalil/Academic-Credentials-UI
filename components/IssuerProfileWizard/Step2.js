@@ -26,7 +26,7 @@ const Step2 = ({ currentUserData, _handleSubmit, _handleSignatureFileChange }) =
           </form>
 
           <div className="mt-10">
-            <img src={"/images/signature.jpg" || currentUserData?.signature?.imageUrl} width="260px" />
+            <img src={currentUserData?.signature?.imageUrl || "/images/signature.jpg"} width="260px" />
           </div>
         </div>
       </div>
