@@ -62,26 +62,7 @@ const CreateDetail = (props) => {
     expiryDate: "",
     faculty: "",
     name: "",
-    credentialTrackingStatus: null,
-    issuerECDSA: 
-    {
-        k: "559013b2dc2196e112b142be2adb426a25f003a9ae504fbee4d0b58f18547564",
-        r: "888e0051ede98729682408349a2bf37657a515474838e4a5121dc7351b1dd327",
-        s: "79a7c464c1e6a912eb36a4804ef6699a273e9f8c8c4378040ea28f2740aab554",
-        signingDate: "Tue, 10 May 2022 12:38:45 GMT"
-    },
-    learnerECDSA: {
-        k: "0d07ba56a96e09c468578bb67b208bd00077ae79bdf7b28ad9feb55888155dd8",
-        r: "7890dc448f2c1ee1e5a428b28bfa6267798782d2ea2f2f7ec251ec7909772b31",
-        s: "2221ef87015f8d561b331b3d9244ca5321a7cff0a4aa5edd462bb5d9cc0fbb76",
-        signingDate: "Tue, 10 May 2022 12:38:51 GMT"
-    },
-    moeECDSA: {
-        k: "75e6a9fd2f9f9ac07dc048427006414db7d984be523d955a70384f0aeda7511a",
-        r: "0a768b73bcb6fc2be07f933b6fd2148d824b8ddd923b961f3334e7d082d7e162",
-        s: "76d1e2d2b9a1a160305b5f1a07d670220755651797f864348c24831d2f7eabd6",
-        signingDate: "Tue, 10 May 2022 12:38:54 GMT"
-    }
+    credentialTrackingStatus: null
   });
   const [createCredentialsMutation, { createCredentialsMutationData, createCredentialsMutationLoading, createCredentialsMutationError }] = useMutation(
     CreateCredentials

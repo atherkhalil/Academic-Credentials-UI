@@ -148,7 +148,7 @@ const CreateDetail = (props) => {
 
         // Now after credential is submitted, Issuer need to sign it with his digital signature
         setShowSignWithKeyModal(!showSignWithKeyModal)
-        setCreatedCredentialId(data.createCredentials.id)
+        setCreatedCredentialId(data.createCredentials.credentialId)
       },
       onError: (errors) => {
         console.log("errors: ", errors.message);

@@ -18,6 +18,19 @@ function LearnerCredentialDetailForMoe({
   issuerError,
   studentsList
 }) {
+
+  const _shouldShowSignatureDetails = (state) => {
+    if (
+      state?.credentialTrackingStatus?.issuerSign?.status == "SIGNED" ||
+      state?.credentialTrackingStatus?.learnerSign?.status == "SIGNED" ||
+      state?.credentialTrackingStatus?.moeSign?.status == "SIGNED"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <>
       <Formik
@@ -267,7 +280,7 @@ function LearnerCredentialDetailForMoe({
               </div>
 
 
-              {initialValues?.credentialTrackingStatus?.issuerSign && initialValues?.credentialTrackingStatus?.learnerSign && initialValues?.credentialTrackingStatus?.moeSign && (
+              { _shouldShowSignatureDetails(initialValues) && (
                 <>
               <hr className="my-20" />
                 <div><h4 className="text-primary my-20">Signature Details</h4></div>
@@ -275,14 +288,14 @@ function LearnerCredentialDetailForMoe({
               )}
 
               {
-                initialValues?.credentialTrackingStatus?.issuerSign && (
+                initialValues?.credentialTrackingStatus?.issuerSign?.status == "SIGNED" && (
                   <>
                     <div><h6 className="text-primary">Issuer Signature Details</h6></div>
                     <div className="row mb-20">
                       <label className="form-label col-lg-3">K</label>
                       <div className="col-lg-9">
                         <Field
-                          name="issuerECDSA.k"
+                          name="credentialTrackingStatus.issuerSign.issuerECDSA.k"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -293,7 +306,7 @@ function LearnerCredentialDetailForMoe({
                       <label className="form-label col-lg-3">R</label>
                       <div className="col-lg-9">
                         <Field
-                          name="issuerECDSA.r"
+                          name="credentialTrackingStatus.issuerSign.issuerECDSA.r"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -304,7 +317,7 @@ function LearnerCredentialDetailForMoe({
                       <label className="form-label col-lg-3">S</label>
                       <div className="col-lg-9">
                         <Field
-                          name="issuerECDSA.s"
+                          name="credentialTrackingStatus.issuerSign.issuerECDSA.s"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -312,10 +325,10 @@ function LearnerCredentialDetailForMoe({
                       </div>
                     </div>
                     <div className="row mb-20">
-                      <label className="form-label col-lg-3">Signing Date</label>
+                      <label className="form-label col-lg-3">Signing timestamp</label>
                       <div className="col-lg-9">
                         <Field
-                          name="issuerECDSA.signingDate"
+                          name="credentialTrackingStatus.issuerSign.issuerECDSA.signingDate"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -327,14 +340,14 @@ function LearnerCredentialDetailForMoe({
               }
 
               {
-                initialValues?.credentialTrackingStatus?.learnerSign && (
+                initialValues?.credentialTrackingStatus?.learnerSign?.status == "SIGNED" && (
                   <>
                     <div><h6 className="text-primary">Student Signature Details</h6></div>
                     <div className="row mb-20">
                       <label className="form-label col-lg-3">K</label>
                       <div className="col-lg-9">
                         <Field
-                          name="learnerECDSA.k"
+                          name="credentialTrackingStatus.learnerSign.issuerECDSA.k"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -345,7 +358,7 @@ function LearnerCredentialDetailForMoe({
                       <label className="form-label col-lg-3">R</label>
                       <div className="col-lg-9">
                         <Field
-                          name="learnerECDSA.r"
+                          name="credentialTrackingStatus.learnerSign.issuerECDSA.r"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -356,7 +369,7 @@ function LearnerCredentialDetailForMoe({
                       <label className="form-label col-lg-3">S</label>
                       <div className="col-lg-9">
                         <Field
-                          name="learnerECDSA.s"
+                          name="credentialTrackingStatus.learnerSign.issuerECDSA.s"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -364,10 +377,10 @@ function LearnerCredentialDetailForMoe({
                       </div>
                     </div>
                     <div className="row mb-20">
-                      <label className="form-label col-lg-3">Signing Date</label>
+                      <label className="form-label col-lg-3">Signing timestamp</label>
                       <div className="col-lg-9">
                         <Field
-                          name="learnerECDSA.signingDate"
+                          name="credentialTrackingStatus.learnerSign.issuerECDSA.signingDate"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -379,14 +392,14 @@ function LearnerCredentialDetailForMoe({
               }
 
               {
-                initialValues?.credentialTrackingStatus?.moeSign && (
+                initialValues?.credentialTrackingStatus?.moeSign?.status == "SIGNED" && (
                   <>
                     <div><h6 className="text-primary">MOE Signature Details</h6></div>
                     <div className="row mb-20">
                       <label className="form-label col-lg-3">K</label>
                       <div className="col-lg-9">
                         <Field
-                          name="moeECDSA.k"
+                          name="credentialTrackingStatus.moeSign.issuerECDSA.k"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -397,7 +410,7 @@ function LearnerCredentialDetailForMoe({
                       <label className="form-label col-lg-3">R</label>
                       <div className="col-lg-9">
                         <Field
-                          name="moeECDSA.r"
+                          name="credentialTrackingStatus.moeSign.issuerECDSA.r"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -408,7 +421,7 @@ function LearnerCredentialDetailForMoe({
                       <label className="form-label col-lg-3">S</label>
                       <div className="col-lg-9">
                         <Field
-                          name="moeECDSA.s"
+                          name="credentialTrackingStatus.moeSign.issuerECDSA.s"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}
@@ -416,10 +429,10 @@ function LearnerCredentialDetailForMoe({
                       </div>
                     </div>
                     <div className="row mb-20">
-                      <label className="form-label col-lg-3">Signing Date</label>
+                      <label className="form-label col-lg-3">Signing timestamp</label>
                       <div className="col-lg-9">
                         <Field
-                          name="moeECDSA.signingDate"
+                          name="credentialTrackingStatus.moeSign.issuerECDSA.signingDate"
                           type="text"
                           className="form-control col-lg-9"
                           disabled={true}

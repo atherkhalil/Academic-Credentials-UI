@@ -42,6 +42,9 @@ mutation LernerOnboarding($data: lernerOnboarding) {
 
 export const CreateCredentials = gql`
     mutation CreateCredentials($data: CreateCredential!) {
-        createCredentials(data: $data)
+        createCredentials(data: $data)  {
+        credentialId
+        txnId
+        }
     }
 `;

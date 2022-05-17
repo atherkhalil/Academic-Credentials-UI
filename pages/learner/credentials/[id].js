@@ -17,33 +17,6 @@ import { GetAllLearnerDetail } from "../../../graphql/queries/learner.query.js";
 import { downloadCredentialPdf } from "../../../services/files.service.js";
 import moment from "moment";
 
-const initialValues = {
-  id: "627a32e7bdd7fef935ce3175",
-  type: "ACADEMIC",
-  title: "Bachelors of Computer Engineering",
-  description: "Bachelors of Computer Engineering is related to Computer Engineering",
-  issuanceDate: new Date(),
-  Board: "Board",
-  courseId: "627a32e7bdd7fef935ce31f7",
-  session: "2022-2026",
-  issuer: {
-    id: "627a32e7bdd7fef935ce31f3",
-    type: "ACCREDITED",
-    name: "Mr. Bob",
-    url: "",
-    publicKey: "vRFy4g2/bRvIHpt3fbr4LA==",
-  },
-  learner: {
-    id: "627a32e7bdd7fef935ce31f5",
-    registrationNumber: "0001",
-    courseRegistrationNumber: "2235",
-    firstName: "Mrs.",
-    lastName: "Alis",
-    courseSession: "4 Years",
-    publicKey: "vRFy4g2/bRvIHpt3fbr4LA=="
-  },
-};
-
 const CourseFormSchema = Yup.object().shape({
   title: Yup.string().required("Title is required"),
 });
@@ -57,12 +30,12 @@ const CourseDetail = (props) => {
   const [initialState, setInitialState] = useState(null);
   const [addCourseMutation, { data, loading, error }] = useMutation(AddCourse);
   const [showSignWithKeyModal, setShowSignWithKeyModal] = useState(false);
-  const { loading: GetCredentialBYIdLoading, error: GetCredentialBYIdError, data: GetCredentialBYIdData } = 
-  useQuery(GetCredentialBYId, {
-    variables: {
-      credentialId: query?.id
-    }
-  });
+  const { loading: GetCredentialBYIdLoading, error: GetCredentialBYIdError, data: GetCredentialBYIdData } =
+    useQuery(GetCredentialBYId, {
+      variables: {
+        credentialId: query?.id
+      }
+    });
   const [
     signCredentialsMutation,
     { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
@@ -73,7 +46,7 @@ const CourseDetail = (props) => {
 
   useEffect(() => {
     if (GetCredentialBYIdData?.GetCredentialBYId) {
-      let temp = {...GetCredentialBYIdData?.GetCredentialBYId};
+      let temp = { ...GetCredentialBYIdData?.GetCredentialBYId };
       temp.issuanceDate = moment(parseInt(temp.issuanceDate)).format("DD:MM:YYYY");
       setInitialState(temp)
     }
@@ -111,6 +84,16 @@ const CourseDetail = (props) => {
     });
   }
 
+  const _handleShowVerifyButton = (state) => {
+    if (
+      state?.credentialTrackingStatus?.learnerSign?.status == "SIGNED"
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   return (
     <Layout
       headTitle="Credential Details"
@@ -128,9 +111,13 @@ const CourseDetail = (props) => {
         </Link>
 
         <div style={{ textAlign: "right" }}>
-          <button color="primary" onClick={_handleVerify} className="btn btn-primary me-10">
-            Verify
-          </button>
+          {
+            !_handleShowVerifyButton(initialState) && (
+              <button color="primary" onClick={_handleVerify} className="btn btn-primary me-10">
+                Verify
+              </button>
+            )
+          }
           <button onClick={() => downloadCredentialPdf(process.env.NEXT_PUBLIC_CREDENTIAL_URL + initialState.credentialUrl)} className="btn btn-success mb-4 "><i class="ri-file-download-fill cursor-pointer ri-xl align-middle"></i>Download</button>
         </div>
       </div>

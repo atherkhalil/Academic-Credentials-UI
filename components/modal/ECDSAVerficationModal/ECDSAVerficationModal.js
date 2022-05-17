@@ -17,7 +17,6 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
         isOpen={toggle}
         centered
         toggle={() => setToggle()}
-        backdrop="static"
         size="xl"
       >
         <ModalBody>

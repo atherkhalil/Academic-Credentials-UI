@@ -82,46 +82,34 @@ function Credentials() {
             verified: false
         },
     });
-    const [showECDSAVerficationModalModal, setShowECDSAVerficationModalModal] = useState(true);
+    const [showECDSAVerficationModalModal, setShowECDSAVerficationModalModal] = useState(false);
     const [
       signCredentialsMutation,
       { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
     ] = useMutation(SignCredentials);
 
     useEffect(() => {
+        let tempId = "62836d2df3a2381b19699527";
         if (GetAllCredentialsData?.GetCredentials?.length > 0) {
             setCredentialList(GetAllCredentialsData?.GetCredentials);
             let tempBoard = board;
-            if (GetAllCredentialsData?.GetCredentials.length == 1) {
-                const credential = GetAllCredentialsData?.GetCredentials[0];
-                tempBoard.columns[0].cards.push(credential);
-            } else {
-                for (let index = 0; index < GetAllCredentialsData?.GetCredentials?.length; index++) {
-                    const credential = GetAllCredentialsData?.GetCredentials[index];
-
-                    let statusList = ["Pending", "Approved", "REJECTED"];
-                    let min = 0;
-                    let max = 2;
-                    let status = statusList[Math.floor(Math.random() * (max - min + 1)) + min];
-                    
-                    if (status == "Pending") {
+            for (let index = 0; index < GetAllCredentialsData?.GetCredentials?.length; index++) {
+                const credential = GetAllCredentialsData?.GetCredentials[index];
+                if (credential.id == tempId) {
+                    // if (status == "Pending") {
                         tempBoard.columns[0].cards.push(credential);
-                    }
-                    if (status == "Approved") {
-                        tempBoard.columns[1].cards.push(credential);
-                    }
-                    if (status == "REJECTED") {
-                        tempBoard.columns[2].cards.push(credential);
-                    }
+                    // }
+                    // if (status == "Approved") {
+                    //     tempBoard.columns[1].cards.push(credential);
+                    // }
+                    // if (status == "REJECTED") {
+                    //     tempBoard.columns[2].cards.push(credential);
+                    // } 
                 }
             }
             setBoard(tempBoard);
         }
     }, [GetAllCredentialsData]);
-
-    useEffect(() => {
-        console.log("eCDSAVerficationState: ", eCDSAVerficationState)
-    }, [eCDSAVerficationState])
 
     const _handleVerify = () => {
         setShowECDSAVerficationModalModal(!showECDSAVerficationModalModal);
@@ -237,6 +225,17 @@ const CredentialDetail = ({
     eCDSAVerficationState,
     _handleAttest
 }) => {
+
+    const _handleShowVerifyButton = (state) => {
+      if (
+        state?.credentialTrackingStatus?.moeSign?.status == "SIGNED"
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    }
+
     return (
         <>
             <div className="mb-4">
@@ -244,11 +243,15 @@ const CredentialDetail = ({
                     <i class="ri-arrow-left-s-line"></i>
                 </button>
 
-                <div style={{ textAlign: "right" }}>
-                    <button color="primary" onClick={_handleVerify} className="btn btn-primary me-10">
-                        Verify
-                    </button>
-                </div>
+                {
+                    !_handleShowVerifyButton(initialValues) && (
+                        <div style={{ textAlign: "right" }}>
+                            <button color="primary" onClick={_handleVerify} className="btn btn-primary me-10">
+                                Verify
+                            </button>
+                        </div>
+                    )
+                }
             </div>
 
             <div className="row">
