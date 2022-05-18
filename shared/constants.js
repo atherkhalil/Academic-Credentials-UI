@@ -79,6 +79,57 @@ export const mainNavLink = {
   ],
 };
 
+export const headerDropDown = {
+  MOE: [
+    {
+      icon: "ri-user-line",
+      text: "Profile",
+      path: "moe/settings/profile",
+      type: "link"
+    },
+    {
+      icon: "ri-logout-circle-line",
+      text: "Logout",
+      path: "",
+      color: "text-danger",
+      type: "button",
+      handler: "_handleLogout"
+    },
+  ],
+  ISSUER: [
+    {
+      icon: "ri-user-line",
+      text: "Profile",
+      path: "issuer/settings/profile",
+      type: "link"
+    },
+    {
+      icon: "ri-logout-circle-line",
+      text: "Logout",
+      path: "",
+      color: "text-danger",
+      type: "button",
+      handler: "_handleLogout"
+    },
+  ],
+  LEARNER: [
+    {
+      icon: "ri-user-line",
+      text: "Profile",
+      path: "learner/settings/profile",
+      type: "link"
+    },
+    {
+      icon: "ri-logout-circle-line",
+      text: "Logout",
+      path: "",
+      color: "text-danger",
+      type: "button",
+      handler: "_handleLogout"
+    },
+  ],
+};
+
 export const profileNavigation = {
   MOE: [
     {

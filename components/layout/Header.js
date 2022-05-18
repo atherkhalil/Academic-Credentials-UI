@@ -1,9 +1,30 @@
 import Link from "next/link";
 import { DropdownMenu, DropdownToggle, UncontrolledDropdown } from "reactstrap";
+import { useDispatch, useSelector } from "react-redux";
 import DropdownNotification from "./../elements/DropdownNotification";
 import DropdownProfile from "./../elements/DropdownProfile";
 
 function Header({ _handleLogout }) {
+    const currentUser = useSelector((state) => state?.User.currentuser);
+
+    const _getName = () => {
+        let user = currentUser?.user;
+        if (user?.name) {
+            return user?.name || "";
+        } else {
+            return `${user?.firstName || ""} ${user?.lastName || ""}`;
+        }
+    }
+
+    const _getEmail = () => {
+        let user = currentUser?.user;
+        if (user?.email) {
+            return user?.email || "";
+        } else {
+            return user?.adminEmail || ""
+        }
+    }
+
     return (
         <>
             <div className="header">
@@ -118,10 +139,8 @@ function Header({ _handleLogout }) {
                                                         />
                                                     </span>
                                                     <div>
-                                                        <h5>Fiaz Abdullah</h5>
-                                                        <span>
-                                                            codeefly@gmail.com
-                                                        </span>
+                                                        <h5>{_getName()}</h5>
+                                                        <span>{_getEmail()}</span>
                                                     </div>
                                                 </div>
                                             </div>

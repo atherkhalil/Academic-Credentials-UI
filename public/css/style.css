@@ -44819,7 +44819,7 @@ a {
       width: 35px;
       color: #fff;
       text-align: center;
-      background: #20d489;
+      background: #c4c4c4;
       border-radius: 50px; }
       .profile_log .user .thumb img {
         border-radius: 50px;
@@ -46220,5 +46220,8 @@ button,
 
 .course-card:hover {
   border: 2px solid #20d489; }
+
+.credential-kanban-card {
+  width: 330px !important; }
 
 /*# sourceMappingURL=style.css.map */

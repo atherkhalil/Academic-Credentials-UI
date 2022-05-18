@@ -163,7 +163,7 @@ const CoursesTable = ({
                   value={row.status}
                   onChange={e => _handleUpdateLearnerCourseStatus(e, row.courseId)}
                 >
-                  <option value="" selected>Select credential type</option>
+                  <option value="" disabled selected>Select credential type</option>
                   {
                     studentCourseStatusList.map((cred, index) => (
                       <option key={index} value={cred}>{cred}</option>
