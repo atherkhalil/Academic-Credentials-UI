@@ -76,8 +76,8 @@ function Credentials() {
             }
         ]
     });
-    const [issuerECDSAVerficationState, setIssuerECDSAVerficationState] = useState(ecdsaVerficationFromBlockchainTypes.wait);
-    const [learnerECDSAVerficationState, setLearnerECDSAVerficationState] = useState(ecdsaVerficationFromBlockchainTypes.wait);
+    const [issuerECDSAVerficationState, setIssuerECDSAVerficationState] = useState(ecdsaVerficationFromBlockchainTypes.loading);
+    const [learnerECDSAVerficationState, setLearnerECDSAVerficationState] = useState(ecdsaVerficationFromBlockchainTypes.loading);
     const [eCDSAVerficationState, setECDSAVerficationState] = useState({
         issuer: {
             verified: false
@@ -134,6 +134,9 @@ function Credentials() {
     }
 
     const _handleECDSAVerifyFromBlockchain = () => {
+        setIssuerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.loading)
+        setLearnerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.loading)
+        
         setTimeout(() => {
             _hanldeVerifyIssuerECDSABlockchain();
        }, 2000);
@@ -172,9 +175,7 @@ function Credentials() {
       });
     }
 
-    const _hanldeVerifyIssuerECDSABlockchain = () => {
-        setIssuerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.loading)
-        
+    const _hanldeVerifyIssuerECDSABlockchain = () => {        
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 
@@ -207,8 +208,6 @@ function Credentials() {
     }
 
     const _hanldeVerifyLearnerECDSABlockchain = () => {
-        setLearnerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.loading)
-
         var myHeaders = new Headers();
         myHeaders.append("Content-Type", "application/json");
 

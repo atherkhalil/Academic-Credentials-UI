@@ -10,8 +10,8 @@ const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _h
     return (
         <div className="card credential-kanban-card">
             <div className="card-body courses-details">
-                <p><b className="text-primary">Credential Id:</b> {content.id}</p>
                 <h5>{content.title}</h5>
+                <p><b className="text-primary">Credential Id:</b> {content.id}</p>
                 <div className="courses-details-info d-flex justify-content-left">
                     <div className="courses-details-info-box">
                         <i class="ri-government-line"></i>

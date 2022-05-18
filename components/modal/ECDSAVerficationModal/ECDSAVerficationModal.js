@@ -148,7 +148,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, issuerECDSAVerficatio
             </div>
             <br />
             <div className="row justify-content-center">
-              <button color="primary" onClick={_handleAttest} style={{ width: "100px" }} className="btn btn-primary me-10">
+              <button color="primary" disabled={issuerECDSAVerficationState !== "success" && learnerECDSAVerficationState !== "success"} onClick={_handleAttest} style={{ width: "100px" }} className="btn btn-primary me-10">
                 Attest
               </button>
             </div>
@@ -160,9 +160,6 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, issuerECDSAVerficatio
 };
 
 const LoaderBeforeVerified = ({ state }) => {
-  if (state == ecdsaVerficationFromBlockchainTypes.wait) {
-    return <i class="ri-timer-2-line ri-lg text-muted"></i>
-  }
   if (state == ecdsaVerficationFromBlockchainTypes.success) {
     return <i class="ri-check-double-line ri-lg text-primary"></i>
   }
