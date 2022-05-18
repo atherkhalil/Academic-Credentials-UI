@@ -13,3 +13,9 @@ export const UpdateLearnerDetails = gql`
         }
     }
 `;
+
+export const SendAttestationRequest = gql`
+    mutation SendAttestationRequest($credentialId: String, $moeId: String) {
+        SendAttestationRequest(credentialId: $credentialId, moeId: $moeId)
+    }
+`;

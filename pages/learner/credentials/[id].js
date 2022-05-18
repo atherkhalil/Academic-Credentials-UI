@@ -5,6 +5,7 @@ import "react-circular-progressbar/dist/styles.css";
 import LearnerCredentialDetail from "../../../components/form/LearnerCredentialDetail";
 import Layout from "../../../components/layout/Layout";
 import { AddCourse } from "../../../graphql/mutations/issuer.mutation.js";
+import { SendAttestationRequest } from "../../../graphql/mutations/learner.mutation.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -23,7 +24,7 @@ const CourseFormSchema = Yup.object().shape({
 
 const CourseDetail = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { query, push, back } = useRouter();
+  const { query, push, back, reload } = useRouter();
   const currentUser = useSelector((state) => state.User.currentuser);
   const dispatch = useDispatch();
   const [issuerPrivateKey, setIssuerPrivateKey] = useState("");
@@ -40,6 +41,10 @@ const CourseDetail = (props) => {
     signCredentialsMutation,
     { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
   ] = useMutation(SignCredentials);
+  const [
+    sendAttestationRequestMutation,
+    { sendAttestationRequestMutationData, sendAttestationRequestMutationLoading, sendAttestationRequestMutationError }
+  ] = useMutation(SendAttestationRequest);
   const { loading: GetAllLearnerDetailLoading, error: GetAllLearnerDetailError, data: GetAllLearnerDetailData } = useQuery(GetAllLearnerDetail, {
     variables: { learnerId: currentUser?.user?._id },
   });
@@ -72,7 +77,30 @@ const CourseDetail = (props) => {
           variant: "success",
         });
         setTimeout(() => {
-          back();
+          reload();
+        }, 500);
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
+  }
+
+  const _handleSendAttestationRequestToMoe = () => {
+    sendAttestationRequestMutation({
+      variables: {
+        credentialId: query?.id,
+        moeId: initialState?.moe?.moeId
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Attestation request sent successfully!", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          reload();
         }, 500);
       },
       onError: (errors) => {
@@ -89,6 +117,22 @@ const CourseDetail = (props) => {
       state?.credentialTrackingStatus?.learnerSign?.status == "SIGNED"
     ) {
       return true;
+    } else {
+      return false;
+    }
+  }
+
+  const _handleShowAttestButton = (state) => {
+    if (
+      state?.credentialTrackingStatus?.learnerSign?.status == "SIGNED"
+    ) {
+      if (
+        state?.credentialTrackingStatus?.moeSign?.status == "SIGNED"
+      ) {
+        return false;
+      } else {
+        return true;
+      }
     } else {
       return false;
     }
@@ -115,6 +159,13 @@ const CourseDetail = (props) => {
             !_handleShowVerifyButton(initialState) && (
               <button color="primary" onClick={_handleVerify} className="btn btn-primary me-10">
                 Verify
+              </button>
+            )
+          }
+          {
+            _handleShowAttestButton(initialState) && (
+              <button color="primary" onClick={_handleSendAttestationRequestToMoe} className="btn btn-info me-10">
+                Attest
               </button>
             )
           }
