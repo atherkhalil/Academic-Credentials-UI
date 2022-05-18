@@ -6,7 +6,7 @@ import SettingsMenu from "../../../components/layout/SettingsMenu";
 import { Step1, Step2, Step3, Step4 } from "../../../components/IssuerProfileWizard";
 import { profileNavigation } from "../../../shared/constants.js";
 import { GetAllIssuerDetail } from "../../../graphql/queries/issuer.query.js";
-import { UpdateIssuerDetails } from "../../../graphql/mutations/learner.mutation.js";
+import { UpdateIssuerDetails } from "../../../graphql/mutations/issuer.mutation.js";
 import { SignatureUpload, SyncCourse } from "../../../graphql/mutations/general.mutation.js";
 import { useQuery, useMutation } from "@apollo/client";
 import { useRouter } from "next/router";

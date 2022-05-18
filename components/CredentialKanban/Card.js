@@ -10,6 +10,7 @@ const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _h
     return (
         <div className="card credential-kanban-card">
             <div className="card-body courses-details">
+                <p><b className="text-primary">Credential Id:</b> {content.id}</p>
                 <h5>{content.title}</h5>
                 <div className="courses-details-info d-flex justify-content-left">
                     <div className="courses-details-info-box">
@@ -23,22 +24,16 @@ const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _h
                 </div>
                 <div className="courses-details-info d-flex justify-content-left">
                     <div className="courses-details-info-box">
-                        <i class="ri-shield-user-line"></i>
+                        <i class="ri-government-line"></i>
                         <span>{content?.issuer?.name}</span>
                     </div>
                     <div className="courses-details-info-box">
                         <i class="ri-shield-user-line"></i>
-                        <span>{content?.learner?.name}</span>
+                        <span>{`${content?.learner?.firstName} ${content?.learner?.lastName}`}</span>
                     </div>
                 </div>
                 <p className="truncate">{truncateString(content.description, 50)}</p>
                 <span className="text-success">{content.Board}</span>
-
-                <p><b className="text-primary">Credential Id:</b> {content.id}</p>
-                <p><b className="text-primary">Course Id:</b> {content.courseId}</p>
-                <p><b className="text-primary">MOE Id:</b> {content.moe.moeId}</p>
-                <p><b className="text-primary">Issuer Id:</b> {content.issuer.id}</p>
-                <p><b className="text-primary">Learner Id:</b> {content.learner.id}</p>
 
                 {content.verified ? <span className="text-primary">Verified</span> : <span className="text-danger">Unverified</span>}
                 <div className="courses-action d-flex flex-row justify-content-between">

@@ -176,4 +176,12 @@ export const enrollLearnerStatusTypes = ["CONTINUE", "DROPPED", "COMPLETED"];
 
 export const bulkCredentialUploadFileName = "bulk_credentials_upload_format.xlsx";
 
-export const studentCourseStatusList = ["IN PROGRESS", "COMPLETED", "ON HOLD", "WITHDRAWN", "FAILED"];
+// export const studentCourseStatusList = ["IN PROGRESS", "COMPLETED", "ON HOLD", "WITHDRAWN", "FAILED"];
+export const studentCourseStatusList = ["IN PROGRESS", "DROPPED", "COMPLETED"];
+
+export const ecdsaVerficationFromBlockchainTypes = {
+  wait: "wait",
+  loading: "loading",
+  success: "success",
+  error: "error",
+}

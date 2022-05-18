@@ -16,6 +16,7 @@ import { SignCredentials } from "../../graphql/mutations/general.mutation.js";
 import ECDSAVerficationModal from "../../components/modal/ECDSAVerficationModal/ECDSAVerficationModal.js";
 import { GetAllCredentials } from "../../graphql/queries/moe.query.js";
 import { GetAllMOEDetailsQuery } from "../../graphql/queries/authentication.query.js";
+import { ecdsaVerficationFromBlockchainTypes } from "../../shared/constants.js";
 const Credentialkanban = dynamic(() => import("../../components/CredentialKanban/CredentialKanban.js"), { ssr: false });
 
 const CourseFormSchema = Yup.object().shape({
@@ -60,12 +61,12 @@ function Credentials() {
         columns: [
             {
                 id: 1,
-                title: 'Pending',
+                title: 'PENDING',
                 cards: []
             },
             {
                 id: 2,
-                title: 'Approved',
+                title: 'ATTESTED',
                 cards: []
             },
             {
@@ -75,6 +76,8 @@ function Credentials() {
             }
         ]
     });
+    const [issuerECDSAVerficationState, setIssuerECDSAVerficationState] = useState(ecdsaVerficationFromBlockchainTypes.wait);
+    const [learnerECDSAVerficationState, setLearnerECDSAVerficationState] = useState(ecdsaVerficationFromBlockchainTypes.wait);
     const [eCDSAVerficationState, setECDSAVerficationState] = useState({
         issuer: {
             verified: false
@@ -83,6 +86,7 @@ function Credentials() {
             verified: false
         },
     });
+
     const [showECDSAVerficationModalModal, setShowECDSAVerficationModalModal] = useState(false);
     const [
       signCredentialsMutation,
@@ -95,7 +99,7 @@ function Credentials() {
     const [moePrivateKey, setMoePrivateKey] = useState("");
 
     useEffect(() => {
-        let tempId = "62837bf576f03c06e9152ebb";
+        let tempId = "6284c44abe2badfb9b03c9b2";
         if (GetAllCredentialsData?.GetCredentials?.length > 0) {
             setCredentialList(GetAllCredentialsData?.GetCredentials);
             let tempBoard = board;
@@ -126,16 +130,13 @@ function Credentials() {
 
     const _handleVerify = () => {
         setShowECDSAVerficationModalModal(!showECDSAVerficationModalModal);
+        _handleECDSAVerifyFromBlockchain();
+    }
+
+    const _handleECDSAVerifyFromBlockchain = () => {
         setTimeout(() => {
-            setECDSAVerficationState({
-                issuer: {
-                    verified: true
-                },
-                learner: {
-                    verified: true
-                },
-            })
-       }, 10000);
+            _hanldeVerifyIssuerECDSABlockchain();
+       }, 2000);
     }
 
     const _handleAttest = () => {
@@ -171,8 +172,68 @@ function Credentials() {
       });
     }
 
-    const _handleECDSAVerification = () => {
-        console.log("ECDSA verification...");
+    const _hanldeVerifyIssuerECDSABlockchain = () => {
+        setIssuerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.loading)
+        
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+        "credentialId": currentDetailState.id
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(`${process.env.NEXT_PUBLIC_BLOCKCHAIN}/credentials/verifyIssuerECDSA`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            if (result.success) {
+                setIssuerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.success)
+            } else {
+                setIssuerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.error)
+            }
+
+            setTimeout(() => {
+                _hanldeVerifyLearnerECDSABlockchain();
+            }, 2000);
+        })
+        .catch(error => console.log('error', error));
+    }
+
+    const _hanldeVerifyLearnerECDSABlockchain = () => {
+        setLearnerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.loading)
+
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+        var raw = JSON.stringify({
+        "credentialId": currentDetailState.id
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+
+        fetch(`${process.env.NEXT_PUBLIC_BLOCKCHAIN}/credentials/verifyLearnerECDSA`, requestOptions)
+        .then(response => response.json())
+        .then(result => {
+            console.log(result)
+            if (result.success) {
+                setLearnerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.success)
+            } else {
+                setLearnerECDSAVerficationState(ecdsaVerficationFromBlockchainTypes.error)
+            }
+        })
+        .catch(error => console.log('error', error));
     }
 
     return (
@@ -209,10 +270,10 @@ function Credentials() {
                             showKanban={showKanban}
                             setShowKanban={setShowKanban}
                             ecdsaVerficationStateTemp={ecdsaVerficationStateTemp}
-                            eCDSAVerficationState={eCDSAVerficationState}
+                            issuerECDSAVerficationState={issuerECDSAVerficationState}
+                            learnerECDSAVerficationState={learnerECDSAVerficationState}
                             showECDSAVerficationModalModal={showECDSAVerficationModalModal}
                             setShowECDSAVerficationModalModal={setShowECDSAVerficationModalModal}
-                            _handleECDSAVerification={_handleECDSAVerification}
                             _handleAttest={_handleAttest}
                             moePrivateKey={moePrivateKey}
                         />
@@ -235,8 +296,8 @@ const CredentialDetail = ({
     ecdsaVerficationStateTemp,
     showECDSAVerficationModalModal,
     setShowECDSAVerficationModalModal,
-    _handleECDSAVerification,
-    eCDSAVerficationState,
+    issuerECDSAVerficationState,
+    learnerECDSAVerficationState,
     _handleAttest,
     moePrivateKey
 }) => {
@@ -300,8 +361,8 @@ const CredentialDetail = ({
                 state={ecdsaVerficationStateTemp}
                 toggle={showECDSAVerficationModalModal}
                 setToggle={setShowECDSAVerficationModalModal}
-                _handleECDSAVerification={_handleECDSAVerification}
-                eCDSAVerficationState={eCDSAVerficationState}
+                issuerECDSAVerficationState={issuerECDSAVerficationState}
+                learnerECDSAVerficationState={learnerECDSAVerficationState}
                 loading={false}
                 _handleAttest={_handleAttest}
             />

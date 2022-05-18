@@ -67,3 +67,17 @@ export const CourseByID = gql`
         }
     }
 `;
+
+export const UpdateIssuerDetails = gql`
+    mutation UpdateIssuerDetails($type: String!, $name: String!, $contactEmail: String!, $telephone: String, $address: Address!, $siteUrl: String, $description: String) {
+        UpdateIssuerDetails(type: $type, name: $name, contactEmail: $contactEmail, telephone: $telephone, address: $address, siteUrl: $siteUrl, description: $description) {
+        id
+        }
+    }
+`;
+
+export const UpdateLearnerCourseStatus = gql`
+    mutation UpdateLearnerCourseStatus($learnerId: String!, $courseId: String!, $status: String!) {
+        UpdateLearnerCourseStatus(learnerId: $learnerId, courseId: $courseId, status: $status)
+    }
+`;

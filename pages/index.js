@@ -73,6 +73,7 @@ function Signin() {
     },
   ] = useMutation(ActivateLearner);
 
+  // Issuer
   const _handleSubmitIssuer = (state) => {
     issuerLoginMutation({
       variables: {
@@ -113,9 +114,9 @@ function Signin() {
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",
         });
-        const token = res.ActivateIssuer;
+        // const token = res.ActivateIssuer;
         setTimeout(() => {
-          localStorage.setItem("certmate_token", token);
+          // localStorage.setItem("certmate_token", token);
           router.push(`/issuer/dashboard`);
         }, 500);
       },
@@ -177,9 +178,9 @@ function Signin() {
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",
         });
-        const token = res.ActivateLearner;
+        // const token = res.ActivateLearner;
         setTimeout(() => {
-          localStorage.setItem("certmate_token", token);
+          // localStorage.setItem("certmate_token", token);
           router.push(`/learner/dashboard`);
         }, 500);
       },

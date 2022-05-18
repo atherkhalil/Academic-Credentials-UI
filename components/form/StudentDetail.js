@@ -12,7 +12,8 @@ function StudentDetail({
   initialValues,
   _handleCourseUpdate,
   context,
-  courseList
+  courseList,
+  _handleUpdateLearnerCourseStatus
 }) {
   return (
     <>
@@ -104,12 +105,11 @@ function StudentDetail({
                     />
                   </div>
                 </div>
-                <hr className="my-20" />
               </div>
             </div>
 
             <div><h6 className="text-primary">Student Course Details</h6></div>
-            <CoursesTable courseList={courseList} />
+            <CoursesTable courseList={courseList} _handleUpdateLearnerCourseStatus={_handleUpdateLearnerCourseStatus} />
           </Form>
         )}
       </Formik>
@@ -121,6 +121,7 @@ const CoursesTable = ({
   courseList,
   loading,
   _handleActivateIssuer,
+  _handleUpdateLearnerCourseStatus
 }) => {
   console.log("courseList: ", courseList);
 
@@ -160,6 +161,7 @@ const CoursesTable = ({
                   type="string"
                   className="form-control"
                   value={row.status}
+                  onChange={e => _handleUpdateLearnerCourseStatus(e, row.courseId)}
                 >
                   <option value="" selected>Select credential type</option>
                   {

@@ -5,7 +5,7 @@ import "react-circular-progressbar/dist/styles.css";
 import StudentDetail from "../../../components/form/StudentDetail";
 import Layout from "../../../components/layout/Layout";
 import { GetAllLearnerDetail } from "../../../graphql/queries/issuer.query.js";
-import { CourseByID } from "../../../graphql/mutations/issuer.mutation.js";
+import { CourseByID, UpdateLearnerCourseStatus } from "../../../graphql/mutations/issuer.mutation.js";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
@@ -35,7 +35,7 @@ const CourseFormSchema = Yup.object().shape({
 
 const StudentDetailPage = (props) => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const { query, push } = useRouter();
+  const { query, push, reload } = useRouter();
   const [initialState, setInitialState] = useState(initialValues);
   const [courseListState, setCourseListState] = useState([]);
   const { loading: GetAllLearnerDetailLoading, error: GetAllLearnerDetailError, data: GetAllLearnerDetailData } = 
@@ -46,6 +46,9 @@ const StudentDetailPage = (props) => {
   });
   const [courseByIDMutation, { courseByIDMutationData, courseByIDMutationLoading, courseByIDMutationError }] = useMutation(
     CourseByID
+  );
+  const [updateLearnerCourseStatusMutation, { updateLearnerCourseStatusMutationData, updateLearnerCourseStatusMutationLoading, updateLearnerCourseStatusMutationError }] = useMutation(
+    UpdateLearnerCourseStatus
   );
 
   useEffect(() => {
@@ -90,6 +93,30 @@ const StudentDetailPage = (props) => {
     }
   }, [GetAllLearnerDetailData]);
 
+  const _handleUpdateLearnerCourseStatus = (e, courseId) => {
+    updateLearnerCourseStatusMutation({
+      variables: {
+        learnerId: query?.id,
+        courseId: courseId,
+        status: e.target.value
+      },
+      onCompleted: () => {
+        enqueueSnackbar("Course status updated successfully!", {
+          variant: "success",
+        });
+        setTimeout(() => {
+          reload();
+        }, 500);
+      },
+      onError: (errors) => {
+        console.log("errors: ", errors.message);
+        enqueueSnackbar(errors.message, {
+          variant: "error",
+        });
+      },
+    });
+  }
+
   return (
     <Layout
       headTitle="Student Details"
@@ -118,6 +145,7 @@ const StudentDetailPage = (props) => {
                     initialValues={initialState}
                     courseList={courseListState}
                     context="edit"
+                    _handleUpdateLearnerCourseStatus={_handleUpdateLearnerCourseStatus}
                   />
                 </div>
               </div>

@@ -85,9 +85,9 @@ function SignUp() {
         enqueueSnackbar("OTP verified successfully!", {
           variant: "success",
         });
-        const token = res.ActivateMOE;
+        // const token = res.ActivateMOE;
         setTimeout(() => {
-          localStorage.setItem("certmate_token", token);
+          // localStorage.setItem("certmate_token", token);
           router.push(`/moe/dashboard`);
         }, 500);
       },

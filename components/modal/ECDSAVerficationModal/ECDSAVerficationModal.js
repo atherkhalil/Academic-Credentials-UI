@@ -4,13 +4,13 @@ import { useSnackbar } from "notistack";
 import SignWithKeyInput from "../../elements/SignWithKeyInput";
 import { Spinner } from "reactstrap";
 import * as Yup from "yup";
+import { ecdsaVerficationFromBlockchainTypes } from "../../../shared/constants.js";
 
 const SignFormSchema = Yup.object().shape({
   signature: Yup.string().required("Digital Signature is required"),
 });
 
-const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerification, eCDSAVerficationState, _handleAttest }) => {
-  console.log("ECDSAVerficationModal eCDSAVerficationState: ", eCDSAVerficationState)
+const ECDSAVerficationModal = ({ state, toggle, setToggle, issuerECDSAVerficationState, learnerECDSAVerficationState, _handleAttest }) => {
   return (
     <>
       <Modal
@@ -22,7 +22,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
         <ModalBody>
           <div className="container-fluid">
             <div className="row">
-              <h4 className="text-primary">
+              <h4 className="text-primary text-center">
                 Verifying Issuer and Student Signature details
               </h4>
               <br />
@@ -80,7 +80,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
                   </div>
                 </div>
                 <div className="row mb-20 justify-content-center text-center">
-                  <LoaderBeforeVerified state={eCDSAVerficationState.issuer.verified} />
+                  <LoaderBeforeVerified state={issuerECDSAVerficationState} />
                 </div>
               </div>
 
@@ -142,7 +142,7 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
                   </div>
                 </div>
                 <div className="row mb-20 justify-content-center text-center">
-                  <LoaderBeforeVerified state={eCDSAVerficationState.learner.verified} />
+                  <LoaderBeforeVerified state={learnerECDSAVerficationState} />
                 </div>
               </div>
             </div>
@@ -159,10 +159,17 @@ const ECDSAVerficationModal = ({ state, toggle, setToggle, _handleECDSAVerificat
   );
 };
 
-const LoaderBeforeVerified = state => {
-  if (state) {
+const LoaderBeforeVerified = ({ state }) => {
+  if (state == ecdsaVerficationFromBlockchainTypes.wait) {
+    return <i class="ri-timer-2-line ri-lg text-muted"></i>
+  }
+  if (state == ecdsaVerficationFromBlockchainTypes.success) {
     return <i class="ri-check-double-line ri-lg text-primary"></i>
   }
+  if (state == ecdsaVerficationFromBlockchainTypes.error) {
+    return <i class="ri-close-circle-line ri-lg text-danger"></i>
+  }
+  // else loading
   return (
     <Spinner children=""></Spinner>
   )
