@@ -188,26 +188,6 @@ function UploadCredential({
               </div>
             </div>
             <div className="row mb-20">
-              <label className="form-label col-lg-3">Expiry Date</label>
-              <div className="col-lg-9">
-                <Field
-                  name="expiryDate"
-                  type="date"
-                  className={
-                    "form-control col-lg-9" +
-                    (errors.expiryDate && touched.expiryDate
-                      ? " is-invalid"
-                      : "")
-                  }
-                />
-                <ErrorMessage
-                  name="expiryDate"
-                  component="div"
-                  className="invalid-feedback"
-                />
-              </div>
-            </div>
-            <div className="row mb-20">
               <label className="form-label col-lg-3">College</label>
               <div className="col-lg-9">
                 <Field

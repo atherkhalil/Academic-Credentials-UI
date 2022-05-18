@@ -169,22 +169,6 @@ function LearnerCredentialDetail({
                 </div>
               </div>
               <div className="row mb-20">
-                <label className="form-label col-lg-3">Expiry Date</label>
-                <div className="col-lg-9">
-                  <Field
-                    name="expiryDate"
-                    type="text"
-                    className={
-                      "form-control col-lg-9" +
-                      (errors.expiryDate && touched.expiryDate
-                        ? " is-invalid"
-                        : "")
-                    }
-                    disabled={true}
-                  />
-                </div>
-              </div>
-              <div className="row mb-20">
                 <label className="form-label col-lg-3">College</label>
                 <div className="col-lg-9">
                   <Field
