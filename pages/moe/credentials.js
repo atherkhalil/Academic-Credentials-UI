@@ -15,6 +15,7 @@ import SignWithKeyModal from "../../components/modal/SignWithKeyModal/SignWithKe
 import { SignCredentials } from "../../graphql/mutations/general.mutation.js";
 import ECDSAVerficationModal from "../../components/modal/ECDSAVerficationModal/ECDSAVerficationModal.js";
 import { GetAllCredentials } from "../../graphql/queries/moe.query.js";
+import { GetCredentialsForCards } from "../../graphql/mutations/moe.mutation.js";
 import { GetAllMOEDetailsQuery } from "../../graphql/queries/authentication.query.js";
 import { ecdsaVerficationFromBlockchainTypes } from "../../shared/constants.js";
 const Credentialkanban = dynamic(() => import("../../components/CredentialKanban/CredentialKanban.js"), { ssr: false });
@@ -57,6 +58,10 @@ function Credentials() {
     const [currentDetailState, setCurrentDetailState] = useState(null);
     const { loading: GetAllCredentialsLoading, error: GetAllCredentialsError, data: GetAllCredentialsData } = 
       useQuery(GetAllCredentials);
+    const [getCredentialsForCardsMutation, { GetCredentialsForCardsData, GetCredentialsForCardsLoading, GetCredentialsForCardsError }] = useMutation(
+        GetCredentialsForCards
+    );
+
     const [board, setBoard] = useState({
         columns: [
             {
@@ -99,30 +104,43 @@ function Credentials() {
     const [moePrivateKey, setMoePrivateKey] = useState("");
 
     useEffect(() => {
-        let tempId = "6284d9acbe2badfb9b03ca69";
-        if (GetAllCredentialsData?.GetCredentials?.length > 0) {
-            setCredentialList(GetAllCredentialsData?.GetCredentials);
-            let tempBoard = board;
-            for (let index = 0; index < GetAllCredentialsData?.GetCredentials?.length; index++) {
-                const credential = GetAllCredentialsData?.GetCredentials[index];
-                if (credential.id == tempId) {
-                    // if (status == "Pending") {
-                        tempBoard.columns[0].cards.push(credential);
-                    // }
-                    // if (status == "Approved") {
-                    //     tempBoard.columns[1].cards.push(credential);
-                    // }
-                    // if (status == "REJECTED") {
-                    //     tempBoard.columns[2].cards.push(credential);
-                    // } 
-                }
-            }
-            setBoard(tempBoard);
-        }
-    }, [GetAllCredentialsData]);
+        getCredentialsForCardsMutation({
+            onCompleted: data => {
+                console.log('GetCredentialsForCardssData: ', data?.GetCredentialsForCards)
+                setBoard({
+                    columns: data?.GetCredentialsForCards
+                });
+            },
+            onError: () => {
+                console.log("errors: ", errors.message);
+                enqueueSnackbar(errors.message, {
+                  variant: "error",
+                });
+              },
+        })
+        // let tempId = "6284d9acbe2badfb9b03ca69";
+        // if (GetAllCredentialsData?.GetCredentials?.length > 0) {
+        //     setCredentialList(GetAllCredentialsData?.GetCredentials);
+        //     let tempBoard = board;
+        //     for (let index = 0; index < GetAllCredentialsData?.GetCredentials?.length; index++) {
+        //         const credential = GetAllCredentialsData?.GetCredentials[index];
+        //         if (credential.id == tempId) {
+        //             // if (status == "Pending") {
+        //                 tempBoard.columns[0].cards.push(credential);
+        //             // }
+        //             // if (status == "Approved") {
+        //             //     tempBoard.columns[1].cards.push(credential);
+        //             // }
+        //             // if (status == "REJECTED") {
+        //             //     tempBoard.columns[2].cards.push(credential);
+        //             // } 
+        //         }
+        //     }
+        //     setBoard(tempBoard);
+        // }
+    }, []);
 
     useEffect(() => {
-        console.log("GetAllMOEDetailsQueryData: ", GetAllMOEDetailsQueryData)
       if (GetAllMOEDetailsQueryData?.GetMOEDetails) {
         setMoePrivateKey(GetAllMOEDetailsQueryData?.GetMOEDetails.privateKey)
       }
@@ -147,9 +165,8 @@ function Credentials() {
         setShowSignWithKeyModal(!showSignWithKeyModal)
     }
 
-    const _handleShowCredentialDetail = (credId) => {
-        let temp = credentialList.find(cred => cred.id == credId);
-        setCurrentDetailState(temp);
+    const _handleShowCredentialDetail = (cardContent) => {
+        setCurrentDetailState(cardContent);
         setShowKanban(!showKanban)
     }
 

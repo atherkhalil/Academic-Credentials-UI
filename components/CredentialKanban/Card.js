@@ -8,7 +8,7 @@ import { downloadCredentialPdf } from "../../services/files.service.js";
 
 const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _handleShowCredentialDetail }) => {
     return (
-        <div className="card credential-kanban-card">
+        <div className="card credential-kanban-card" style={{ minWidth: "450px" }}>
             <div className="card-body courses-details">
                 <h5>{content.title}</h5>
                 <p><b className="text-primary">Credential Id:</b> {content.id}</p>
@@ -32,13 +32,13 @@ const Card = ({ content, dragging, allowRemoveCard, onCardRemove, openDrawer, _h
                         <span>{`${content?.learner?.firstName} ${content?.learner?.lastName}`}</span>
                     </div>
                 </div>
-                <p className="truncate">{truncateString(content.description, 50)}</p>
+                <p className="truncate">{truncateString(content.description, 60)}</p>
                 <span className="text-success">{content.Board}</span>
 
-                {content.verified ? <span className="text-primary">Verified</span> : <span className="text-danger">Unverified</span>}
+                {/* {content.verified ? <span className="text-primary">Verified</span> : <span className="text-danger">Unverified</span>} */}
                 <div className="courses-action d-flex flex-row justify-content-between">
                     <div>
-                        <button className="btn btn-primary" onClick={() => _handleShowCredentialDetail(content.id)}>Details</button>
+                        <button className="btn btn-primary" onClick={() => _handleShowCredentialDetail(content)}>Details</button>
                     </div>
                     <div>
                         <i onClick={() => downloadCredentialPdf(process.env.NEXT_PUBLIC_CREDENTIAL_URL + content.credentialUrl)} class="ri-file-download-fill ri-xl cursor-pointer"></i>
