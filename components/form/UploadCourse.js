@@ -6,6 +6,7 @@ function UploadCourse({
   initialValues,
   _handleCourseUpdate,
   context,
+  _handleCancel
 }) {
   return (
     <>
@@ -159,7 +160,7 @@ function UploadCourse({
                   <Button color="primary" className="me-10">
                     Create
                   </Button>{" "}
-                  <Button color="danger">Cancel</Button>{" "}
+                  <Button onClick={_handleCancel} color="danger">Cancel</Button>
                 </div>
               </div>
             )}

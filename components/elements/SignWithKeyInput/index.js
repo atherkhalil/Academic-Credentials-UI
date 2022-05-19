@@ -20,7 +20,11 @@ function SignWithKeyInput({
             <div className="row px-12">
               <div className="col-12 mb-16">
                 <label className="form-label">Private key</label>
-                <p className="border rounded border-secondary bg-light p-8">{initialValues.signature}</p>
+                <p className="border rounded border-secondary bg-light p-8" style={{
+                  display: "block",
+                  overflowWrap: "break-word",
+                  maxWidth: "100%"
+                }}>{initialValues.signature}</p>
                 <div class="row justify-content-center">
                   <button
                     class="btn btn-primary"

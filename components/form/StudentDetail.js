@@ -161,7 +161,7 @@ const CoursesTable = ({
                   type="string"
                   className="form-control"
                   value={row.status}
-                  onChange={e => _handleUpdateLearnerCourseStatus(e, row.courseId)}
+                  onChange={e => _handleUpdateLearnerCourseStatus(e, row.Id)}
                 >
                   <option value="" disabled selected>Select credential type</option>
                   {

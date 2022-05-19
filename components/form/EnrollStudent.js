@@ -12,7 +12,8 @@ function EnrollStudent({
   coursesList,
   courseSelected,
   setCourseSelected,
-  courseSelectedError
+  courseSelectedError,
+  _handleCancel
 }) {
   return (
     <>
@@ -296,7 +297,7 @@ function EnrollStudent({
                   <Button type="submit" color="primary" className="me-10">
                     Submit
                   </Button>{" "}
-                  <Button color="danger">Cancel</Button>{" "}
+                  <Button onClick={_handleCancel} color="danger">Cancel</Button>{" "}
                 </div>
               </div>
             )}

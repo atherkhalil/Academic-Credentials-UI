@@ -76,6 +76,7 @@ const CreateDetail = (props) => {
     { signCredentialsMutationData, signCredentialsMutationLoading, signCredentialsMutationError }
   ] = useMutation(SignCredentials);
   const [createdCredentialId, setCreatedCredentialId] = useState(null);
+  const [createdCredentialTxId, setCreatedCredentialTxId] = useState(null);
 
   useEffect(() => {
     if (GetCourseByIDData?.GetCourseByID) {
@@ -144,6 +145,7 @@ const CreateDetail = (props) => {
         enqueueSnackbar("Successfully submitted!", {
           variant: "success",
         });        
+        setCreatedCredentialTxId(data?.createCredentials?.txnId)
 
         // Now after credential is submitted, Issuer need to sign it with his digital signature
         setShowSignWithKeyModal(!showSignWithKeyModal)
@@ -180,6 +182,10 @@ const CreateDetail = (props) => {
     });
   }
 
+  const _handleCancel = () => {
+    router.back();
+  }
+
   return (
     <Layout
       headTitle="Create Credential"
@@ -213,6 +219,7 @@ const CreateDetail = (props) => {
                     setIssuer={setIssuer}
                     issuerError={issuerError}
                     studentsList={studentsList}
+                    _handleCancel={_handleCancel}
                   />
                 </div>
               </div>
@@ -227,6 +234,8 @@ const CreateDetail = (props) => {
         setToggle={setShowSignWithKeyModal}
         _handleSignCredential={_handleSignCredential}
         loading={false}
+        createdCredentialTxId={createdCredentialTxId}
+        showTxId={true}
       />
     </Layout>
   );

@@ -12,17 +12,17 @@ import Link from "next/link";
 import * as Yup from "yup";
 
 const initialValues =  {
-  __typename:"Course",
-  id:"627a32e7bdd7fef935ce31f7",
-  issuerId:"627a27ce136fe6549adfb686",
-  courseTitle:"Bachelors of Computer Engineering",
-  duration:"4 Years",
-  description:"Bachelors of Computer Engineering is related to Computer Engineering",
-  creditHours:"140",
-  code:"BSEE",
-  active:true,
-  createdAt:"1652175591693",
-  updatedAt:"1652175591693"
+  __typename:"",
+  id:"",
+  issuerId:"",
+  courseTitle:"",
+  duration:"",
+  description:"",
+  creditHours:"",
+  code:"",
+  active: true,
+  createdAt:"",
+  updatedAt:""
 };
 
 const CourseFormSchema = Yup.object().shape({
@@ -55,11 +55,11 @@ const StudentDetailPage = (props) => {
     if (GetAllLearnerDetailData?.GetLearnerDetail) {
         setInitialState(GetAllLearnerDetailData?.GetLearnerDetail);
         let courseList = GetAllLearnerDetailData?.GetLearnerDetail.courses;
-        console.log("GetAllLearnerDetailData?.GetLearnerDetail: ", )
 
         let tempCourseList = [];
         for (let index = 0; index < courseList.length; index++) {
           const course = courseList[index];
+          console.log("course: ", course)
 
           courseByIDMutation({
             variables: {
@@ -80,6 +80,7 @@ const StudentDetailPage = (props) => {
                 issuerId: data.CourseByID.issuerId,
                 level: data.CourseByID.level,
                 updatedAt: data.CourseByID.updatedAt,
+                Id: course.id
               };
               setCourseListState([...courseListState, newCourseObj]);
             },

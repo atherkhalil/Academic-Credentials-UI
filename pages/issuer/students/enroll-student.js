@@ -124,6 +124,10 @@ const StudentDetial = (props) => {
     });
   }
 
+  const _handleCancel = () => {
+    router.back();
+  }
+
   return (
     <Layout
       headTitle="Enroll Student"
@@ -154,6 +158,7 @@ const StudentDetial = (props) => {
                     courseSelected={courseSelected}
                     setCourseSelected={setCourseSelected}
                     courseSelectedError={courseSelectedError}
+                    _handleCancel={_handleCancel}
                   />
                 </div>
               </div>

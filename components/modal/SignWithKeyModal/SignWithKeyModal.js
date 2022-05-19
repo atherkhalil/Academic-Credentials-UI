@@ -12,7 +12,7 @@ const SignFormSchema = Yup.object().shape({
   signature: Yup.string().required("Digital Signature is required"),
 });
 
-const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential, privateKey }) => {
+const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential, privateKey, createdCredentialTxId, showTxId }) => {
   return (
     <>
       <Modal
@@ -22,9 +22,16 @@ const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential, privateKey
         backdrop="static"
       >
         <ModalBody>
-          <h4 className="text-center text-primary">
+          <h4 className="text-center text-primary" style={{ 
+            display: "block", 
+            overflowWrap: "break-word", 
+            maxWidth : "100%"
+           }}>
             Confirm to Digitally sign the credential using ECDSA Algorithm
           </h4>
+          <h5 className="text-center">
+            <span className="text-primary">Transaction Id: </span> <span className="text-muted" style={{ fontWeight: 400 }}>{showTxId && createdCredentialTxId}</span>
+          </h5>
           <div
             style={{
               display: "flex",

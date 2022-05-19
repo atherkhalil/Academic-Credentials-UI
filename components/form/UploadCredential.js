@@ -16,7 +16,8 @@ function UploadCredential({
   issuer,
   setIssuer,
   issuerError,
-  studentsList
+  studentsList,
+  _handleCancel
 }) {
   return (
     <>
@@ -258,7 +259,7 @@ function UploadCredential({
                   <Button type="submit" color="primary" className="me-10">
                     Create
                   </Button>{" "}
-                  <Button color="danger">Cancel</Button>{" "}
+                  <Button onClick={_handleCancel} color="danger">Cancel</Button>{" "}
                 </div>
               </div>
             )}

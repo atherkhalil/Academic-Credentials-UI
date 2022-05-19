@@ -65,6 +65,10 @@ const CourseDetail = (props) => {
     });
   }
 
+  const _handleCancel = () => {
+    router.back();
+  }
+
   return (
     <Layout
       headTitle="Create Course"
@@ -91,6 +95,7 @@ const CourseDetail = (props) => {
                     initialValues={initialValues}
                     _handleCourseUpdate={_handleCourseUpdate}
                     context="create"
+                    _handleCancel={_handleCancel}
                   />
                 </div>
               </div>
