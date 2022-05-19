@@ -22,16 +22,9 @@ const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential, privateKey
         backdrop="static"
       >
         <ModalBody>
-          <h4 className="text-center text-primary" style={{ 
-            display: "block", 
-            overflowWrap: "break-word", 
-            maxWidth : "100%"
-           }}>
+          <h4 className="text-center text-primary">
             Confirm to Digitally sign the credential using ECDSA Algorithm
           </h4>
-          <h5 className="text-center">
-            <span className="text-primary">Transaction Id: </span> <span className="text-muted" style={{ fontWeight: 400 }}>{showTxId && createdCredentialTxId}</span>
-          </h5>
           <div
             style={{
               display: "flex",
@@ -54,6 +47,8 @@ const SignWithKeyModal = ({ toggle, setToggle, _handleSignCredential, privateKey
             SignFormSchema={SignFormSchema}
             handleSubmit={_handleSignCredential}
             loading={false}
+            createdCredentialTxId={createdCredentialTxId}
+            showTxId={showTxId}
           />
         </ModalBody>
       </Modal>

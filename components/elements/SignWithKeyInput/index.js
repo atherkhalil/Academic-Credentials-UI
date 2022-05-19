@@ -7,6 +7,8 @@ function SignWithKeyInput({
   SignFormSchema,
   handleSubmit,
   loading,
+  createdCredentialTxId,
+  showTxId
 }) {
   return (
     <>
@@ -25,6 +27,21 @@ function SignWithKeyInput({
                   overflowWrap: "break-word",
                   maxWidth: "100%"
                 }}>{initialValues.signature}</p>
+
+                {
+                  showTxId && 
+                  <>
+                    <h5 className="text-center" style={{ 
+                      display: "block", 
+                      overflowWrap: "break-word", 
+                      maxWidth : "100%"
+                    }}>
+                      <span className="text-primary">Transaction Id: </span> <span className="text-muted" style={{ fontWeight: 400 }}>{createdCredentialTxId}</span>
+                    </h5>
+                    <br />
+                  </>
+                }
+
                 <div class="row justify-content-center">
                   <button
                     class="btn btn-primary"
